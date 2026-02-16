@@ -1,15 +1,144 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Game Freezer ❄️</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Hub</title>
+
+<style>
+body {
+    margin: 0;
+    background: #000;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+header {
+    padding: 30px 20px 10px;
+}
+
+.logo {
+    width: 350px;
+    max-width: 90%;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.search-box {
+    margin: 20px auto;
+}
+
+.search-box input {
+    padding: 10px;
+    width: 250px;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+}
+
+#loader {
+    margin-top: 30px;
+    font-size: 18px;
+    opacity: 0.7;
+}
+
+#games {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.game-card {
+    background: #111;
+    border-radius: 10px;
+    padding: 15px;
+    transition: 0.2s ease;
+}
+
+.game-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #00bfff;
+}
+
+.game-card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.game-card h2 {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.game-card a {
+    display: inline-block;
+    padding: 8px 12px;
+    background: #00bfff;
+    color: black;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: bold;
+}
+</style>
 </head>
+
 <body>
 
-<h1>❄️ Game Freezer</h1>
+<header>
+    <img src="logo.png" class="logo" alt="Game Hub">
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Buscar jogo...">
+    </div>
+</header>
+
+<div id="loader">Carregando jogos...</div>
 <div id="games"></div>
 
-<script src="script.js"></script>
+<script>
+let allGames = [];
+
+fetch("games.json")
+    .then(res => res.json())
+    .then(data => {
+        allGames = data;
+        document.getElementById("loader").style.display = "none";
+        renderGames(allGames);
+    })
+    .catch(err => {
+        document.getElementById("loader").innerText = "Erro ao carregar games.json";
+        console.error(err);
+    });
+
+function renderGames(games) {
+    const container = document.getElementById("games");
+    container.innerHTML = "";
+
+    games.forEach(game => {
+        const card = document.createElement("div");
+        card.className = "game-card";
+
+        card.innerHTML = `
+            <img src="${game.ImageURL}" alt="${game.Name}">
+            <h2>${game.Name}</h2>
+            <a href="${game.Link}" target="_blank">Jogar</a>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+document.getElementById("searchInput").addEventListener("input", function() {
+    const value = this.value.toLowerCase();
+    const filtered = allGames.filter(game =>
+        game.Name.toLowerCase().includes(value)
+    );
+    renderGames(filtered);
+});
+</script>
+
 </body>
 </html>
