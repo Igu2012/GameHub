@@ -1,0 +1,31 @@
+body {
+  background: #0b0f1a;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+#games {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.game-card {
+  background: #141a2e;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.game-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.game-card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #00eaff;
+  text-decoration: none;
+}
