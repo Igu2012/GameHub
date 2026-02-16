@@ -6,10 +6,38 @@ body {
 }
 
 #games {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 20px;
+    display: grid;
+    gap: 15px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* 💻 Desktop */
+@media (min-width: 768px) {
+    #games {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+
+    .game-card {
+        padding: 8px;
+    }
+
+    .game-card h2 {
+        font-size: 14px;
+    }
+
+    .game-card a {
+        font-size: 12px;
+        padding: 6px 8px;
+    }
+}
+
+/* 📱 Mobile */
+@media (max-width: 767px) {
+    #games {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
 }
 
 .game-card {
