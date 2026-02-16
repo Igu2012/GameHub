@@ -8,5 +8,10 @@
     "Name": "Minecraft",
     "ImageURL": "img/minecraft.png",
     "Link": "https://prismarinejs.github.io/prismarine-web-client/"
+  },
+  {
+    "Name": "Doom",
+    "ImageURL": "img/doom.png",
+    "Link": "https://linuxfandudeguy.github.io/doomonline/"
   }
 ]
