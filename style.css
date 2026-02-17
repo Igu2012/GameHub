@@ -1,58 +1,113 @@
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
+/* ========================= */
+/* TEMA AUTOMÁTICO */
+/* ========================= */
+
+:root {
+    --bg: #ffffff;
+    --text: #000000;
+    --card: #e6e6e6;       /* branco mais escuro */
+    --search: #dddddd;
 }
 
-body.dark {
-    background-color: black;
-    color: white;
-}
-
-/* Tema padrão (claro) */
-body {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-/* Tema escuro automático */
 @media (prefers-color-scheme: dark) {
-    body {
-        background-color: #000000;
-        color: #ffffff;
+    :root {
+        --bg: #000000;
+        --text: #ffffff;
+        --card: #1f1f1f;   /* cinza escuro */
+        --search: #2a2a2a;
     }
 }
 
-#games {
+/* ========================= */
+/* GERAL */
+/* ========================= */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* ========================= */
+/* HEADER */
+/* ========================= */
+
+header {
+    padding: 15px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* ========================= */
+/* BARRA DE PESQUISA */
+/* ========================= */
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.search-container input {
+    width: 90%;
+    max-width: 400px;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: var(--search);
+    color: var(--text);
+    font-size: 16px;
+    outline: none;
+}
+
+/* ========================= */
+/* GRID DE JOGOS */
+/* ========================= */
+
+.games {
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     gap: 15px;
     padding: 20px;
-    max-width: 1200px;
-    margin: auto;
 }
 
-/* 💻 Desktop */
-@media (min-width: 768px) {
-    #games {
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    }
+/* ========================= */
+/* CARD DOS JOGOS */
+/* ========================= */
 
-    .game-card {
-        padding: 8px;
-    }
-
-    .game-card h2 {
-        font-size: 14px;
-    }
-
-    .game-card a {
-        font-size: 12px;
-        padding: 6px 8px;
-    }
+.game-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    transition: 0.2s ease;
+    cursor: pointer;
 }
 
-/* 📱 Mobile */
-@media (max-width: 767px) {
-    #games {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+.game-card:hover {
+    transform: scale(1.05);
+}
+
+.game-card img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.game-card p {
+    margin: 8px 0 0;
+    font-size: 14px;
+}
+
+/* ========================= */
+/* MOBILE */
+/* ========================= */
+
+@media (max-width: 600px) {
+    .games {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
 }
