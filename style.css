@@ -8,6 +8,20 @@ body.dark {
     color: white;
 }
 
+/* Tema padrão (claro) */
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Tema escuro automático */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #000000;
+        color: #ffffff;
+    }
+}
+
 #games {
     display: grid;
     gap: 15px;
