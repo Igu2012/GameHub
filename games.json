@@ -13,5 +13,35 @@
     "Name": "Doom",
     "ImageURL": "img/doom.png",
     "Link": "https://linuxfandudeguy.github.io/doomonline/"
+  },
+  {
+    "Name": "Fnaf 1",
+    "ImageURL": "img/fnaf1.png",
+    "Link": "https://irv77.github.io/hd_fnaf/1/"
+  },
+  {
+    "Name": "Fnaf 2",
+    "ImageURL": "img/fnaf2.png",
+    "Link": "https://irv77.github.io/hd_fnaf/2/"
+  },
+  {
+    "Name": "Fnaf 3",
+    "ImageURL": "img/fnaf3.png",
+    "Link": "https://irv77.github.io/hd_fnaf/3/"
+  },
+  {
+    "Name": "Fnaf 4",
+    "ImageURL": "img/fnaf4.png",
+    "Link": "https://irv77.github.io/hd_fnaf/4/"
+  },
+  {
+    "Name": "Fnaf Sister Location",
+    "ImageURL": "img/fnafSL.png",
+    "Link": "https://irv77.github.io/hd_fnaf/sl/"
+  },
+  {
+    "Name": "Fnaf Ultimate Custom Night",
+    "ImageURL": "img/FnafUCN.png",
+    "Link": "https://irv77.github.io/hd_fnaf/ucn/"
   }
 ]
