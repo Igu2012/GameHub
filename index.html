@@ -3,141 +3,134 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Game Hub</title>
+<title>GameHub</title>
 
 <style>
+/* ========================= */
+/* THEME AUTOMÁTICO */
+/* ========================= */
+
+:root {
+    --bg: #ffffff;
+    --text: #000000;
+    --card: #e5e5e5; /* branco mais escuro */
+    --search: #dddddd;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #000000;
+        --text: #ffffff;
+        --card: #1f1f1f; /* cinza escuro */
+        --search: #2a2a2a;
+    }
+}
+
 body {
     margin: 0;
-    color: white;
     font-family: Arial, sans-serif;
-    text-align: center;
+    background: var(--bg);
+    color: var(--text);
 }
+
+/* ========================= */
+/* HEADER */
+/* ========================= */
 
 header {
-    padding: 30px 20px 10px;
+    padding: 15px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
 }
 
-.logo {
-    width: 350px;
-    max-width: 90%;
-    display: block;
-    margin: 0 auto 20px;
-}
+/* ========================= */
+/* SEARCH BAR */
+/* ========================= */
 
-.search-box {
-    margin: 20px auto;
-}
-
-.search-box input {
+.search-container {
+    display: flex;
+    justify-content: center;
     padding: 10px;
-    width: 250px;
-    border-radius: 6px;
+}
+
+.search-container input {
+    width: 90%;
+    max-width: 400px;
+    padding: 10px;
     border: none;
-    outline: none;
+    border-radius: 8px;
+    background: var(--search);
+    color: var(--text);
+    font-size: 16px;
 }
 
-#loader {
-    margin-top: 30px;
-    font-size: 18px;
-    opacity: 0.7;
-}
+/* ========================= */
+/* GAME GRID */
+/* ========================= */
 
-#games {
+.games {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
     padding: 20px;
-    max-width: 1200px;
-    margin: auto;
 }
+
+/* ========================= */
+/* GAME CARD */
+/* ========================= */
 
 .game-card {
-    background: #111;
-    border-radius: 10px;
-    padding: 15px;
+    background: var(--card);
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
     transition: 0.2s ease;
+    cursor: pointer;
 }
 
 .game-card:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 15px #00bfff;
 }
 
 .game-card img {
     width: 100%;
+    height: 80px;
+    object-fit: cover;
     border-radius: 8px;
 }
 
-.game-card h2 {
-    font-size: 18px;
-    margin: 10px 0;
+.game-card p {
+    margin: 8px 0 0;
+    font-size: 14px;
 }
 
-.game-card a {
-    display: inline-block;
-    padding: 8px 12px;
-    background: #00bfff;
-    color: black;
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: bold;
+/* ========================= */
+/* MOBILE AJUSTE */
+/* ========================= */
+
+@media (max-width: 600px) {
+    .games {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <img src="logo.png" class="logo" alt="Game Hub">
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Buscar jogo...">
+<header>🎮 GameHub</header>
+
+<div class="search-container">
+    <input type="text" id="search" placeholder="Pesquisar jogo...">
+</div>
+
+<div class="games" id="games">
+
+    <div class="game-card" data-name="doom">
+        <img src="https://via.placeholder.com/150" alt="Doom">
+        <p>Doom</p>
     </div>
-</header>
 
-<div id="loader">Carregando jogos...</div>
-<div id="games"></div>
-
-<script>
-let allGames = [];
-
-fetch("games.json")
-    .then(res => res.json())
-    .then(data => {
-        allGames = data;
-        document.getElementById("loader").style.display = "none";
-        renderGames(allGames);
-    })
-    .catch(err => {
-        document.getElementById("loader").innerText = "Erro ao carregar games.json";
-        console.error(err);
-    });
-
-function renderGames(games) {
-    const container = document.getElementById("games");
-    container.innerHTML = "";
-
-    games.forEach(game => {
-        const card = document.createElement("div");
-        card.className = "game-card";
-
-        card.innerHTML = `
-            <img src="${game.ImageURL}" alt="${game.Name}">
-            <h2>${game.Name}</h2>
-            <a href="${game.Link}" target="_blank">Jogar</a>
-        `;
-
-        container.appendChild(card);
-    });
-}
-
-document.getElementById("searchInput").addEventListener("input", function() {
-    const value = this.value.toLowerCase();
-    const filtered = allGames.filter(game =>
-        game.Name.toLowerCase().includes(value)
-    );
-    renderGames(filtered);
-});
-</script>
-
-</body>
-</html>
+    <div class="game-card" data-name="minecraft">
+        <img src="https://via.placeholder.com/150" alt="Minecraft">
