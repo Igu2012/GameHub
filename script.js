@@ -1,3 +1,7 @@
+if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    document.body.classList.add('dark');
+}
+
 fetch("games.json")
   .then(res => res.json())
   .then(games => {
