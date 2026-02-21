@@ -1,5 +1,10 @@
 [
   {
+    "Name": "Subway Surfers",
+    "ImageURL": "img/subwaysurfers.png",
+    "Link": "https://testingherokuapp.github.io/subwaysurfer"
+  },
+  {
     "Name": "Minecraft",
     "ImageURL": "img/minecraft.png",
     "Link": "https://prismarinejs.github.io/prismarine-web-client/"
