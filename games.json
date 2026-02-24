@@ -48,5 +48,10 @@
     "Name": "Happy Wheels",
     "ImageURL": "img/happywheels.png",
     "Link": "https://jarg.wtf/openWheels/"
+  },
+  {
+    "Name": "Chicken King's Vault Hub (by wanocapy)",
+    "ImageURL": "img/ckv.png",
+    "Link": "https://wanocapy.github.io/ChickenKingsVault/"
   }
 ]
