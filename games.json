@@ -43,5 +43,10 @@
     "Name": "Fnaf Ultimate Custom Night",
     "ImageURL": "img/fnafUCN.png",
     "Link": "Fnaf_Ultimate_Custom_Night/index.html"
+  },
+  {
+    "Name": "Stickman Hook",
+    "ImageURL": "img/stickmanhook.png",
+    "Link": "StickmanHook/index.html"
   }
 ]
