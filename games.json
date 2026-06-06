@@ -58,5 +58,10 @@
     "Name": "Bad Ice Cream",
     "ImageURL": "img/badicecream.png",
     "Link": "BadIceCream/index.html"
+  },
+  {
+    "Name": "Level Devil",
+    "ImageURL": "img/leveldevil.png",
+    "Link": "LevelDevil/index.html"
   }
 ]
