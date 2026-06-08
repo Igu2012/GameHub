@@ -1,82 +1,114 @@
-[
-  {
-    "Name": "Subway Surfers",
-    "ImageURL": "img/subwaysurfers.png",
-    "Link": "SubwaySurfers/index.html"
-  },
-  {
-    "Name": "Minecraft",
-    "ImageURL": "img/minecraft.png",
-    "Link": "Minecraft/index.html"
-  },
-  {
-    "Name": "Doom",
-    "ImageURL": "img/doom.png",
-    "Link": "Doom/index.html"
-  },
-  {
-    "Name": "Fnaf 1",
-    "ImageURL": "img/fnaf1.png",
-    "Link": "Fnaf_1/index.html"
-  },
-  {
-    "Name": "Fnaf 2",
-    "ImageURL": "img/fnaf2.png",
-    "Link": "Fnaf_2/index.html"
-  },
-  {
-    "Name": "Fnaf 3",
-    "ImageURL": "img/fnaf3.png",
-    "Link": "Fnaf_3/index.html"
-  },
-  {
-    "Name": "Fnaf 4",
-    "ImageURL": "img/fnaf4.png",
-    "Link": "Fnaf_4/index.html"
-  },
-  {
-    "Name": "Fnaf Sister Location",
-    "ImageURL": "img/fnafSL.png",
-    "Link": "Fnaf_Sister_Location/index.html"
-  },
-  {
-    "Name": "Fnaf Ultimate Custom Night",
-    "ImageURL": "img/fnafUCN.png",
-    "Link": "Fnaf_Ultimate_Custom_Night/index.html"
-  },
-  {
-    "Name": "Wrassling",
-    "ImageURL": "img/wrassling.png",
-    "Link": "Wrassling/index.html"
-  },
-  {
-    "Name": "Fireboy & Watergirl",
-    "ImageURL": "img/fireboyandwatergirl.png",
-    "Link": "FireboyAndWatergirl/index.html"
-  },
-  {
-    "Name": "Bad Ice Cream",
-    "ImageURL": "img/badicecream.png",
-    "Link": "BadIceCream/index.html"
-  },
-  {
-    "Name": "Level Devil",
-    "ImageURL": "img/leveldevil.png",
-    "Link": "LevelDevil/index.html"
-  },
-  {
-    "Name": "Moto X3M",
-    "ImageURL": "img/motox3m.png",
-    "Link": "MotoX3M/index.html"
-  },
-  {
-    "Name": "Basket Random",
-    "ImageURL": "img/basketrandom.png",
-    "Link": "BasketRandom/index.html"
-  },
-  {
-    "Name": "Rocket Goal",
-    "ImageURL": "img/rocketgoal.png",
-    "Link": "RocketGoal/index.html"
-  }
-]
+{
+  "categories": [
+    {
+      "id": "action",
+      "name": "Ação",
+      "games": [
+        {
+          "Name": "Subway Surfers",
+          "ImageURL": "img/subwaysurfers.png",
+          "Link": "SubwaySurfers/index.html"
+        },
+        {
+          "Name": "Doom",
+          "ImageURL": "img/doom.png",
+          "Link": "Doom/index.html"
+        },
+        {
+          "Name": "Moto X3M",
+          "ImageURL": "img/motox3m.png",
+          "Link": "MotoX3M/index.html"
+        },
+        {
+          "Name": "Level Devil",
+          "ImageURL": "img/leveldevil.png",
+          "Link": "LevelDevil/index.html"
+        }
+      ]
+    },
+    {
+      "id": "horror",
+      "name": "Terror",
+      "games": [
+        {
+          "Name": "Fnaf 1",
+          "ImageURL": "img/fnaf1.png",
+          "Link": "Fnaf_1/index.html"
+        },
+        {
+          "Name": "Fnaf 2",
+          "ImageURL": "img/fnaf2.png",
+          "Link": "Fnaf_2/index.html"
+        },
+        {
+          "Name": "Fnaf 3",
+          "ImageURL": "img/fnaf3.png",
+          "Link": "Fnaf_3/index.html"
+        },
+        {
+          "Name": "Fnaf 4",
+          "ImageURL": "img/fnaf4.png",
+          "Link": "Fnaf_4/index.html"
+        },
+        {
+          "Name": "Fnaf Sister Location",
+          "ImageURL": "img/fnafSL.png",
+          "Link": "Fnaf_Sister_Location/index.html"
+        },
+        {
+          "Name": "Fnaf Ultimate Custom Night",
+          "ImageURL": "img/fnafUCN.png",
+          "Link": "Fnaf_Ultimate_Custom_Night/index.html"
+        }
+      ]
+    },
+    {
+      "id": "sports",
+      "name": "Esportes",
+      "games": [
+        {
+          "Name": "Basket Random",
+          "ImageURL": "img/basketrandom.png",
+          "Link": "BasketRandom/index.html"
+        },
+        {
+          "Name": "Rocket Goal",
+          "ImageURL": "img/rocketgoal.png",
+          "Link": "RocketGoal/index.html"
+        }
+      ]
+    },
+    {
+      "id": "multiplayer",
+      "name": "2 Jogadores",
+      "games": [
+        {
+          "Name": "Fireboy & Watergirl",
+          "ImageURL": "img/fireboyandwatergirl.png",
+          "Link": "FireboyAndWatergirl/index.html"
+        },
+        {
+          "Name": "Wrassling",
+          "ImageURL": "img/wrassling.png",
+          "Link": "Wrassling/index.html"
+        },
+        {
+          "Name": "Bad Ice Cream",
+          "ImageURL": "img/badicecream.png",
+          "Link": "BadIceCream/index.html"
+        }
+      ]
+    },
+    {
+      "id": "adventure",
+      "name": "Aventura",
+      "games": [
+        {
+          "Name": "Minecraft",
+          "ImageURL": "img/minecraft.png",
+          "Link": "Minecraft/index.html"
+        }
+      ]
+    }
+  ]
+}
