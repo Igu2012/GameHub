@@ -112,6 +112,11 @@
           "Name": "Bloxorz",
           "ImageURL": "img/bloxorz.png",
           "Link": "Bloxorz/index.html"
+        },
+        {
+          "Name": "Duck Life 1",
+          "ImageURL": "img/ducklife1.png",
+          "Link": "DuckLife1/index.html"
         }
       ]
     }
