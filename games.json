@@ -23,6 +23,11 @@
           "Name": "Level Devil",
           "ImageURL": "img/leveldevil.png",
           "Link": "LevelDevil/index.html"
+        },
+        {
+          "Name": "Friday Night Funkin",
+          "ImageURL": "img/funkin.png",
+          "Link": "Funkin/index.html"
         }
       ]
     },
