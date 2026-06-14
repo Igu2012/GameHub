@@ -77,6 +77,11 @@
       "name": "Esportes",
       "games": [
         {
+          "Name": "Soccer Random",
+          "ImageURL": "img/soccerrandom.png",
+          "Link": "SoccerRandom/index.html"
+        },
+        {
           "Name": "Basket Random",
           "ImageURL": "img/basketrandom.png",
           "Link": "BasketRandom/index.html"
