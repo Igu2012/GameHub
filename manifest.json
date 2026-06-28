@@ -2,11 +2,11 @@
   "name": "GameHub",
   "short_name": "GameHub",
   "start_url": "/",
-  "display": "standalone",
+  "display": "fullscreen", 
   "background_color": "#ffffff",
   "icons": [
     {
-      "src": "/logo.png",
+      "src": "/icone.png",
       "sizes": "512x512",
       "type": "image/png"
     }
