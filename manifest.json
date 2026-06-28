@@ -1,0 +1,14 @@
+{
+  "name": "GameHub",
+  "short_name": "App",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "500x500",
+      "type": "image/png"
+    }
+  ]
+}
