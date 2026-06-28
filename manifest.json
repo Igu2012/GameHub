@@ -1,6 +1,6 @@
 {
   "name": "GameHub",
-  "short_name": "App",
+  "short_name": "GameHub",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
