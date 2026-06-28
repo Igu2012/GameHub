@@ -12,32 +12,32 @@
         {
           "Name": "Doom",
           "ImageURL": "img/doom.png",
-          "Link": "Doom/index.html"
+          "Link": "Doom/"
         },
         {
           "Name": "Moto X3M",
           "ImageURL": "img/motox3m.png",
-          "Link": "MotoX3M/index.html"
+          "Link": "MotoX3M/"
         },
         {
           "Name": "Level Devil",
           "ImageURL": "img/leveldevil.png",
-          "Link": "LevelDevil/index.html"
+          "Link": "LevelDevil/"
         },
         {
           "Name": "Friday Night Funkin",
           "ImageURL": "img/funkin.png",
-          "Link": "Funkin/index.html"
+          "Link": "Funkin/"
         },
         {
           "Name": "Geometry Dash",
           "ImageURL": "img/geometrydash.png",
-          "Link": "GeometryDash/index.html"
+          "Link": "GeometryDash/"
         },
         {
           "Name": "Happy Wheels",
           "ImageURL": "img/happywheels.png",
-          "Link": "HappyWheels/index.html"
+          "Link": "HappyWheels/"
         }
       ]
     },
@@ -48,37 +48,37 @@
         {
           "Name": "Fnaf 1",
           "ImageURL": "img/fnaf1.png",
-          "Link": "Fnaf_1/index.html"
+          "Link": "Fnaf_1/"
         },
         {
           "Name": "Fnaf 2",
           "ImageURL": "img/fnaf2.png",
-          "Link": "Fnaf_2/index.html"
+          "Link": "Fnaf_2/"
         },
         {
           "Name": "Fnaf 3",
           "ImageURL": "img/fnaf3.png",
-          "Link": "Fnaf_3/index.html"
+          "Link": "Fnaf_3/"
         },
         {
           "Name": "Fnaf 4",
           "ImageURL": "img/fnaf4.png",
-          "Link": "Fnaf_4/index.html"
+          "Link": "Fnaf_4/"
         },
         {
           "Name": "Fnaf Sister Location",
           "ImageURL": "img/fnafSL.png",
-          "Link": "Fnaf_Sister_Location/index.html"
+          "Link": "Fnaf_Sister_Location/"
         },
         {
           "Name": "Fnaf Ultimate Custom Night",
           "ImageURL": "img/fnafUCN.png",
-          "Link": "Fnaf_Ultimate_Custom_Night/index.html"
+          "Link": "Fnaf_Ultimate_Custom_Night/"
         },
         {
           "Name": "Granny 1",
           "ImageURL": "img/granny1.png",
-          "Link": "Granny1/index.html"
+          "Link": "Granny1/"
         }
       ]
     },
@@ -89,17 +89,17 @@
         {
           "Name": "Soccer Random",
           "ImageURL": "img/soccerrandom.png",
-          "Link": "SoccerRandom/index.html"
+          "Link": "SoccerRandom/"
         },
         {
           "Name": "Basket Random",
           "ImageURL": "img/basketrandom.png",
-          "Link": "BasketRandom/index.html"
+          "Link": "BasketRandom/"
         },
         {
           "Name": "Rocket Goal",
           "ImageURL": "img/rocketgoal.png",
-          "Link": "RocketGoal/index.html"
+          "Link": "RocketGoal/"
         }
       ]
     },
@@ -110,12 +110,12 @@
         {
           "Name": "Wrassling",
           "ImageURL": "img/wrassling.png",
-          "Link": "Wrassling/index.html"
+          "Link": "Wrassling/"
         },
         {
           "Name": "Bad Ice Cream",
           "ImageURL": "img/badicecream.png",
-          "Link": "BadIceCream/index.html"
+          "Link": "BadIceCream/"
         }
       ]
     },
@@ -126,7 +126,7 @@
         {
           "Name": "Minecraft",
           "ImageURL": "img/minecraft.png",
-          "Link": "Minecraft/index.html"
+          "Link": "Minecraft/"
         }
       ]
     },
@@ -137,27 +137,27 @@
         {
           "Name": "Duck Life 1",
           "ImageURL": "img/ducklife1.png",
-          "Link": "DuckLife1/index.html"
+          "Link": "DuckLife1/"
         },
         {
           "Name": "Duck Life 2",
           "ImageURL": "img/ducklife2.png",
-          "Link": "DuckLife2/index.html"
+          "Link": "DuckLife2/"
         },
         {
           "Name": "Henry Stickmin: Breaking the Bank",
           "ImageURL": "img/henrystickminbreakingthebank.png",
-          "Link": "HenryStickminBreakingTheBank/index.html"
+          "Link": "HenryStickminBreakingTheBank/"
         },
         {
           "Name": "The Right Mix",
           "ImageURL": "img/therightmix.png",
-          "Link": "TheRightMix/index.html"
+          "Link": "TheRightMix/"
         },
         {
           "Name": "Angry Birds 1",
           "ImageURL": "img/angrybirds1.png",
-          "Link": "AngryBirds1/index.html"
+          "Link": "AngryBirds1/"
         }
       ]
     },
@@ -168,12 +168,12 @@
         {
           "Name": "Fireboy & Watergirl",
           "ImageURL": "img/fireboyandwatergirl.png",
-          "Link": "FireboyAndWatergirl/index.html"
+          "Link": "FireboyAndWatergirl/"
         },
         {
           "Name": "Bloxorz",
           "ImageURL": "img/bloxorz.png",
-          "Link": "Bloxorz/index.html"
+          "Link": "Bloxorz/"
         }
       ]
     }
