@@ -74,6 +74,7 @@
             align-items: center;
             justify-content: center;
             gap: 1rem;
+            cursor: pointer;
         }
 
         .version-card:hover {
@@ -137,21 +138,36 @@
         <p class="subtitle">Selecione uma versão para jogar</p>
 
         <div class="versions-grid">
-            <a href="1.5.2.html" class="version-card">
+            <div class="version-card" data-link="1.5.2.html">
                 <div class="version-number">1.5.2</div>
                 <div class="version-label">Versão Clássica</div>
-            </a>
-            <a href="1.8.8.html" class="version-card">
+            </div>
+            <div class="version-card" data-link="1.8.8.html">
                 <div class="version-number">1.8.8</div>
                 <div class="version-label">Versão Popular</div>
-            </a>
-            <a href="1.12.2.html" class="version-card">
+            </div>
+            <div class="version-card" data-link="1.12.2.html">
                 <div class="version-number">1.12.2</div>
                 <div class="version-label">Versão Recente</div>
-            </a>
+            </div>
         </div>
 
         <a href="../index.html" class="back-link">← Voltar ao GameHub</a>
     </div>
+
+    <script>
+        document.querySelectorAll('.version-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const gameLink = this.getAttribute('data-link');
+                const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+                if (isMobile) {
+                    window.location.href = gameLink; 
+                } else {
+                    window.open(gameLink, '_blank');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
