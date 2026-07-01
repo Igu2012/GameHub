@@ -79,6 +79,11 @@
           "Name": "Granny 1",
           "ImageURL": "img/granny1.png",
           "Link": "Granny1/"
+        },
+        {
+          "Name": "Baldi's Basics Remastered",
+          "ImageURL": "img/baldiremastered.png",
+          "Link": "BaldiRemastered/"
         }
       ]
     },
