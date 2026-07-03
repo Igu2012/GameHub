@@ -1,18 +1,46 @@
-const BaldiMobileControls = {
+const BaldiSmartControls = {
+    isInitialized: false,
+    controlsVisible: false,
+    gameStarted: false,
+    
     init() {
         if (!this.isMobile()) return;
         
-        setTimeout(() => {
-            this.createControlsUI();
-            this.setupEventListeners();
-        }, 3000);
+        this.monitorGameStart();
     },
     
     isMobile() {
         return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
     },
     
+    monitorGameStart() {
+        const canvas = document.getElementById('unity-canvas');
+        if (!canvas) {
+            setTimeout(() => this.monitorGameStart(), 500);
+            return;
+        }
+        
+        canvas.addEventListener('click', () => {
+            if (!this.gameStarted) {
+                this.gameStarted = true;
+                setTimeout(() => {
+                    this.createControlsUI();
+                }, 1000);
+            }
+        });
+        
+        setTimeout(() => {
+            if (!this.gameStarted) {
+                this.gameStarted = true;
+                this.createControlsUI();
+            }
+        }, 8000);
+    },
+    
     createControlsUI() {
+        if (this.isInitialized) return;
+        this.isInitialized = true;
+        
         const container = document.createElement('div');
         container.id = 'mobile-controls';
         container.style.cssText = `
@@ -28,6 +56,8 @@ const BaldiMobileControls = {
             padding: 10px;
             box-sizing: border-box;
             z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
         `;
         
         const joystickArea = document.createElement('div');
@@ -52,7 +82,6 @@ const BaldiMobileControls = {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            cursor: grab;
         `;
         
         joystickArea.appendChild(joystick);
@@ -91,6 +120,7 @@ const BaldiMobileControls = {
             
             button.addEventListener('touchstart', (e) => {
                 e.preventDefault();
+                this.focusUnityCanvas();
                 this.sendKeyToUnity(btn.key, true);
                 button.style.background = 'rgba(255,255,255,0.4)';
             });
@@ -108,7 +138,20 @@ const BaldiMobileControls = {
         container.appendChild(buttonsArea);
         document.body.appendChild(container);
         
+        setTimeout(() => {
+            container.style.opacity = '1';
+            this.controlsVisible = true;
+        }, 100);
+        
         this.setupJoystick(joystickArea, joystick);
+    },
+    
+    focusUnityCanvas() {
+        const canvas = document.getElementById('unity-canvas');
+        if (canvas) {
+            canvas.focus();
+            canvas.click();
+        }
     },
     
     setupJoystick(area, stick) {
@@ -138,6 +181,7 @@ const BaldiMobileControls = {
         
         area.addEventListener('touchstart', (e) => {
             isActive = true;
+            this.focusUnityCanvas();
             handleMove(e);
         });
         
@@ -187,15 +231,14 @@ const BaldiMobileControls = {
             cancelable: true
         });
         
+        const canvas = document.getElementById('unity-canvas');
+        if (canvas) {
+            canvas.dispatchEvent(event);
+        }
         document.dispatchEvent(event);
         window.dispatchEvent(event);
-    },
-    
-    setupEventListeners() {
-        window.addEventListener('orientationchange', () => {
-            setTimeout(() => location.reload(), 500);
-        });
     }
 };
 
-document.addEventListener('DOMContentLoaded', () => BaldiMobileControls.init());
+document.addEventListener('DOMContentLoaded', () => BaldiSmartControls.init());
+window.addEventListener('load', () => BaldiSmartControls.init());

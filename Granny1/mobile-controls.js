@@ -1,18 +1,33 @@
-const GrannyMobileControls = {
+const GrannySmartControls = {
+    isInitialized: false,
+    controlsVisible: false,
+    firstTouchDetected: false,
+    
     init() {
         if (!this.isMobile()) return;
         
-        setTimeout(() => {
-            this.createControlsUI();
-            this.setupEventListeners();
-        }, 2000);
+        this.setupFirstTouchListener();
     },
     
     isMobile() {
         return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
     },
     
+    setupFirstTouchListener() {
+        document.addEventListener('touchstart', () => {
+            if (!this.firstTouchDetected) {
+                this.firstTouchDetected = true;
+                setTimeout(() => {
+                    this.createControlsUI();
+                }, 500);
+            }
+        }, { once: false });
+    },
+    
     createControlsUI() {
+        if (this.isInitialized) return;
+        this.isInitialized = true;
+        
         const container = document.createElement('div');
         container.id = 'mobile-controls';
         container.style.cssText = `
@@ -54,7 +69,6 @@ const GrannyMobileControls = {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            cursor: grab;
         `;
         
         joystickArea.appendChild(joystick);
@@ -112,6 +126,7 @@ const GrannyMobileControls = {
         
         setTimeout(() => {
             container.style.opacity = '1';
+            this.controlsVisible = true;
         }, 100);
         
         this.setupJoystick(joystickArea, joystick);
@@ -179,7 +194,7 @@ const GrannyMobileControls = {
     },
     
     sendKeyEvent(key, isPressed) {
-        const keyCode = { 'w': 87, 'a': 65, 's': 83, 'd': 68, 'c': 67, 'e': 69, 'd': 68 }[key] || key.charCodeAt(0);
+        const keyCode = { 'w': 87, 'a': 65, 's': 83, 'd': 68, 'c': 67, 'e': 69 }[key] || key.charCodeAt(0);
         const eventType = isPressed ? 'keydown' : 'keyup';
         const event = new KeyboardEvent(eventType, {
             key: key,
@@ -191,13 +206,8 @@ const GrannyMobileControls = {
         
         document.dispatchEvent(event);
         window.dispatchEvent(event);
-    },
-    
-    setupEventListeners() {
-        window.addEventListener('orientationchange', () => {
-            setTimeout(() => location.reload(), 500);
-        });
     }
 };
 
-document.addEventListener('DOMContentLoaded', () => GrannyMobileControls.init());
+document.addEventListener('DOMContentLoaded', () => GrannySmartControls.init());
+window.addEventListener('load', () => GrannySmartControls.init());
