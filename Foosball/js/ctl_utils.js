@@ -253,7 +253,7 @@ function sizeHandler() {
 };
 
 function _checkOrientation(iWidth,iHeight){
-    if(s_bMobile && ENABLE_CHECK_ORIENTATION){
+    if(false){
         if( iWidth>iHeight ){ 
             if( $(".orientation-msg-container").attr("data-orientation") === "landscape" ){
                 $(".orientation-msg-container").css("display","none");
