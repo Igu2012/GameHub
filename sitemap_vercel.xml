@@ -116,4 +116,8 @@
     <loc>https://gamehubjogos.vercel.app/Bloxorz/</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/Foosball/</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>

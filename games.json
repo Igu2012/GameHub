@@ -105,6 +105,11 @@
           "Name": "Rocket Goal",
           "ImageURL": "img/rocketgoal.png",
           "Link": "RocketGoal/"
+        },
+        {
+          "Name": "Foosball",
+          "ImageURL": "img/foosball.png",
+          "Link": "Foosball/"
         }
       ]
     },
