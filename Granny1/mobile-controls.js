@@ -1,9 +1,11 @@
-const MobileControls = {
+const GrannyMobileControls = {
     init() {
         if (!this.isMobile()) return;
         
-        this.createControlsUI();
-        this.setupEventListeners();
+        setTimeout(() => {
+            this.createControlsUI();
+            this.setupEventListeners();
+        }, 2000);
     },
     
     isMobile() {
@@ -26,6 +28,8 @@ const MobileControls = {
             padding: 10px;
             box-sizing: border-box;
             z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
         `;
         
         const joystickArea = document.createElement('div');
@@ -68,8 +72,7 @@ const MobileControls = {
         const buttons = [
             { id: 'crouch-btn', label: 'Crouch', key: 'c' },
             { id: 'interact-btn', label: 'Use', key: 'e' },
-            { id: 'drop-btn', label: 'Drop', key: 'd' },
-            { id: 'shoot-btn', label: 'Shoot', key: 'space' }
+            { id: 'drop-btn', label: 'Drop', key: 'd' }
         ];
         
         buttons.forEach(btn => {
@@ -90,12 +93,13 @@ const MobileControls = {
             
             button.addEventListener('touchstart', (e) => {
                 e.preventDefault();
-                this.simulateKeyPress(btn.key);
+                this.sendKeyEvent(btn.key, true);
                 button.style.background = 'rgba(255,255,255,0.4)';
             });
             
             button.addEventListener('touchend', (e) => {
                 e.preventDefault();
+                this.sendKeyEvent(btn.key, false);
                 button.style.background = 'rgba(255,255,255,0.2)';
             });
             
@@ -106,11 +110,16 @@ const MobileControls = {
         container.appendChild(buttonsArea);
         document.body.appendChild(container);
         
+        setTimeout(() => {
+            container.style.opacity = '1';
+        }, 100);
+        
         this.setupJoystick(joystickArea, joystick);
     },
     
     setupJoystick(area, stick) {
         let isActive = false;
+        let currentKeys = { w: false, a: false, s: false, d: false };
         
         const handleMove = (e) => {
             if (!isActive) return;
@@ -130,7 +139,7 @@ const MobileControls = {
             
             stick.style.transform = `translate(calc(-50% + ${stickX}px), calc(-50% + ${stickY}px))`;
             
-            this.handleJoystickInput(angle);
+            this.handleJoystickInput(angle, currentKeys);
         };
         
         area.addEventListener('touchstart', (e) => {
@@ -143,10 +152,14 @@ const MobileControls = {
         document.addEventListener('touchend', () => {
             isActive = false;
             stick.style.transform = 'translate(-50%, -50%)';
+            Object.keys(currentKeys).forEach(key => {
+                if (currentKeys[key]) this.sendKeyEvent(key, false);
+                currentKeys[key] = false;
+            });
         });
     },
     
-    handleJoystickInput(angle) {
+    handleJoystickInput(angle, currentKeys) {
         const directions = {
             'w': angle > -Math.PI * 0.75 && angle < -Math.PI * 0.25,
             'a': angle > -Math.PI * 1.25 && angle < -Math.PI * 0.75,
@@ -155,30 +168,36 @@ const MobileControls = {
         };
         
         Object.entries(directions).forEach(([key, active]) => {
-            if (active) this.simulateKeyPress(key);
+            if (active && !currentKeys[key]) {
+                this.sendKeyEvent(key, true);
+                currentKeys[key] = true;
+            } else if (!active && currentKeys[key]) {
+                this.sendKeyEvent(key, false);
+                currentKeys[key] = false;
+            }
         });
     },
     
-    simulateKeyPress(key) {
-        const keyMap = {
-            'w': 'KeyW', 'a': 'KeyA', 's': 'KeyS', 'd': 'KeyD',
-            'c': 'KeyC', 'e': 'KeyE', 'd': 'KeyD', 'space': 'Space'
-        };
-        
-        const event = new KeyboardEvent('keydown', {
+    sendKeyEvent(key, isPressed) {
+        const keyCode = { 'w': 87, 'a': 65, 's': 83, 'd': 68, 'c': 67, 'e': 69, 'd': 68 }[key] || key.charCodeAt(0);
+        const eventType = isPressed ? 'keydown' : 'keyup';
+        const event = new KeyboardEvent(eventType, {
             key: key,
-            code: keyMap[key] || key,
-            bubbles: true
+            keyCode: keyCode,
+            code: `Key${key.toUpperCase()}`,
+            bubbles: true,
+            cancelable: true
         });
         
         document.dispatchEvent(event);
+        window.dispatchEvent(event);
     },
     
     setupEventListeners() {
         window.addEventListener('orientationchange', () => {
-            setTimeout(() => this.init(), 100);
+            setTimeout(() => location.reload(), 500);
         });
     }
 };
 
-document.addEventListener('DOMContentLoaded', () => MobileControls.init());
+document.addEventListener('DOMContentLoaded', () => GrannyMobileControls.init());
