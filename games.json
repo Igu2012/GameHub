@@ -43,6 +43,11 @@
           "Name": "Jelly Drift",
           "ImageURL": "img/jellydrift.png",
           "Link": "JellyDrift/"
+        },
+        {
+          "Name": "Getting Over It",
+          "ImageURL": "img/gettingoverit.png",
+          "Link": "GettingOverIt/"
         }
       ]
     },
