@@ -38,6 +38,11 @@
           "Name": "Happy Wheels",
           "ImageURL": "img/happywheels.png",
           "Link": "HappyWheels/"
+        },
+        {
+          "Name": "Jelly Drift",
+          "ImageURL": "img/jellydrift.png",
+          "Link": "JellyDrift/"
         }
       ]
     },
