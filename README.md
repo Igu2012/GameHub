@@ -8,3 +8,4 @@ Você pode acessar o GameHub através dos seguintes links:
 
 *   **Github:** [https://gamehubjogos.github.io](https://gamehubjogos.github.io)
 *   **Vercel:** [https://gamehubjogos.vercel.app](https://gamehubjogos.vercel.app)
+\n# Update for Vercel deploy
