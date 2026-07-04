@@ -2,15 +2,15 @@
 <html lang="en-us">
 
 <head>
-    <base href="https://cdn.jsdelivr.net/gh/genizy/web-port@main/getting-over-it/">
+    
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | Getting Over It</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-    <style>
-        html,
-        body {
+    
+    
+        
+        body_old {
             margin: 0;
             padding: 0;
             border: 0;
@@ -25,12 +25,95 @@
             height: 100%;
             display: block;
         }
+    
+    
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        overflow: hidden;
+      }
+
+      body {
+        background: #000;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      #unity-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+      }
+
+      #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .loading-content {
+        text-align: center;
+      }
+
+      .loading-text {
+        color: white;
+        font-size: 32px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin-bottom: 20px;
+        letter-spacing: 2px;
+      }
+
+      .progress-container {
+        width: 300px;
+        height: 10px;
+        background: #333;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+
+      .progress-bar {
+        width: 0%;
+        height: 100%;
+        background: white;
+        transition: width 0.3s ease;
+      }
     </style>
+
+
 </head>
 
+
+
 <body>
-    <div id="loading-text" style="color: white; font-size: 48px; font-family: cursive; text-align: center; margin-top: 20px;"> LOADING... </div>
-    <div id="unity-container" class="unity-desktop">
+    <div id="loading-screen">
+      <div class="loading-content">
+        <div class="loading-text">LOADING... 0%</div>
+        <div class="progress-container">
+          <div class="progress-bar"></div>
+        </div>
+      </div>
+    </div>
+    <div id="unity-container">
+        <canvas id="unity-canvas" tabindex="-1"></canvas>
+    </div>
+
+        <canvas id="unity-canvas" tabindex="-1"></canvas>
+    </div>
+
         <canvas id="unity-canvas" tabindex="-1"></canvas>
         <div id="unity-loading-bar">
             <div id="unity-logo"></div>
@@ -73,7 +156,12 @@
                 const doneText = formatSize(loadedBytes);
                 const totalText = formatSize(totalBytes);
                 const percent = totalBytes > 0 ? ((loadedBytes / totalBytes) * 100).toFixed(1) : "?";
-                loadingText.textContent = `LOADING... ${doneText} / ${totalText} (${percent}%)`;
+                
+                const bar = document.querySelector(".progress-bar");
+                const text = document.querySelector(".loading-text");
+                if (bar) bar.style.width = percent + "%";
+                if (text) text.textContent = `LOADING... ${Math.round(percent)}%`;
+
             }
             let fullBuffer = new Uint8Array(received);
             let offset = 0;
@@ -121,7 +209,7 @@
                 frameworkUrl: buildUrl + "/GettingOverIt.framework.js",
                 codeUrl: wasmUrl,
                 streamingAssetsUrl: "StreamingAssets",
-                companyName: "Bennett Foddy",
+                companyName: "GameHub",
                 productName: "Getting Over It",
                 productVersion: "1.7",
                 showBanner: unityShowBanner,
@@ -158,8 +246,8 @@
                 createUnityInstance(canvas, config, (progress) => {
                     progressBarFull.style.width = 100 * progress + "%";
                 }).then((unityInstance) => {
-                    loadingBar.style.display = "none";
-                    loadingText.remove();
+                    document.getElementById("loading-screen").style.display = "none";
+                    
                 }).catch((message) => {
                     alert(message);
                 });
