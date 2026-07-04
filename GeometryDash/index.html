@@ -25,6 +25,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="themes/gamehippy.com/rs/css/home.css?v=1">
 <script src="fullscreen-mobile.js"></script>
+
+<script>
+    // Fullscreen for mobile devices
+    function enableFullscreen() {
+        var doc = window.document;
+        var docEl = doc.documentElement;
+
+        var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+        
+        if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+            if (requestFullScreen) {
+                requestFullScreen.call(docEl);
+            }
+        }
+    }
+
+    // Add event listeners to trigger fullscreen on first interaction
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        ['touchstart', 'click', 'keydown'].forEach(event => {
+            window.addEventListener(event, enableFullscreen, { once: true });
+        });
+    }
+</script>
 </head>
 <meta name="cf-2fa-verify" content="GpoihhhSRQknehLQkEtXM">
 

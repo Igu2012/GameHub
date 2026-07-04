@@ -62,6 +62,29 @@
 		}
 	</style>
 
+
+<script>
+    // Fullscreen for mobile devices
+    function enableFullscreen() {
+        var doc = window.document;
+        var docEl = doc.documentElement;
+
+        var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+        
+        if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+            if (requestFullScreen) {
+                requestFullScreen.call(docEl);
+            }
+        }
+    }
+
+    // Add event listeners to trigger fullscreen on first interaction
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        ['touchstart', 'click', 'keydown'].forEach(event => {
+            window.addEventListener(event, enableFullscreen, { once: true });
+        });
+    }
+</script>
 </head>
 
 <body style="overflow:hidden;">
