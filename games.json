@@ -131,6 +131,11 @@
           "Name": "Bad Ice Cream",
           "ImageURL": "img/badicecream.png",
           "Link": "BadIceCream/"
+        },
+        {
+          "Name": "Tank Trouble",
+          "ImageURL": "img/tank-trouble.webp",
+          "Link": "TankTrouble/"
         }
       ]
     },
