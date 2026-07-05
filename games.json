@@ -194,13 +194,13 @@
           "Name": "Duck Life 1",
           "ImageURL": "img/ducklife1.png",
           "Link": "DuckLife1/",
-          "MobileFriendly": true
+          "MobileFriendly": false
         },
         {
           "Name": "Duck Life 2",
           "ImageURL": "img/ducklife2.png",
           "Link": "DuckLife2/",
-          "MobileFriendly": true
+          "MobileFriendly": false
         },
         {
           "Name": "Henry Stickmin: Breaking the Bank",
