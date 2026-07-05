@@ -112,9 +112,26 @@
 			visibility: visible;
 		}
 	</style>
-<link id='-gd-engine-icon' rel='icon' type='image/png' href='index.icon.png' />
+<link rel='icon' type='image/x-icon' href='favicon.ico' />
 <link rel='apple-touch-icon' href='index.apple-touch-icon.png'>
 
+
+<script>
+    function enableFullscreen() {
+        var doc = window.document;
+        var docEl = doc.documentElement;
+        var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (requestFullScreen) {
+                requestFullScreen.call(docEl);
+            }
+        }
+    }
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        ['touchstart', 'click', 'keydown'].forEach(event => {
+            window.addEventListener(event, enableFullscreen, { once: true });
+        });
+    }
+</script>
 </head>
 <body>
 	<canvas id='canvas'>
