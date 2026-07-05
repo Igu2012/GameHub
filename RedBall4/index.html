@@ -35,6 +35,25 @@
             });
         }
     </script>
+
+    <script>
+        window.PokiSDK = {
+            init: function() { return Promise.resolve(); },
+            gameLoadingStart: function() {},
+            gameLoadingFinished: function() {},
+            gameLoadingProgress: function() {},
+            gameplayStart: function() {},
+            gameplayStop: function() {},
+            happyTime: function() {},
+            setDebug: function() {},
+            commercialBreak: function() { return Promise.resolve(); },
+            rewardedBreak: function() { return Promise.resolve(true); },
+            displayAd: function() { return Promise.resolve(); },
+            destroyAd: function() {},
+            initPokiBridge: function() { return Promise.resolve(); }
+        };
+        window.initPokiBridge = function() { return Promise.resolve(); };
+    </script>
 </head>
 <body>
     <div id="loading-screen">
