@@ -108,12 +108,7 @@ function createGameCard(game) {
     playBtn.className = 'play-btn';
     playBtn.textContent = 'Jogar';
     playBtn.addEventListener('click', () => {
-        const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-        if (isMobile) {
-            window.location.href = game.Link; 
-        } else {
-            window.open(game.Link, '_blank');
-        }
+        window.location.href = game.Link;
     });
 
     overlay.appendChild(playBtn);
