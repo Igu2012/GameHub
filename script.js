@@ -123,6 +123,13 @@ function createGameCard(game) {
     name.textContent = game.Name;
 
     content.appendChild(name);
+
+    if (game.MobileFriendly) {
+        const mobileTag = document.createElement('div');
+        mobileTag.className = 'mobile-friendly-tag';
+        mobileTag.textContent = 'Mobile Friendly';
+        content.appendChild(mobileTag);
+    }
     card.appendChild(imageDiv);
     card.appendChild(content);
 
