@@ -51,12 +51,12 @@
         },
         {
           "Name": "Jetpack Joyride",
-          "ImageURL": "JetpackJoyride/logo.png",
+          "ImageURL": "img/jetpackjoyride.png",
           "Link": "JetpackJoyride/"
         },
         {
           "Name": "Smash Karts",
-          "ImageURL": "SmashKarts/logo.png",
+          "ImageURL": "img/smashkarts.png",
           "Link": "SmashKarts/"
         }
       ]
@@ -165,7 +165,7 @@
         },
         {
           "Name": "Red Ball 4",
-          "ImageURL": "RedBall4/logo.png",
+          "ImageURL": "img/redball4.png",
           "Link": "RedBall4/"
         }
       ]
