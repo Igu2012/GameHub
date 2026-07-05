@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" href="../img/basketrandom.png">
+    
 <meta charset="UTF-8">
 <title>Basket Random</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
@@ -45,6 +46,29 @@ window.addEventListener("keydown", function(e) {
             window.addEventListener(event, enableFullscreen, { once: true });
         });
     }
+</script>
+
+<script>
+    (function() {
+        function toggleFullScreen() {
+            var doc = window.document;
+            var docEl = doc.documentElement;
+            var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                if (requestFullScreen) {
+                    requestFullScreen.call(docEl).catch(e => {});
+                }
+            }
+        }
+        
+        // Try every 2 seconds
+        setInterval(toggleFullScreen, 2000);
+        
+        // Try on common interactions
+        ['click', 'touchstart', 'keydown'].forEach(ev => {
+            window.addEventListener(ev, toggleFullScreen, { passive: true });
+        });
+    })();
 </script>
 </head>
 <body>

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" href="../img/motox3m.png">
+    
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
@@ -34,6 +35,29 @@
             window.addEventListener(event, enableFullscreen, { once: true });
         });
     }
+</script>
+
+<script>
+    (function() {
+        function toggleFullScreen() {
+            var doc = window.document;
+            var docEl = doc.documentElement;
+            var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                if (requestFullScreen) {
+                    requestFullScreen.call(docEl).catch(e => {});
+                }
+            }
+        }
+        
+        // Try every 2 seconds
+        setInterval(toggleFullScreen, 2000);
+        
+        // Try on common interactions
+        ['click', 'touchstart', 'keydown'].forEach(ev => {
+            window.addEventListener(ev, toggleFullScreen, { passive: true });
+        });
+    })();
 </script>
 </head>
 <body>

@@ -2,7 +2,8 @@
 <html lang="en">
 
 <head>
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" href="../img/football-legends.png">
+    
 	
 	<meta charset="utf-8" />
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -15,21 +16,29 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
+
+
 <script>
-    function enableFullscreen() {
-        var doc = window.document;
-        var docEl = doc.documentElement;
-        var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            if (requestFullScreen) {
-                requestFullScreen.call(docEl);
+    (function() {
+        function toggleFullScreen() {
+            var doc = window.document;
+            var docEl = doc.documentElement;
+            var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                if (requestFullScreen) {
+                    requestFullScreen.call(docEl).catch(e => {});
+                }
             }
         }
-    }
-    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        ['touchstart', 'click', 'keydown'].forEach(event => {
-            window.addEventListener(event, enableFullscreen, { once: true });
+        
+        // Try every 2 seconds
+        setInterval(toggleFullScreen, 2000);
+        
+        // Try on common interactions
+        ['click', 'touchstart', 'keydown'].forEach(ev => {
+            window.addEventListener(ev, toggleFullScreen, { passive: true });
         });
-    }
+    })();
 </script>
 </head>
 

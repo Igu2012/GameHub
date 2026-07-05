@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" href="../img/smashkarts.png">
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Smash Karts</title>
@@ -11,23 +12,30 @@
         body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #000; }
         iframe { width: 100%; height: 100%; border: none; }
     </style>
-    <script>
-        function enableFullscreen() {
+    
+
+<script>
+    (function() {
+        function toggleFullScreen() {
             var doc = window.document;
             var docEl = doc.documentElement;
             var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
             if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
                 if (requestFullScreen) {
-                    requestFullScreen.call(docEl);
+                    requestFullScreen.call(docEl).catch(e => {});
                 }
             }
         }
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            ['touchstart', 'click', 'keydown'].forEach(event => {
-                window.addEventListener(event, enableFullscreen, { once: true });
-            });
-        }
-    </script>
+        
+        // Try every 2 seconds
+        setInterval(toggleFullScreen, 2000);
+        
+        // Try on common interactions
+        ['click', 'touchstart', 'keydown'].forEach(ev => {
+            window.addEventListener(ev, toggleFullScreen, { passive: true });
+        });
+    })();
+</script>
 </head>
 <body>
     <iframe src="https://webgltest-17af1.firebaseapp.com/" allowfullscreen></iframe>

@@ -2,7 +2,8 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="icon" type="image/png" href="../img/redball4.png">
+    
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
@@ -19,23 +20,7 @@
         .progress-container { width: 300px; height: 10px; background: #333; border-radius: 5px; overflow: hidden; }
         .progress-bar { width: 0%; height: 100%; background: #3CF7DC; transition: width 0.3s ease; }
     </style>
-    <script>
-        function enableFullscreen() {
-            var doc = window.document;
-            var docEl = doc.documentElement;
-            var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-                if (requestFullScreen) {
-                    requestFullScreen.call(docEl);
-                }
-            }
-        }
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            ['touchstart', 'click', 'keydown'].forEach(event => {
-                window.addEventListener(event, enableFullscreen, { once: true });
-            });
-        }
-    </script>
+    
 
     <script>
         window.PokiSDK = {
@@ -55,6 +40,29 @@
         };
         window.initPokiBridge = function() { return Promise.resolve(); };
     </script>
+
+<script>
+    (function() {
+        function toggleFullScreen() {
+            var doc = window.document;
+            var docEl = doc.documentElement;
+            var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
+                if (requestFullScreen) {
+                    requestFullScreen.call(docEl).catch(e => {});
+                }
+            }
+        }
+        
+        // Try every 2 seconds
+        setInterval(toggleFullScreen, 2000);
+        
+        // Try on common interactions
+        ['click', 'touchstart', 'keydown'].forEach(ev => {
+            window.addEventListener(ev, toggleFullScreen, { passive: true });
+        });
+    })();
+</script>
 </head>
 <body>
     <div id="loading-screen">
