@@ -7,57 +7,62 @@
         {
           "Name": "Subway Surfers",
           "ImageURL": "img/subwaysurfers.png",
-          "Link": "SubwaySurfers/"
+          "Link": "SubwaySurfers/",
+          "MobileFriendly": false
         },
         {
           "Name": "Doom",
           "ImageURL": "img/doom.png",
-          "Link": "Doom/"
+          "Link": "Doom/",
+          "MobileFriendly": false
         },
         {
           "Name": "Moto X3M",
           "ImageURL": "img/motox3m.png",
-          "Link": "MotoX3M/"
+          "Link": "MotoX3M/",
+          "MobileFriendly": true
         },
         {
           "Name": "Level Devil",
           "ImageURL": "img/leveldevil.png",
-          "Link": "LevelDevil/"
+          "Link": "LevelDevil/",
+          "MobileFriendly": true
         },
         {
           "Name": "Friday Night Funkin",
           "ImageURL": "img/funkin.png",
-          "Link": "Funkin/"
+          "Link": "Funkin/",
+          "MobileFriendly": true
         },
         {
           "Name": "Geometry Dash",
           "ImageURL": "img/geometrydash.png",
-          "Link": "GeometryDash/"
+          "Link": "GeometryDash/",
+          "MobileFriendly": true
         },
         {
           "Name": "Happy Wheels",
           "ImageURL": "img/happywheels.png",
-          "Link": "HappyWheels/"
+          "Link": "HappyWheels/",
+          "MobileFriendly": false
         },
         {
           "Name": "Jelly Drift",
           "ImageURL": "img/jellydrift.png",
-          "Link": "JellyDrift/"
+          "Link": "JellyDrift/",
+          "MobileFriendly": false
         },
         {
           "Name": "Getting Over It",
           "ImageURL": "img/gettingoverit.png",
-          "Link": "GettingOverIt/"
-        },
-        {
-          "Name": "Jetpack Joyride",
-          "ImageURL": "img/jetpackjoyride.png",
-          "Link": "JetpackJoyride/"
+          "Link": "GettingOverIt/",
+          "MobileFriendly": false
         },
         {
           "Name": "Smash Karts",
           "ImageURL": "img/smashkarts.png",
-          "Link": "SmashKarts/"
+          "Link": "SmashKarts/",
+          "MobileFriendly": true
         }
       ]
     },
@@ -68,42 +73,50 @@
         {
           "Name": "Fnaf 1",
           "ImageURL": "img/fnaf1.png",
-          "Link": "Fnaf_1/"
+          "Link": "Fnaf_1/",
+          "MobileFriendly": true
         },
         {
           "Name": "Fnaf 2",
           "ImageURL": "img/fnaf2.png",
-          "Link": "Fnaf_2/"
+          "Link": "Fnaf_2/",
+          "MobileFriendly": true
         },
         {
           "Name": "Fnaf 3",
           "ImageURL": "img/fnaf3.png",
-          "Link": "Fnaf_3/"
+          "Link": "Fnaf_3/",
+          "MobileFriendly": true
         },
         {
           "Name": "Fnaf 4",
           "ImageURL": "img/fnaf4.png",
-          "Link": "Fnaf_4/"
+          "Link": "Fnaf_4/",
+          "MobileFriendly": true
         },
         {
           "Name": "Fnaf Sister Location",
           "ImageURL": "img/fnafSL.png",
-          "Link": "Fnaf_Sister_Location/"
+          "Link": "Fnaf_Sister_Location/",
+          "MobileFriendly": true
         },
         {
           "Name": "Fnaf Ultimate Custom Night",
           "ImageURL": "img/fnafUCN.png",
-          "Link": "Fnaf_Ultimate_Custom_Night/"
+          "Link": "Fnaf_Ultimate_Custom_Night/",
+          "MobileFriendly": true
         },
         {
           "Name": "Granny 1",
           "ImageURL": "img/granny1.png",
-          "Link": "Granny1/"
+          "Link": "Granny1/",
+          "MobileFriendly": false
         },
         {
           "Name": "Baldi's Basics Remastered",
           "ImageURL": "img/baldiremastered.png",
-          "Link": "BaldiRemastered/"
+          "Link": "BaldiRemastered/",
+          "MobileFriendly": false
         }
       ]
     },
@@ -114,22 +127,26 @@
         {
           "Name": "Soccer Random",
           "ImageURL": "img/soccerrandom.png",
-          "Link": "SoccerRandom/"
+          "Link": "SoccerRandom/",
+          "MobileFriendly": true
         },
         {
           "Name": "Basket Random",
           "ImageURL": "img/basketrandom.png",
-          "Link": "BasketRandom/"
+          "Link": "BasketRandom/",
+          "MobileFriendly": true
         },
         {
           "Name": "Rocket Goal",
           "ImageURL": "img/rocketgoal.png",
-          "Link": "RocketGoal/"
+          "Link": "RocketGoal/",
+          "MobileFriendly": true
         },
         {
           "Name": "Football Legends",
           "ImageURL": "img/football-legends.png",
-          "Link": "FootballLegends/"
+          "Link": "FootballLegends/",
+          "MobileFriendly": true
         }
       ]
     },
@@ -140,17 +157,20 @@
         {
           "Name": "Wrassling",
           "ImageURL": "img/wrassling.png",
-          "Link": "Wrassling/"
+          "Link": "Wrassling/",
+          "MobileFriendly": true
         },
         {
           "Name": "Bad Ice Cream",
           "ImageURL": "img/badicecream.png",
-          "Link": "BadIceCream/"
+          "Link": "BadIceCream/",
+          "MobileFriendly": false
         },
         {
           "Name": "Tank Trouble",
           "ImageURL": "img/tank-trouble.png",
-          "Link": "TankTrouble/"
+          "Link": "TankTrouble/",
+          "MobileFriendly": false
         }
       ]
     },
@@ -161,12 +181,8 @@
         {
           "Name": "Minecraft",
           "ImageURL": "img/minecraft.png",
-          "Link": "Minecraft/"
-        },
-        {
-          "Name": "Red Ball 4",
-          "ImageURL": "img/redball4.png",
-          "Link": "RedBall4/"
+          "Link": "Minecraft/",
+          "MobileFriendly": true
         }
       ]
     },
@@ -177,27 +193,32 @@
         {
           "Name": "Duck Life 1",
           "ImageURL": "img/ducklife1.png",
-          "Link": "DuckLife1/"
+          "Link": "DuckLife1/",
+          "MobileFriendly": true
         },
         {
           "Name": "Duck Life 2",
           "ImageURL": "img/ducklife2.png",
-          "Link": "DuckLife2/"
+          "Link": "DuckLife2/",
+          "MobileFriendly": true
         },
         {
           "Name": "Henry Stickmin: Breaking the Bank",
           "ImageURL": "img/henrystickminbreakingthebank.png",
-          "Link": "HenryStickminBreakingTheBank/"
+          "Link": "HenryStickminBreakingTheBank/",
+          "MobileFriendly": true
         },
         {
           "Name": "The Right Mix",
           "ImageURL": "img/therightmix.png",
-          "Link": "TheRightMix/"
+          "Link": "TheRightMix/",
+          "MobileFriendly": true
         },
         {
           "Name": "Angry Birds 1",
           "ImageURL": "img/angrybirds1.png",
-          "Link": "AngryBirds1/"
+          "Link": "AngryBirds1/",
+          "MobileFriendly": true
         }
       ]
     },
@@ -208,12 +229,14 @@
         {
           "Name": "Fireboy & Watergirl",
           "ImageURL": "img/fireboyandwatergirl.png",
-          "Link": "FireboyAndWatergirl/"
+          "Link": "FireboyAndWatergirl/",
+          "MobileFriendly": false
         },
         {
           "Name": "Bloxorz",
           "ImageURL": "img/bloxorz.png",
-          "Link": "Bloxorz/"
+          "Link": "Bloxorz/",
+          "MobileFriendly": false
         }
       ]
     }
