@@ -231,6 +231,24 @@ header {
     text-overflow: ellipsis;
 }
 
+.mobile-friendly-tag {
+    font-size: 10px;
+    color: #ffd700;
+    margin-top: 4px;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: subtle-pulse 3s infinite ease-in-out;
+}
+
+@keyframes subtle-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
 /* Footer */
 footer {
     border-top: 1px solid var(--border);
