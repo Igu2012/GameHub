@@ -93,6 +93,17 @@ function renderCategory(container, category) {
 function createGameCard(game) {
     const card = document.createElement('div');
     card.className = 'game-card';
+    card.tabIndex = 0; // Torna o card focável por teclado/controle
+
+    // Clique no card inteiro abre o jogo (Resolve bug de precisar clicar no botão)
+    card.addEventListener('click', () => {
+        window.location.href = game.Link;
+    });
+    
+    // Suporte para tecla Enter quando focado
+    card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') window.location.href = game.Link;
+    });
 
     const imageDiv = document.createElement('div');
     imageDiv.className = 'game-card-image';
@@ -100,6 +111,7 @@ function createGameCard(game) {
     const img = document.createElement('img');
     img.src = game.ImageURL;
     img.alt = game.Name;
+    img.loading = 'lazy';
 
     const overlay = document.createElement('div');
     overlay.className = 'game-card-overlay';
@@ -107,9 +119,6 @@ function createGameCard(game) {
     const playBtn = document.createElement('button');
     playBtn.className = 'play-btn';
     playBtn.textContent = 'Jogar';
-    playBtn.addEventListener('click', () => {
-        window.location.href = game.Link;
-    });
 
     overlay.appendChild(playBtn);
     imageDiv.appendChild(img);
@@ -125,10 +134,11 @@ function createGameCard(game) {
     content.appendChild(name);
 
     if (game.MobileFriendly) {
-        const mobileTag = document.createElement('div');
-        mobileTag.className = 'mobile-friendly-tag';
-        mobileTag.textContent = 'Mobile Friendly';
-        content.appendChild(mobileTag);
+        const mobileIcon = document.createElement('img');
+        mobileIcon.src = 'img/mobile-icon.webp';
+        mobileIcon.className = 'mobile-icon';
+        mobileIcon.alt = 'Mobile Friendly';
+        content.appendChild(mobileIcon);
     }
     card.appendChild(imageDiv);
     card.appendChild(content);

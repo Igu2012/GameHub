@@ -285,3 +285,32 @@ footer p {
         font-size: 1rem;
     }
 }
+
+.game-card:focus {
+    outline: 4px solid var(--text-main);
+    outline-offset: 4px;
+    transform: scale(1.03);
+    border-color: var(--text-dim);
+    background: var(--bg-hover);
+}
+.game-card:focus .game-card-overlay {
+    opacity: 1;
+}
+.game-card:focus .game-card-image img {
+    filter: grayscale(0%);
+}
+.game-card-content {
+    position: relative;
+}
+.game-card-name {
+    padding-right: 35px;
+}
+.mobile-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    opacity: 0.9;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
