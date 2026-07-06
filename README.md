@@ -2,7 +2,7 @@
 
 Bem-vindo ao GameHub! O catálogo de jogos mais leve do Github.
 
-## 🚀 Links de Acesso
+## 🚀 Link de Acesso
 
 Você pode acessar o GameHub através dos seguinte link:
 
