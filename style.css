@@ -286,13 +286,15 @@ footer p {
     }
 }
 
+
 .game-card:focus {
-    outline: 4px solid var(--text-main);
-    outline-offset: 4px;
-    transform: scale(1.03);
-    border-color: var(--text-dim);
-    background: var(--bg-hover);
+    outline: 5px solid #ffffff !important;
+    outline-offset: 2px;
+    transform: scale(1.05);
+    z-index: 10;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
 }
+
 .game-card:focus .game-card-overlay {
     opacity: 1;
 }

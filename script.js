@@ -93,16 +93,20 @@ function renderCategory(container, category) {
 function createGameCard(game) {
     const card = document.createElement('div');
     card.className = 'game-card';
-    card.tabIndex = 0; // Torna o card focável por teclado/controle
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `Jogar ${game.Name}`);
 
-    // Clique no card inteiro abre o jogo (Resolve bug de precisar clicar no botão)
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+        e.preventDefault();
         window.location.href = game.Link;
     });
     
-    // Suporte para tecla Enter quando focado
     card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') window.location.href = game.Link;
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            window.location.href = game.Link;
+        }
     });
 
     const imageDiv = document.createElement('div');
@@ -116,7 +120,7 @@ function createGameCard(game) {
     const overlay = document.createElement('div');
     overlay.className = 'game-card-overlay';
 
-    const playBtn = document.createElement('button');
+    const playBtn = document.createElement('div');
     playBtn.className = 'play-btn';
     playBtn.textContent = 'Jogar';
 
