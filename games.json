@@ -2,7 +2,7 @@
   "categories": [
     {
       "id": "action",
-      "name": "Ação",
+      "name": "A\u00e7\u00e3o",
       "games": [
         {
           "Name": "Subway Surfers",
@@ -62,6 +62,12 @@
           "Name": "Smash Karts",
           "ImageURL": "img/smashkarts.png",
           "Link": "SmashKarts/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Repo",
+          "ImageURL": "img/repo.png",
+          "Link": "Repo/",
           "MobileFriendly": true
         }
       ]
