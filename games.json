@@ -68,7 +68,7 @@
           "Name": "Repo",
           "ImageURL": "img/repo.png",
           "Link": "Repo/",
-          "MobileFriendly": true
+          "MobileFriendly": false
         }
       ]
     },
