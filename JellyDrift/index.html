@@ -48,9 +48,17 @@
               resolve(URL.createObjectURL(mergedBlob));
               return;
             }
-            fetch(fileParts[index])
+            const partUrl = fileParts[index];
+            fetch(partUrl)
               .then(r => {
-                if (!r.ok) throw new Error("File not found: " + fileParts[index]);
+                if (!r.ok) {
+                  const contentType = r.headers.get("Content-Type");
+                  if (contentType && contentType.includes("text/html")) {
+                    throw new Error(`File not found or server returned HTML for: ${partUrl} (Status: ${r.status}, Content-Type: ${contentType})`);
+                  } else {
+                    throw new Error(`Failed to load file: ${partUrl} (Status: ${r.status}, Content-Type: ${contentType})`);
+                  }
+                }
                 return r.arrayBuffer();
               })
               .then(data => {
@@ -113,7 +121,7 @@
         }
       }
       setInterval(toggleFullScreen, 2000);
-      ['click', 'touchstart', 'keydown'].forEach(ev => window.addEventListener(ev, toggleFullScreen, { passive: true }));
+      ["click", "touchstart", "keydown"].forEach(ev => window.addEventListener(ev, toggleFullScreen, { passive: true }));
     </script>
   </body>
 </html>
