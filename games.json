@@ -195,6 +195,12 @@
           "ImageURL": "img/crazycattle3d.png",
           "Link": "CrazyCattle3D/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "Celeste",
+          "ImageURL": "img/celeste.png",
+          "Link": "Celeste/",
+          "MobileFriendly": true
         }
       ]
     },
