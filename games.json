@@ -47,12 +47,6 @@
           "MobileFriendly": false
         },
         {
-          "Name": "Jelly Drift",
-          "ImageURL": "img/jellydrift.png",
-          "Link": "JellyDrift/",
-          "MobileFriendly": false
-        },
-        {
           "Name": "Getting Over It",
           "ImageURL": "img/gettingoverit.png",
           "Link": "GettingOverIt/",
