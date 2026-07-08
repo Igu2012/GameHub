@@ -1,22 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-us">
-
 <head>
     <link rel="icon" type="image/png" href="../img/repo.png">
-    <base href="https://cdn.jsdelivr.net/gh/genizy/web-port@main/repo/">
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
     <title>R.E.P.O</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
     <style>
-        html,
-        body {
+        html, body {
             margin: 0;
             padding: 0;
             overflow: hidden;
             height: 100%;
             width: 100%;
+            background: #000;
         }
 
         #unity-container {
@@ -26,18 +23,26 @@
             top: 0;
             left: 0;
         }
-    
-    
-      #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; }
-      .loading-content { text-align: center; }
-      .loading-text { color: white; font-size: 32px; font-family: sans-serif; margin-bottom: 20px; letter-spacing: 2px; }
-      .progress-container { width: 300px; height: 10px; background: #333; border-radius: 5px; overflow: hidden; }
-      .progress-bar { width: 0%; height: 100%; background: white; transition: width 0.3s ease; }
-    
 
+        #loading-screen { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background: #000; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 9999; 
+        }
+        .loading-content { text-align: center; }
+        .loading-text { color: white; font-size: 32px; font-family: sans-serif; margin-bottom: 20px; letter-spacing: 2px; }
+        .progress-container { width: 300px; height: 10px; background: #333; border-radius: 5px; overflow: hidden; }
+        .progress-bar { width: 0%; height: 100%; background: white; transition: width 0.3s ease; }
     </style>
 </head>
-
 <body>
 
     <div id="loading-screen">
@@ -47,41 +52,23 @@
       </div>
     </div>
 
-    <div id="loading-text" style="color: black; font-family: cursive; font-size: 48px; text-align: center; margin-top: 20px;">LOADING...</div>
     <div id="unity-container" class="unity-desktop" hidden>
         <canvas id="unity-canvas" tabindex="-1"></canvas>
-        <div id="unity-loading-bar">
-            <div id="unity-logo"></div>
-            <div id="unity-progress-bar-empty">
-                <div id="unity-progress-bar-full"></div>
-            </div>
-        </div>
-        <div id="unity-warning"> </div>
     </div>
+
     <script>
         var container = document.querySelector("#unity-container");
         var canvas = document.querySelector("#unity-canvas");
-        var loadingBar = document.querySelector("#unity-loading-bar");
-        var progressBarFull = document.querySelector("#unity-progress-bar-full");
-        var fullscreenButton = document.querySelector("#unity-fullscreen-button");
-        var warningBanner = document.querySelector("#unity-warning");
+        
+        let max = 0;
+        let done = 0;
 
-        function unityShowBanner(msg, type) {
-            function updateBannerVisibility() {
-                warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
-            }
-            var div = document.createElement('div');
-            div.innerHTML = msg;
-            warningBanner.appendChild(div);
-            if (type == 'error') div.style = 'background: red; padding: 10px;';
-            else {
-                if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-                setTimeout(function () {
-                    warningBanner.removeChild(div);
-                    updateBannerVisibility();
-                }, 5000);
-            }
-            updateBannerVisibility();
+        function updateProgress() {
+            const progress = (done / max) * 100;
+            const bar = document.querySelector(".progress-bar");
+            const text = document.querySelector(".loading-text");
+            if (bar) bar.style.width = progress + "%";
+            if (text) text.textContent = `LOADING... ${Math.round(progress)}%`;
         }
 
         function mergeFiles(fileParts) {
@@ -95,8 +82,21 @@
                         resolve(mergedFileUrl);
                         return;
                     }
-                    fetch(fileParts[index]).then((response) => response.arrayBuffer()).then((data) => {
+                    const partUrl = fileParts[index];
+                    fetch(partUrl).then((response) => {
+                        if (!response.ok) {
+                            const contentType = response.headers.get("Content-Type");
+                            if (contentType && contentType.includes("text/html")) {
+                                throw new Error(`File not found or server returned HTML for: ${partUrl} (Status: ${response.status})`);
+                            } else {
+                                throw new Error(`Failed to load file: ${partUrl} (Status: ${response.status})`);
+                            }
+                        }
+                        return response.arrayBuffer();
+                    }).then((data) => {
                         buffers.push(data);
+                        done++;
+                        updateProgress();
                         fetchPart(index + 1);
                     }).catch(reject);
                 }
@@ -109,8 +109,10 @@
             for (let i = start; i <= end; i++) {
                 parts.push(file + ".part" + i);
             }
+            max += end;
             return parts;
         }
+
         Promise.all([
             mergeFiles(getParts("Build/NewestBuild.wasm.gz", 1, 3)),
             mergeFiles(getParts("Build/NewestBuild.data.gz", 1, 16))
@@ -127,42 +129,34 @@
                 productName: "R.E.P.O",
                 productVersion: "0.1"
             };
-            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-                var meta = document.createElement('meta');
-                meta.name = 'viewport';
-                meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-                document.getElementsByTagName('head')[0].appendChild(meta);
-                container.className = "unity-mobile";
-                canvas.className = "unity-mobile";
-            } else {
-                function resizeCanvas() {
-                    canvas.width = window.innerWidth;
-                    canvas.height = window.innerHeight;
-                    canvas.style.width = window.innerWidth + "px";
-                    canvas.style.height = window.innerHeight + "px";
-                }
-                resizeCanvas();
-                window.addEventListener('resize', resizeCanvas);
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                canvas.style.width = window.innerWidth + "px";
+                canvas.style.height = window.innerHeight + "px";
             }
-            loadingBar.style.display = "block";
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
             var script = document.createElement("script");
             script.src = loaderUrl;
             script.onload = () => {
                 createUnityInstance(canvas, config, (progress) => {
-                    progressBarFull.style.width = 100 * progress + "%";
+                    // Unity internal progress
                 }).then((unityInstance) => {
-                    loadingBar.style.display = "none";
-                    document.querySelector("#loading-text").remove();
+                    document.getElementById("loading-screen").style.display = "none";
                 }).catch((message) => {
                     alert(message);
                 });
             };
             document.body.appendChild(script);
+        }).catch(err => {
+            console.error(err);
+            alert("Error loading game: " + err.message);
         });
-    </script>
 
-<script>
-    (function() {
+        // Fullscreen Logic
         function toggleFullScreen() {
             var doc = window.document;
             var docEl = doc.documentElement;
@@ -173,8 +167,6 @@
         }
         setInterval(toggleFullScreen, 2000);
         ['click', 'touchstart', 'keydown'].forEach(ev => window.addEventListener(ev, toggleFullScreen, { passive: true }));
-    })();
-</script>
+    </script>
 </body>
-
 </html>
