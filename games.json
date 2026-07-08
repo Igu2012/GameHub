@@ -189,6 +189,12 @@
           "ImageURL": "img/minecraft.png",
           "Link": "Minecraft/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "Crazy Cattle 3D",
+          "ImageURL": "img/crazycattle3d.png",
+          "Link": "CrazyCattle3D/",
+          "MobileFriendly": true
         }
       ]
     },
