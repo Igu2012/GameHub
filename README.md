@@ -1,6 +1,6 @@
 # GameHub
 
-Bem-vindo ao GameHub! O catálogo de jogos mais leve do Github.
+Bem-vindo ao GameHub! O Hub de jogos que não requer download.
 
 ## 🚀 Link de Acesso
 
