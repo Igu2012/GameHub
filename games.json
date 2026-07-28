@@ -59,7 +59,7 @@
           "MobileFriendly": false
         },
         {
-          "Name": "Plants vs. Zombies",
+          "Name": "Plants vs Zombies",
           "ImageURL": "img/pvz.png",
           "Link": "PvZ/",
           "MobileFriendly": true
