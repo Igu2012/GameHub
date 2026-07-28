@@ -42,6 +42,24 @@
         .progress-container { width: 300px; height: 10px; background: #333; border-radius: 5px; overflow: hidden; }
         .progress-bar { width: 0%; height: 100%; background: white; transition: width 0.3s ease; }
     </style>
+
+<script>
+    (function() {
+        function enableFullscreen() {
+            const docEl = document.documentElement;
+            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (requestFullScreen) {
+                requestFullScreen.call(docEl).catch(e => {});
+            }
+        }
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            ['touchstart', 'click', 'keydown'].forEach(event => {
+                window.addEventListener(event, enableFullscreen, { once: true });
+            });
+        }
+    })();
+</script>
 </head>
 <body>
 
