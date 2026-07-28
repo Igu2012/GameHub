@@ -53,12 +53,6 @@
           "MobileFriendly": false
         },
         {
-          "Name": "Smash Karts",
-          "ImageURL": "img/smashkarts.png",
-          "Link": "SmashKarts/",
-          "MobileFriendly": true
-        },
-        {
           "Name": "Repo",
           "ImageURL": "img/repo.png",
           "Link": "Repo/",
