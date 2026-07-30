@@ -5,7 +5,10 @@
     <title>Plants vs Zombies</title>
     <style>
         #loading-ui { 
-            position: absolute; 
+            position: fixed; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center; 
             width: 300px; 
             font-family: sans-serif;
@@ -194,91 +197,6 @@
 
       Module.callMain([]);
       loadingUI.remove();
-    })();
-  </script>
-</body>
-</html>
-      for (let chunk of chunks) {
-        fullBuffer.set(chunk, offset);
-        offset += chunk.length;
-      }
-      return fullBuffer.buffer;
-    }
-
-    async function mergeFiles(fileParts, cacheKey) {
-      const cache = await caches.open("pvz-cache");
-      const cachedResponse = await cache.match(cacheKey);
-      if (cachedResponse) {
-        const blob = await cachedResponse.blob();
-        return URL.createObjectURL(blob);
-      }
-      const buffers = await Promise.all(
-        fileParts.map(part => fetchWithProgress(part))
-      );
-      const mergedBlob = new Blob(buffers);
-      const response = new Response(mergedBlob);
-      await cache.put(cacheKey, response);
-      return URL.createObjectURL(mergedBlob);
-    }
-
-    function getParts(file, start, end) {
-      let parts = [];
-      for (let i = start; i <= end; i++) {
-        parts.push(file + ".part" + i);
-      }
-      return parts;
-    }
-
-    (async () => {
-      const [pakurl] = await Promise.all([
-        mergeFiles(getParts("main.pak", 1, 3), "main.pak"),
-      ]);
-      let ns = document.createElement("script");
-      ns.src="pvz.js";
-      document.body.appendChild(ns);
-      await moduleReadyPromise;
-
-      const files = [
-        [pakurl, "main.pak"],
-        ["properties/Layout.xml", "properties/Layout.xml"],
-        ["properties/partner.xml.sig", "properties/partner.xml.sig"],
-        ["properties/default.xml", "properties/default.xml"],
-        ["properties/partner.xml", "properties/partner.xml"],
-        ["properties/partner_logo.jpg", "properties/partner_logo.jpg"],
-      ];
-
-      for (const [src, dest] of files) {
-        const data = new Uint8Array(await (await fetch(src)).arrayBuffer());
-        const parts = dest.split("/");
-        let dir = "/";
-        for (let i = 0; i < parts.length - 1; i++) {
-          dir += (dir === "/" ? "" : "/") + parts[i];
-          try { Module.FS.mkdir(dir); } catch {}
-        }
-        Module.FS.writeFile("/" + dest, data);
-      }
-
-      try { Module.FS.mkdir("/saves"); } catch {}
-      try { Module.FS.mount(Module.FS.filesystems.IDBFS, {}, "/saves"); } catch {}
-      await new Promise(r => Module.FS.syncfs(true, r));
-
-      const c = document.getElementById("canvas");
-      const resize = () => {
-        const s = Math.min(innerWidth / 800, innerHeight / 600);
-        c.style.width  = s * 800 + "px";
-        c.style.height = s * 600 + "px";
-      };
-      resize();
-      addEventListener("resize", resize);
-      addEventListener("fullscreenchange", resize);
-
-      const sync = () => Module.FS.syncfs(false, () => {});
-      setInterval(sync, 5000);
-      addEventListener("visibilitychange", () => document.hidden && sync());
-      addEventListener("pagehide", sync);
-
-      Module.callMain([]);
-      loadingText.remove();
     })();
   </script>
 </body>
