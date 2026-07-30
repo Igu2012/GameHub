@@ -1,19 +1,20 @@
 let gamesData = [];
 let currentCategory = 'all';
 
-// Ano no rodapé
-const yearSpan = document.getElementById('footerYear');
-if (yearSpan) yearSpan.textContent = `GAMEHUB © ${new Date().getFullYear()}`;
+// Inicialização
+document.addEventListener('DOMContentLoaded', () => {
+    const yearSpan = document.getElementById('footerYear');
+    if (yearSpan) yearSpan.textContent = `GAMEHUB © ${new Date().getFullYear()}`;
 
-// Carregar jogos
-fetch('games.json')
-    .then(res => res.json())
-    .then(data => {
-        gamesData = data.categories;
-        initCategories();
-        renderGames('all');
-    })
-    .catch(err => console.error('Erro ao carregar jogos:', err));
+    fetch('games.json')
+        .then(res => res.json())
+        .then(data => {
+            gamesData = data.categories;
+            initCategories();
+            renderGames('all');
+        })
+        .catch(err => console.error('Erro:', err));
+});
 
 function initCategories() {
     const nav = document.getElementById('categoriesNav');
@@ -21,14 +22,14 @@ function initCategories() {
     
     nav.innerHTML = '';
     
-    // Botão "Todos"
+    // Todos
     const allBtn = document.createElement('button');
     allBtn.className = 'category-btn active';
     allBtn.textContent = 'Todos';
     allBtn.onclick = () => filterCategory('all', allBtn);
     nav.appendChild(allBtn);
     
-    // Botões das categorias
+    // Outras
     gamesData.forEach(cat => {
         const btn = document.createElement('button');
         btn.className = 'category-btn';
@@ -63,12 +64,13 @@ function renderSection(container, cat) {
     const section = document.createElement('div');
     section.className = 'category-section';
     
-    section.innerHTML = `
-        <h2 class="category-title">${cat.name}</h2>
-        <div class="games-grid"></div>
-    `;
+    const title = document.createElement('h2');
+    title.className = 'category-title';
+    title.textContent = cat.name;
     
-    const grid = section.querySelector('.games-grid');
+    const grid = document.createElement('div');
+    grid.className = 'games-grid';
+    
     cat.games.forEach(game => {
         const card = document.createElement('a');
         card.href = game.Link;
@@ -78,17 +80,19 @@ function renderSection(container, cat) {
                 <img src="${game.ImageURL}" alt="${game.Name}" loading="lazy">
             </div>
             <div class="game-card-content">
-                <div class="game-card-name">${game.Name}</div>
-                ${game.MobileFriendly ? '<img src="img/mobile-icon.webp" class="mobile-icon" alt="Mobile">' : ''}
+                <span class="game-card-name">${game.Name}</span>
+                ${game.MobileFriendly ? '<img src="img/mobile-icon.webp" class="mobile-icon" alt="M">' : ''}
             </div>
         `;
         grid.appendChild(card);
     });
     
+    section.appendChild(title);
+    section.appendChild(grid);
     container.appendChild(section);
 }
 
-// Busca simples
+// Busca direta
 document.getElementById('searchInput').oninput = (e) => {
     const term = e.target.value.toLowerCase();
     const container = document.getElementById('gamesContainer');
@@ -106,8 +110,7 @@ document.getElementById('searchInput').oninput = (e) => {
     });
 };
 
-// Logo volta para o início
+// Logo link
 document.getElementById('logoLink').onclick = () => {
-    const allBtn = document.querySelector('.category-btn');
-    if (allBtn) allBtn.click();
+    location.reload();
 };

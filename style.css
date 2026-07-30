@@ -1,163 +1,141 @@
-/* GameHub - Interface Simples e Humana */
-:root {
-    --bg: #0b0b0b;
-    --surface: #161616;
-    --surface-hover: #222222;
-    --border: #282828;
-    --text: #eeeeee;
-    --text-dim: #999999;
-    --accent: #ffffff;
-}
-
+/* GameHub - Redesign Minimalista e Humano */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
 }
 
 body {
-    font-family: system-ui, -apple-system, sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
-    line-height: 1.5;
-    overflow-x: hidden;
+    background-color: #000000; /* Preto puro */
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.2;
 }
 
-/* Header */
+/* Header fixo e simples */
 header {
-    background-color: var(--bg);
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 0;
+    background-color: #000000;
+    border-bottom: 2px solid #222222;
+    padding: 15px 20px;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .header-container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 1.5rem;
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    justify-content: space-between;
 }
 
 .logo {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--text);
-    text-decoration: none;
-    white-space: nowrap;
+    font-size: 24px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
 }
 
 .search-bar {
-    flex: 1;
+    flex-grow: 1;
+    max-width: 500px;
+    margin: 0 30px;
 }
 
 .search-bar input {
     width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    padding: 0.6rem 1rem;
-    border-radius: 8px;
-    color: var(--text);
-    font-size: 0.95rem;
+    background-color: #111111;
+    border: 2px solid #333333;
+    color: #ffffff;
+    padding: 10px 15px;
+    font-size: 16px;
     outline: none;
 }
 
 .search-bar input:focus {
-    border-color: #444;
+    border-color: #ffffff;
 }
 
-/* Main Container */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1.5rem;
-}
-
-/* Categories Nav */
+/* Categorias como tags simples */
 .categories-nav {
     display: flex;
-    gap: 0.6rem;
-    margin-bottom: 2rem;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-    scrollbar-width: none;
-}
-
-.categories-nav::-webkit-scrollbar {
-    display: none;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 20px 0;
+    padding: 0 20px;
 }
 
 .category-btn {
-    padding: 0.5rem 1.2rem;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text-dim);
-    border-radius: 6px;
+    background: none;
+    border: 1px solid #444444;
+    color: #888888;
+    padding: 8px 16px;
     cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    white-space: nowrap;
-    transition: all 0.1s ease;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .category-btn:hover {
-    background: var(--surface-hover);
-    color: var(--text);
+    color: #ffffff;
+    border-color: #ffffff;
 }
 
 .category-btn.active {
-    background: var(--text);
-    color: var(--bg);
-    border-color: var(--text);
+    background-color: #ffffff;
+    color: #000000;
+    border-color: #ffffff;
 }
 
-/* Sections */
+/* Container de Jogos */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-bottom: 50px;
+}
+
 .category-section {
-    margin-bottom: 3rem;
+    margin-bottom: 40px;
+    padding: 0 20px;
 }
 
 .category-title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 1.2rem;
-    color: var(--text);
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-left: 4px solid #ffffff;
+    padding-left: 15px;
 }
 
-/* Grid */
+/* Grid de Jogos denso */
 .games-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-    gap: 1.2rem;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
 }
 
-/* Game Card */
+/* Card sem efeitos de IA */
 .game-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    overflow: hidden;
+    background-color: #000000;
+    border: 1px solid #222222;
+    cursor: pointer;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.1s ease, border-color 0.1s ease;
+    display: block;
 }
 
 .game-card:hover {
-    transform: translateY(-2px);
-    border-color: #444;
-    background: var(--surface-hover);
+    border-color: #ffffff;
 }
 
 .game-card-image {
     width: 100%;
     aspect-ratio: 16/10;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-color: #111111;
+    overflow: hidden;
 }
 
 .game-card-image img {
@@ -167,60 +145,56 @@ header {
 }
 
 .game-card-content {
-    padding: 0.8rem;
-    position: relative;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .game-card-name {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text);
+    font-size: 14px;
+    font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-right: 20px;
 }
 
 .mobile-icon {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
     width: 16px;
     height: 16px;
+    filter: invert(1);
     opacity: 0.5;
 }
 
 /* Footer */
 footer {
-    border-top: 1px solid var(--border);
-    padding: 3rem 1.5rem;
+    border-top: 2px solid #222222;
+    padding: 40px 20px;
     text-align: center;
-    color: var(--text-dim);
-    font-size: 0.85rem;
+    color: #444444;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
-/* Mobile Adjustments */
+/* Responsivo */
 @media (max-width: 768px) {
     .header-container {
-        padding: 0 1rem;
-        gap: 1rem;
+        flex-direction: column;
+        gap: 15px;
     }
     
-    .logo {
-        font-size: 1.2rem;
+    .search-bar {
+        margin: 0;
+        width: 100%;
     }
-
+    
     .games-grid {
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 0.8rem;
-    }
-
-    .container {
-        padding: 1rem;
+        gap: 10px;
     }
     
-    .game-card-content {
-        padding: 0.6rem;
+    .category-section {
+        padding: 0 10px;
     }
 }
