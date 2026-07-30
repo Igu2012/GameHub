@@ -2,65 +2,65 @@
   "categories": [
     {
       "id": "action",
-      "name": "A\u00e7\u00e3o",
+      "name": "Ação",
       "games": [
         {
           "Name": "Subway Surfers",
-          "ImageURL": "img/subwaysurfers.png",
+          "ImageURL": "SubwaySurfers/card.png",
           "Link": "SubwaySurfers/",
           "MobileFriendly": false
         },
         {
           "Name": "Doom",
-          "ImageURL": "img/doom.png",
+          "ImageURL": "Doom/card.png",
           "Link": "Doom/",
           "MobileFriendly": false
         },
         {
           "Name": "Moto X3M",
-          "ImageURL": "img/motox3m.png",
+          "ImageURL": "MotoX3M/card.png",
           "Link": "MotoX3M/",
           "MobileFriendly": true
         },
         {
           "Name": "Level Devil",
-          "ImageURL": "img/leveldevil.png",
+          "ImageURL": "LevelDevil/card.png",
           "Link": "LevelDevil/",
           "MobileFriendly": true
         },
         {
           "Name": "Friday Night Funkin",
-          "ImageURL": "img/funkin.png",
+          "ImageURL": "Funkin/card.png",
           "Link": "Funkin/",
           "MobileFriendly": true
         },
         {
           "Name": "Geometry Dash",
-          "ImageURL": "img/geometrydash.png",
+          "ImageURL": "GeometryDash/card.png",
           "Link": "GeometryDash/",
           "MobileFriendly": true
         },
         {
           "Name": "Happy Wheels",
-          "ImageURL": "img/happywheels.png",
+          "ImageURL": "HappyWheels/card.png",
           "Link": "HappyWheels/",
           "MobileFriendly": false
         },
         {
           "Name": "Getting Over It",
-          "ImageURL": "img/gettingoverit.png",
+          "ImageURL": "GettingOverIt/card.png",
           "Link": "GettingOverIt/",
           "MobileFriendly": false
         },
         {
           "Name": "Repo",
-          "ImageURL": "img/repo.png",
+          "ImageURL": "Repo/card.png",
           "Link": "Repo/",
           "MobileFriendly": false
         },
         {
           "Name": "Plants vs Zombies",
-          "ImageURL": "img/pvz.png",
+          "ImageURL": "PvZ/card.png",
           "Link": "PvZ/",
           "MobileFriendly": true
         }
@@ -72,49 +72,49 @@
       "games": [
         {
           "Name": "Fnaf 1",
-          "ImageURL": "img/fnaf1.png",
+          "ImageURL": "Fnaf_1/card.png",
           "Link": "Fnaf_1/",
           "MobileFriendly": true
         },
         {
           "Name": "Fnaf 2",
-          "ImageURL": "img/fnaf2.png",
+          "ImageURL": "Fnaf_2/card.png",
           "Link": "Fnaf_2/",
           "MobileFriendly": true
         },
         {
           "Name": "Fnaf 3",
-          "ImageURL": "img/fnaf3.png",
+          "ImageURL": "Fnaf_3/card.png",
           "Link": "Fnaf_3/",
           "MobileFriendly": true
         },
         {
           "Name": "Fnaf 4",
-          "ImageURL": "img/fnaf4.png",
+          "ImageURL": "Fnaf_4/card.png",
           "Link": "Fnaf_4/",
           "MobileFriendly": true
         },
         {
           "Name": "Fnaf Sister Location",
-          "ImageURL": "img/fnafSL.png",
+          "ImageURL": "Fnaf_Sister_Location/card.png",
           "Link": "Fnaf_Sister_Location/",
           "MobileFriendly": true
         },
         {
           "Name": "Fnaf Ultimate Custom Night",
-          "ImageURL": "img/fnafUCN.png",
+          "ImageURL": "Fnaf_Ultimate_Custom_Night/card.png",
           "Link": "Fnaf_Ultimate_Custom_Night/",
           "MobileFriendly": true
         },
         {
           "Name": "Granny 1",
-          "ImageURL": "img/granny1.png",
+          "ImageURL": "Granny1/card.png",
           "Link": "Granny1/",
           "MobileFriendly": false
         },
         {
           "Name": "Baldi's Basics Remastered",
-          "ImageURL": "img/baldiremastered.png",
+          "ImageURL": "BaldiRemastered/card.png",
           "Link": "BaldiRemastered/",
           "MobileFriendly": false
         }
@@ -126,25 +126,25 @@
       "games": [
         {
           "Name": "Soccer Random",
-          "ImageURL": "img/soccerrandom.png",
+          "ImageURL": "SoccerRandom/card.png",
           "Link": "SoccerRandom/",
           "MobileFriendly": true
         },
         {
           "Name": "Basket Random",
-          "ImageURL": "img/basketrandom.png",
+          "ImageURL": "BasketRandom/card.png",
           "Link": "BasketRandom/",
           "MobileFriendly": true
         },
         {
           "Name": "Rocket Goal",
-          "ImageURL": "img/rocketgoal.png",
+          "ImageURL": "RocketGoal/card.png",
           "Link": "RocketGoal/",
           "MobileFriendly": true
         },
         {
           "Name": "Football Legends",
-          "ImageURL": "img/football-legends.png",
+          "ImageURL": "FootballLegends/card.png",
           "Link": "FootballLegends/",
           "MobileFriendly": true
         }
@@ -156,19 +156,19 @@
       "games": [
         {
           "Name": "Wrassling",
-          "ImageURL": "img/wrassling.png",
+          "ImageURL": "Wrassling/card.png",
           "Link": "Wrassling/",
           "MobileFriendly": true
         },
         {
           "Name": "Bad Ice Cream",
-          "ImageURL": "img/badicecream.png",
+          "ImageURL": "BadIceCream/card.png",
           "Link": "BadIceCream/",
           "MobileFriendly": false
         },
         {
           "Name": "Tank Trouble",
-          "ImageURL": "img/tank-trouble.png",
+          "ImageURL": "TankTrouble/card.png",
           "Link": "TankTrouble/",
           "MobileFriendly": false
         }
@@ -180,25 +180,25 @@
       "games": [
         {
           "Name": "Minecraft",
-          "ImageURL": "img/minecraft.png",
+          "ImageURL": "Minecraft/card.png",
           "Link": "Minecraft/",
           "MobileFriendly": true
         },
         {
           "Name": "Crazy Cattle 3D",
-          "ImageURL": "img/crazycattle3d.png",
+          "ImageURL": "CrazyCattle3D/card.png",
           "Link": "CrazyCattle3D/",
           "MobileFriendly": false
         },
         {
           "Name": "Celeste",
-          "ImageURL": "img/celeste.png",
+          "ImageURL": "Celeste/card.png",
           "Link": "Celeste/",
           "MobileFriendly": false
         },
         {
           "Name": "A Difficult Game About Climbing",
-          "ImageURL": "img/adgac.png",
+          "ImageURL": "ADGAC/card.png",
           "Link": "ADGAC/",
           "MobileFriendly": false
         }
@@ -210,37 +210,37 @@
       "games": [
         {
           "Name": "Duck Life 1",
-          "ImageURL": "img/ducklife1.png",
+          "ImageURL": "DuckLife1/card.png",
           "Link": "DuckLife1/",
           "MobileFriendly": false
         },
         {
           "Name": "Duck Life 2",
-          "ImageURL": "img/ducklife2.png",
+          "ImageURL": "DuckLife2/card.png",
           "Link": "DuckLife2/",
           "MobileFriendly": false
         },
         {
           "Name": "Henry Stickmin: Breaking the Bank",
-          "ImageURL": "img/henrystickminbreakingthebank.png",
+          "ImageURL": "HenryStickminBreakingTheBank/card.png",
           "Link": "HenryStickminBreakingTheBank/",
           "MobileFriendly": true
         },
         {
           "Name": "The Right Mix",
-          "ImageURL": "img/therightmix.png",
+          "ImageURL": "TheRightMix/card.png",
           "Link": "TheRightMix/",
           "MobileFriendly": true
         },
         {
           "Name": "Angry Birds 1",
-          "ImageURL": "img/angrybirds1.png",
+          "ImageURL": "AngryBirds1/card.png",
           "Link": "AngryBirds1/",
           "MobileFriendly": true
         },
         {
           "Name": "Bad Piggies",
-          "ImageURL": "img/badpiggies.png",
+          "ImageURL": "BadPiggies/card.png",
           "Link": "BadPiggies/",
           "MobileFriendly": true
         }
@@ -252,13 +252,13 @@
       "games": [
         {
           "Name": "Fireboy & Watergirl",
-          "ImageURL": "img/fireboyandwatergirl.png",
+          "ImageURL": "FireboyAndWatergirl/card.png",
           "Link": "FireboyAndWatergirl/",
           "MobileFriendly": false
         },
         {
           "Name": "Bloxorz",
-          "ImageURL": "img/bloxorz.png",
+          "ImageURL": "Bloxorz/card.png",
           "Link": "Bloxorz/",
           "MobileFriendly": false
         }

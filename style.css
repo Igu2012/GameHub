@@ -1,139 +1,163 @@
+/* Estilo GameHub - Simples, Escuro e Intuitivo */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+:root {
+    --bg-main: #0f0f0f;
+    --bg-header: #181818;
+    --bg-card: #1e1e1e;
+    --accent: #3d3d3d;
+    --text-primary: #f1f1f1;
+    --text-secondary: #aaaaaa;
+    --border-color: #2c2c2c;
+}
+
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background-color: #121212;
-    color: #e0e0e0;
-    min-height: 100vh;
-    line-height: 1.5;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    line-height: 1.4;
 }
 
 /* Header */
 header {
-    background-color: #1a1a1a;
-    border-bottom: 1px solid #2a2a2a;
-    padding: 0.8rem 0;
+    background-color: var(--bg-header);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 0;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
 }
 
 .header-container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 0 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
 }
 
 .logo {
-    font-size: 1.3rem;
-    font-weight: bold;
+    font-size: 1.25rem;
+    font-weight: 800;
     color: #fff;
+    letter-spacing: -0.5px;
 }
 
 .search-bar {
     flex: 1;
-    max-width: 400px;
+    max-width: 450px;
+    margin: 0 1.5rem;
 }
 
 .search-bar input {
     width: 100%;
-    padding: 0.5rem 1rem;
-    border: 1px solid #333;
-    border-radius: 4px;
-    background: #1e1e1e;
-    color: #e0e0e0;
+    padding: 0.6rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: #222;
+    color: #fff;
     font-size: 0.9rem;
+    outline: none;
 }
 
 .search-bar input:focus {
-    outline: none;
     border-color: #555;
+    background: #2a2a2a;
 }
 
-.search-bar input::placeholder {
-    color: #777;
+/* Categories */
+.categories-nav {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    padding: 0.5rem 0;
+    scrollbar-width: none;
 }
 
-/* Main Container */
+.categories-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.category-btn {
+    padding: 0.5rem 1.2rem;
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.category-btn:hover, .category-btn.active {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+}
+
+/* Container */
 .container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 1.5rem;
 }
 
-/* Categories Nav */
-.categories-nav {
-    display: flex;
-    gap: 0.4rem;
-    margin-bottom: 2rem;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-}
-
-.category-btn {
-    padding: 0.4rem 1rem;
-    border: 1px solid #333;
-    background: #1e1e1e;
-    color: #aaa;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    white-space: nowrap;
-}
-
-.category-btn:hover,
-.category-btn.active {
-    background: #333;
-    color: #fff;
-    border-color: #444;
-}
-
-/* Category Section */
 .category-section {
-    margin-bottom: 2.5rem;
+    margin-bottom: 3rem;
 }
 
 .category-title {
     font-size: 1.1rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
     color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-title::after {
+    content: "";
+    height: 1px;
+    background: var(--border-color);
+    flex: 1;
 }
 
 /* Games Grid */
 .games-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.25rem;
 }
 
 .game-card {
-    background: #1a1a1a;
-    border: 1px solid #2a2a2a;
-    border-radius: 6px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
     overflow: hidden;
-    cursor: pointer;
+    transition: transform 0.15s ease;
+    text-decoration: none;
+    color: inherit;
 }
 
 .game-card:hover {
+    transform: translateY(-4px);
     border-color: #444;
 }
 
 .game-card-image {
     aspect-ratio: 16/10;
-    background: #111;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 100%;
     overflow: hidden;
+    background: #000;
 }
 
 .game-card-image img {
@@ -143,79 +167,54 @@ header {
 }
 
 .game-card-content {
-    padding: 0.6rem 0.8rem;
-}
-
-.game-card-name {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #ddd;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.mobile-friendly-tag {
-    font-size: 8px;
-    color: #ffd700;
-    margin-top: 2px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-/* Footer */
-footer {
-    border-top: 1px solid #2a2a2a;
-    padding: 2rem 1.5rem;
-    text-align: center;
-    color: #666;
-    font-size: 0.8rem;
-}
-
-/* Mobile */
-@media (max-width: 768px) {
-    .header-container {
-        padding: 0 1rem;
-    }
-
-    .search-bar {
-        margin: 0 0.5rem;
-    }
-
-    .games-grid {
-        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-        gap: 0.7rem;
-    }
-
-    .container {
-        padding: 1rem;
-    }
-
-    .category-title {
-        font-size: 1rem;
-    }
-}
-
-/* Focus */
-.game-card:focus {
-    outline: 3px solid #fff;
-    outline-offset: 1px;
-}
-
-.game-card-content {
+    padding: 0.75rem;
     position: relative;
 }
 
 .game-card-name {
-    padding-right: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #eee;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 25px;
 }
 
 .mobile-icon {
-    width: 24px;
-    height: 24px;
-    object-fit: contain;
-    opacity: 0.9;
     position: absolute;
-    right: 8px;
-    bottom: 8px;
+    right: 10px;
+    bottom: 10px;
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+}
+
+/* Footer */
+footer {
+    padding: 3rem 1.5rem;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 1rem;
+    }
+    
+    .search-bar {
+        margin: 0 0.5rem;
+    }
+    
+    .games-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 0.75rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
 }
