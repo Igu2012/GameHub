@@ -201,6 +201,12 @@
           "ImageURL": "ADGAC/card.png",
           "Link": "ADGAC/",
           "MobileFriendly": false
+        },
+        {
+          "Name": "Raft",
+          "ImageURL": "Raft/card.png",
+          "Link": "Raft/",
+          "MobileFriendly": true
         }
       ]
     },
