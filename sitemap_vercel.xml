@@ -140,4 +140,12 @@
     <loc>https://gamehubjogos.vercel.app/PvZ/</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/BadPiggies/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/ADGAC/</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>

@@ -195,6 +195,12 @@
           "ImageURL": "img/celeste.png",
           "Link": "Celeste/",
           "MobileFriendly": false
+        },
+        {
+          "Name": "A Difficult Game About Climbing",
+          "ImageURL": "img/adgac.png",
+          "Link": "ADGAC/",
+          "MobileFriendly": false
         }
       ]
     },
@@ -231,6 +237,12 @@
           "ImageURL": "img/angrybirds1.png",
           "Link": "AngryBirds1/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "Bad Piggies",
+          "ImageURL": "img/badpiggies.png",
+          "Link": "BadPiggies/",
+          "MobileFriendly": false
         }
       ]
     },
