@@ -1,195 +1,113 @@
 let gamesData = [];
 let currentCategory = 'all';
 
-document.getElementById('footerYear').textContent = `GAMEHUB © ${new Date().getFullYear()}`;
+// Ano no rodapé
+const yearSpan = document.getElementById('footerYear');
+if (yearSpan) yearSpan.textContent = `GAMEHUB © ${new Date().getFullYear()}`;
 
+// Carregar jogos
 fetch('games.json')
-    .then(response => response.json())
+    .then(res => res.json())
     .then(data => {
         gamesData = data.categories;
-        initializeCategories();
+        initCategories();
         renderGames('all');
     })
-    .catch(error => {
-        console.error('Erro ao carregar games.json:', error);
-        document.getElementById('gamesContainer').innerHTML = '<p>Erro ao carregar jogos.</p>';
-    });
+    .catch(err => console.error('Erro ao carregar jogos:', err));
 
-function initializeCategories() {
-    const categoriesNav = document.getElementById('categoriesNav');
+function initCategories() {
+    const nav = document.getElementById('categoriesNav');
+    if (!nav) return;
     
-    categoriesNav.innerHTML = '';
+    nav.innerHTML = '';
     
-    const todosButton = document.createElement('button');
-    todosButton.className = 'category-btn active';
-    todosButton.textContent = 'Todos';
-    todosButton.dataset.category = 'all';
+    // Botão "Todos"
+    const allBtn = document.createElement('button');
+    allBtn.className = 'category-btn active';
+    allBtn.textContent = 'Todos';
+    allBtn.onclick = () => filterCategory('all', allBtn);
+    nav.appendChild(allBtn);
     
-    todosButton.addEventListener('click', () => {
-        document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-        todosButton.classList.add('active');
-        currentCategory = 'all';
-        document.getElementById('searchInput').value = '';
-        renderGames('all');
-    });
-    
-    categoriesNav.appendChild(todosButton);
-    
-    gamesData.forEach(category => {
-        const button = document.createElement('button');
-        button.className = 'category-btn';
-        button.textContent = category.name;
-        button.dataset.category = category.id;
-        
-        button.addEventListener('click', () => {
-            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            currentCategory = category.id;
-            document.getElementById('searchInput').value = '';
-            renderGames(category.id);
-        });
-        
-        categoriesNav.appendChild(button);
+    // Botões das categorias
+    gamesData.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'category-btn';
+        btn.textContent = cat.name;
+        btn.onclick = () => filterCategory(cat.id, btn);
+        nav.appendChild(btn);
     });
 }
 
-function renderGames(categoryId) {
+function filterCategory(id, btn) {
+    document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentCategory = id;
+    document.getElementById('searchInput').value = '';
+    renderGames(id);
+}
+
+function renderGames(catId) {
     const container = document.getElementById('gamesContainer');
+    if (!container) return;
     container.innerHTML = '';
 
-    if (categoryId === 'all') {
-        gamesData.forEach(category => {
-            renderCategory(container, category);
-        });
+    if (catId === 'all') {
+        gamesData.forEach(cat => renderSection(container, cat));
     } else {
-        const category = gamesData.find(cat => cat.id === categoryId);
-        if (category) {
-            renderCategory(container, category);
-        }
+        const cat = gamesData.find(c => c.id === catId);
+        if (cat) renderSection(container, cat);
     }
 }
 
-function renderCategory(container, category) {
+function renderSection(container, cat) {
     const section = document.createElement('div');
     section.className = 'category-section';
-
-    const title = document.createElement('h2');
-    title.className = 'category-title';
-    title.textContent = category.name;
-
-    const grid = document.createElement('div');
-    grid.className = 'games-grid';
-
-    category.games.forEach(game => {
-        const card = createGameCard(game);
+    
+    section.innerHTML = `
+        <h2 class="category-title">${cat.name}</h2>
+        <div class="games-grid"></div>
+    `;
+    
+    const grid = section.querySelector('.games-grid');
+    cat.games.forEach(game => {
+        const card = document.createElement('a');
+        card.href = game.Link;
+        card.className = 'game-card';
+        card.innerHTML = `
+            <div class="game-card-image">
+                <img src="${game.ImageURL}" alt="${game.Name}" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <div class="game-card-name">${game.Name}</div>
+                ${game.MobileFriendly ? '<img src="img/mobile-icon.webp" class="mobile-icon" alt="Mobile">' : ''}
+            </div>
+        `;
         grid.appendChild(card);
     });
-
-    section.appendChild(title);
-    section.appendChild(grid);
+    
     container.appendChild(section);
 }
 
-function createGameCard(game) {
-    const card = document.createElement('div');
-    card.className = 'game-card';
-    card.tabIndex = 0;
-
-    card.addEventListener('click', (e) => {
-        e.preventDefault();
-        window.location.href = game.Link;
-    });
-    
-    card.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            window.location.href = game.Link;
-        }
-    });
-
-    const imageDiv = document.createElement('div');
-    imageDiv.className = 'game-card-image';
-
-    const img = document.createElement('img');
-    img.src = game.ImageURL;
-    img.alt = game.Name;
-    img.loading = 'lazy';
-
-    imageDiv.appendChild(img);
-
-    const content = document.createElement('div');
-    content.className = 'game-card-content';
-
-    const name = document.createElement('div');
-    name.className = 'game-card-name';
-    name.textContent = game.Name;
-
-    content.appendChild(name);
-
-    if (game.MobileFriendly) {
-        const mobileIcon = document.createElement('img');
-        mobileIcon.src = 'img/mobile-icon.webp';
-        mobileIcon.className = 'mobile-icon';
-        mobileIcon.alt = 'Mobile Friendly';
-        content.appendChild(mobileIcon);
-    }
-
-    card.appendChild(imageDiv);
-    card.appendChild(content);
-
-    return card;
-}
-
-document.getElementById('logoLink').addEventListener('click', () => {
-    document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-    const todosBtn = document.querySelector('[data-category="all"]');
-    if (todosBtn) {
-        todosBtn.classList.add('active');
-    }
-    currentCategory = 'all';
-    document.getElementById('searchInput').value = '';
-    renderGames('all');
-});
-
-document.getElementById('searchInput').addEventListener('input', function(e) {
-    const searchTerm = e.target.value.toLowerCase();
+// Busca simples
+document.getElementById('searchInput').oninput = (e) => {
+    const term = e.target.value.toLowerCase();
     const container = document.getElementById('gamesContainer');
-    
-    if (searchTerm === '') {
+    if (!term) {
         renderGames(currentCategory);
         return;
     }
 
     container.innerHTML = '';
-
-    gamesData.forEach(category => {
-        const filteredGames = category.games.filter(game =>
-            game.Name.toLowerCase().includes(searchTerm)
-        );
-
-        if (filteredGames.length > 0) {
-            const section = document.createElement('div');
-            section.className = 'category-section';
-
-            const title = document.createElement('h2');
-            title.className = 'category-title';
-            title.textContent = category.name;
-
-            const grid = document.createElement('div');
-            grid.className = 'games-grid';
-
-            filteredGames.forEach(game => {
-                const card = createGameCard(game);
-                grid.appendChild(card);
-            });
-
-            section.appendChild(title);
-            section.appendChild(grid);
-            container.appendChild(section);
+    gamesData.forEach(cat => {
+        const matches = cat.games.filter(g => g.Name.toLowerCase().includes(term));
+        if (matches.length > 0) {
+            renderSection(container, { name: cat.name, games: matches });
         }
     });
+};
 
-    if (container.children.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: #888; padding: 2rem;">Nenhum jogo encontrado.</p>';
-    }
-});
+// Logo volta para o início
+document.getElementById('logoLink').onclick = () => {
+    const allBtn = document.querySelector('.category-btn');
+    if (allBtn) allBtn.click();
+};
