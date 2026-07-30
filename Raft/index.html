@@ -12,9 +12,9 @@
             padding: 0;
             height: 100%;
             overflow: hidden;
-            background: #111;
+            background: #000;
             color: #fff;
-            font-family: sans-serif;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
         }
         #unity-container {
             width: 100vw;
@@ -24,71 +24,95 @@
             justify-content: center;
             position: relative;
         }
-        #unity-canvas {
+        #unityContainer {
+            width: 100%;
+            height: 100%;
+        }
+        #loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
         }
-        #loading-ui {
-            position: absolute;
+        .loading-box {
+            width: 250px;
             text-align: center;
-            width: 300px;
-            z-index: 10;
-        }
-        #bar-container {
-            width: 100%;
-            height: 6px;
-            background: #333;
-            margin-top: 10px;
-            border-radius: 3px;
-        }
-        #bar-fill {
-            width: 0%;
-            height: 100%;
-            background: #eee;
-            border-radius: 3px;
-            transition: width 0.1s;
         }
         #status-text {
             font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #222;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        #progress-fill {
+            width: 0%;
+            height: 100%;
+            background: #fff;
+            transition: width 0.2s;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/gh/genizy/web-port@main/raft/Build/UnityLoader.js"></script>
     <script>
+        // Fullscreen Mobile
         (function() {
             function enableFullscreen() {
                 const docEl = document.documentElement;
                 const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
                 if (requestFullScreen) {
-                    requestFullScreen.call(docEl).catch(e => {});
+                    requestFullScreen.call(docEl).catch(e => console.log(e));
                 }
             }
             if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-                ['touchstart', 'click', 'keydown'].forEach(event => {
+                ['touchstart', 'click'].forEach(event => {
                     window.addEventListener(event, enableFullscreen, { once: true });
                 });
             }
         })();
 
-        let max = 0;
-        let done = 0;
-        function mergeFiles(fileParts, statusText) {
+        // File Merging Logic
+        let totalParts = 0;
+        let loadedParts = 0;
+
+        function updateProgress() {
+            const fill = document.getElementById("progress-fill");
+            const status = document.getElementById("status-text");
+            if (totalParts > 0) {
+                const percent = (loadedParts / totalParts) * 100;
+                fill.style.width = percent + "%";
+                status.textContent = `LOADING... ${Math.round(percent)}%`;
+            }
+        }
+
+        function mergeFiles(fileParts) {
+            totalParts += fileParts.length;
             return new Promise((resolve, reject) => {
                 let buffers = [];
                 function fetchPart(index) {
                     if (index >= fileParts.length) {
-                        let mergedBlob = new Blob(buffers);
-                        resolve(URL.createObjectURL(mergedBlob));
+                        resolve(URL.createObjectURL(new Blob(buffers)));
                         return;
                     }
                     fetch("https://cdn.jsdelivr.net/gh/genizy/web-port@main/raft/" + fileParts[index])
                         .then(res => res.arrayBuffer())
                         .then(data => {
                             buffers.push(data);
-                            done++;
-                            statusText.textContent = `LOADING... (${done}/${max})`;
+                            loadedParts++;
+                            updateProgress();
                             fetchPart(index + 1);
                         })
                         .catch(reject);
@@ -100,27 +124,26 @@
         function getParts(file, start, end) {
             let parts = [];
             for (let i = start; i <= end; i++) parts.push(file + ".part" + i);
-            max += end;
             return parts;
         }
     </script>
 </head>
 <body>
     <div id="unity-container">
-        <div id="unityContainer" style="width: 100%; height: 100%"></div>
-        <div id="loading-ui">
-            <div id="status-text">LOADING...</div>
-            <div id="bar-container"><div id="bar-fill"></div></div>
+        <div id="unityContainer"></div>
+        <div id="loading-overlay">
+            <div class="loading-box">
+                <div id="status-text">LOADING...</div>
+                <div class="progress-bar">
+                    <div id="progress-fill"></div>
+                </div>
+            </div>
         </div>
     </div>
     <script>
-        const statusText = document.querySelector("#status-text");
-        const barFill = document.querySelector("#bar-fill");
-        const loadingUI = document.querySelector("#loading-ui");
-
         Promise.all([
-            mergeFiles(getParts("Build/Raft-WEBGL.data.unityweb", 1, 3), statusText),
-            mergeFiles(getParts("Build/Raft-WEBGL.asm.code.unityweb", 1, 2), statusText)
+            mergeFiles(getParts("Build/Raft-WEBGL.data.unityweb", 1, 3)),
+            mergeFiles(getParts("Build/Raft-WEBGL.asm.code.unityweb", 1, 2))
         ]).then(([dataUrl, asmCode]) => {
             var json = {
                 "TOTAL_MEMORY": 268435456,
@@ -134,11 +157,12 @@
             
             UnityLoader.instantiate("unityContainer", json, {
                 onProgress: (gameInstance, progress) => {
-                    barFill.style.width = (100 * progress) + "%";
-                },
-                Module: {
-                    onRuntimeInitialized: function () {
-                        loadingUI.remove();
+                    // Progress from Unity after files are merged
+                    if (progress === 1) {
+                        setTimeout(() => {
+                            const overlay = document.getElementById("loading-overlay");
+                            if (overlay) overlay.remove();
+                        }, 500);
                     }
                 }
             });
