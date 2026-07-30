@@ -242,7 +242,7 @@
           "Name": "Bad Piggies",
           "ImageURL": "img/badpiggies.png",
           "Link": "BadPiggies/",
-          "MobileFriendly": false
+          "MobileFriendly": true
         }
       ]
     },
