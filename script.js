@@ -94,8 +94,6 @@ function createGameCard(game) {
     const card = document.createElement('div');
     card.className = 'game-card';
     card.tabIndex = 0;
-    card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', `Jogar ${game.Name}`);
 
     card.addEventListener('click', (e) => {
         e.preventDefault();
@@ -117,16 +115,7 @@ function createGameCard(game) {
     img.alt = game.Name;
     img.loading = 'lazy';
 
-    const overlay = document.createElement('div');
-    overlay.className = 'game-card-overlay';
-
-    const playBtn = document.createElement('div');
-    playBtn.className = 'play-btn';
-    playBtn.textContent = 'Jogar';
-
-    overlay.appendChild(playBtn);
     imageDiv.appendChild(img);
-    imageDiv.appendChild(overlay);
 
     const content = document.createElement('div');
     content.className = 'game-card-content';
@@ -144,6 +133,7 @@ function createGameCard(game) {
         mobileIcon.alt = 'Mobile Friendly';
         content.appendChild(mobileIcon);
     }
+
     card.appendChild(imageDiv);
     card.appendChild(content);
 
@@ -200,6 +190,6 @@ document.getElementById('searchInput').addEventListener('input', function(e) {
     });
 
     if (container.children.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: #a3a3a3; padding: 2rem;">Nenhum jogo encontrado.</p>';
+        container.innerHTML = '<p style="text-align: center; color: #888; padding: 2rem;">Nenhum jogo encontrado.</p>';
     }
 });

@@ -1,40 +1,84 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>A Difficult Game About Climbing</title>
     <link rel="icon" type="image/png" href="favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <style>
-        html,
-        body {
+        html, body {
             margin: 0;
             padding: 0;
             height: 100%;
             overflow: hidden;
-            background: #231F20;
+            background: #111;
+            color: #fff;
+            font-family: sans-serif;
         }
-
         #unity-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        #unity-canvas {
             width: 100%;
             height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
+            background: #000;
+        }
+        #loading-ui {
+            position: absolute;
+            text-align: center;
+            width: 300px;
+        }
+        #bar-container {
+            width: 100%;
+            height: 6px;
+            background: #333;
+            margin-top: 10px;
+            border-radius: 3px;
+        }
+        #bar-fill {
+            width: 0%;
+            height: 100%;
+            background: #eee;
+            border-radius: 3px;
+            transition: width 0.1s;
+        }
+        #status-text {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
     </style>
-  </head>
-  <body>
-	<div id="loading-text" style="color: white; font-size: 48px; font-family: cursive; text-align: center; margin-top: 20px;"> LOADING... </div>
-    <div id="unity-container" class="unity-desktop" hidden>
-      <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
-      <div id="unity-loading-bar">
-        <div id="unity-logo"></div>
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
+    <script>
+        (function() {
+            function enableFullscreen() {
+                const docEl = document.documentElement;
+                const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+                if (requestFullScreen) {
+                    requestFullScreen.call(docEl).catch(e => {});
+                }
+            }
+            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+                ['touchstart', 'click', 'keydown'].forEach(event => {
+                    window.addEventListener(event, enableFullscreen, { once: true });
+                });
+            }
+        })();
+    </script>
+</head>
+<body>
+    <div id="unity-container">
+        <canvas id="unity-canvas" width=960 height=600 tabindex="-1"></canvas>
+        <div id="loading-ui">
+            <div id="status-text">loading data</div>
+            <div id="bar-container"><div id="bar-fill"></div></div>
         </div>
-      </div>
     </div>
     <script>
         var loadingText = document.querySelector("#loading-text");
@@ -47,17 +91,14 @@
             let chunks = [];
             let received = 0;
             while (true) {
-                const {
-                    done,
-                    value
-                } = await reader.read();
+                const { done, value } = await reader.read();
                 if (done) break;
                 received += value.length;
                 loadedBytes += value.length;
                 chunks.push(value);
                 let mbDone = (loadedBytes / (1024 * 1024)).toFixed(2);
                 let mbTotal = '319.89';
-                loadingText.textContent = `LOADING... ${mbDone} MB / ${mbTotal} MB`;
+                statusText.textContent = `loading... ${mbDone} MB / ${mbTotal} MB`;
             }
             let fullBuffer = new Uint8Array(received);
             let offset = 0;
@@ -82,69 +123,57 @@
             }
             return parts;
         }
+
+        const canvas = document.querySelector("#unity-canvas");
+        const statusText = document.querySelector("#status-text");
+        const barFill = document.querySelector("#bar-fill");
+        const loadingUI = document.querySelector("#loading-ui");
+
         (async () => {
             const [dataUrl, wasmUrl] = await Promise.all([
                 mergeFiles(getParts("Build/adgac.data", 1, 14), "gtagwebR2.data"),
                 mergeFiles(getParts("Build/adgac.wasm", 1, 3), "gtagwebR2.wasm"),
             ]);
             var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/adgac.loader.js";
-      var config = {
-        dataUrl: dataUrl,
-        frameworkUrl: "Build/adgac.framework.js",
-        codeUrl: wasmUrl,
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "Pontypants",
-        productName: "A Difficult Game About Climbing",
-        productVersion: "1.2.61",
-        // matchWebGLToCanvasSize: false, // Uncomment this to separately control WebGL canvas render size and DOM element size.
-        // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
-      };
+            var loaderUrl = buildUrl + "/adgac.loader.js";
+            var config = {
+                dataUrl: dataUrl,
+                frameworkUrl: "Build/adgac.framework.js",
+                codeUrl: wasmUrl,
+                streamingAssetsUrl: "StreamingAssets",
+                companyName: "Pontypants",
+                productName: "A Difficult Game About Climbing",
+                productVersion: "1.2.61",
+            };
             var container = document.querySelector("#unity-container");
             container.hidden = false;
-            var canvas = document.querySelector("#unity-canvas");
-            var loadingBar = document.querySelector("#unity-loading-bar");
-            var progressBarFull = document.querySelector("#unity-progress-bar-full");
             if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
                 container.className = "unity-mobile";
                 config.devicePixelRatio = 1;
             } else {
-                if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-                    var meta = document.createElement('meta');
-                    meta.name = 'viewport';
-                    meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-                    document.getElementsByTagName('head')[0].appendChild(meta);
-                    container.className = "unity-mobile";
-                    canvas.className = "unity-mobile";
-                } else {
-                    function resizeCanvas() {
-                        canvas.width = window.innerWidth;
-                        canvas.height = window.innerHeight;
-                        canvas.style.width = window.innerWidth + "px";
-                        canvas.style.height = window.innerHeight + "px";
-                    }
-                    resizeCanvas();
-                    window.addEventListener('resize', resizeCanvas);
+                function resizeCanvas() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                    canvas.style.width = window.innerWidth + "px";
+                    canvas.style.height = window.innerHeight + "px";
                 }
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
             }
-            loadingBar.style.display = "block";
             var script = document.createElement("script");
             script.src = loaderUrl;
             script.onload = () => {
                 createUnityInstance(canvas, config, (progress) => {
-                    progressBarFull.style.width = 100 * progress + "%";
+                    barFill.style.width = (100 * progress) + "%";
+                    statusText.textContent = "loading";
                 }).then((unityInstance) => {
-                    loadingText.remove();
-					console.log(loadedBytes)
-                    loadingBar.style.display = "none";
-                    canvas.style.display = "block";
+                    loadingUI.style.display = "none";
                 }).catch(async (message) => {
                     alert(message);
                 });
-
             };
             document.body.appendChild(script);
         })();
     </script>
-  </body>
+</body>
 </html>
