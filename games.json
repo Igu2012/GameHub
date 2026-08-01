@@ -2,7 +2,7 @@
   "categories": [
     {
       "id": "action",
-      "name": "Ação",
+      "name": "Action",
       "games": [
         {
           "Name": "Subway Surfers",
@@ -68,7 +68,7 @@
     },
     {
       "id": "horror",
-      "name": "Terror",
+      "name": "Horror",
       "games": [
         {
           "Name": "Fnaf 1",
@@ -122,7 +122,7 @@
     },
     {
       "id": "sports",
-      "name": "Esportes",
+      "name": "Sports",
       "games": [
         {
           "Name": "Soccer Random",
@@ -170,7 +170,7 @@
     },
     {
       "id": "multiplayer",
-      "name": "2 Jogadores",
+      "name": "2 Players",
       "games": [
         {
           "Name": "Wrassling",
@@ -194,7 +194,7 @@
     },
     {
       "id": "adventure",
-      "name": "Aventura",
+      "name": "Adventure",
       "games": [
         {
           "Name": "Minecraft",

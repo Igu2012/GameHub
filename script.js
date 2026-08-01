@@ -1,7 +1,7 @@
 let gamesData = [];
 let currentCategory = 'all';
 
-// Inicialização
+// Initialization
 document.addEventListener('DOMContentLoaded', () => {
     const yearSpan = document.getElementById('footerYear');
     if (yearSpan) yearSpan.textContent = `GAMEHUB © ${new Date().getFullYear()}`;
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             initCategories();
             renderGames('all');
         })
-        .catch(err => console.error('Erro:', err));
+        .catch(err => console.error('Error:', err));
 });
 
 function initCategories() {
@@ -22,14 +22,14 @@ function initCategories() {
     
     nav.innerHTML = '';
     
-    // Todos
+    // All
     const allBtn = document.createElement('button');
     allBtn.className = 'category-btn active';
-    allBtn.textContent = 'Todos';
+    allBtn.textContent = 'All';
     allBtn.onclick = () => filterCategory('all', allBtn);
     nav.appendChild(allBtn);
     
-    // Outras
+    // Others
     gamesData.forEach(cat => {
         const btn = document.createElement('button');
         btn.className = 'category-btn';
@@ -92,7 +92,7 @@ function renderSection(container, cat) {
     container.appendChild(section);
 }
 
-// Busca direta
+// Search
 document.getElementById('searchInput').oninput = (e) => {
     const term = e.target.value.toLowerCase();
     const container = document.getElementById('gamesContainer');

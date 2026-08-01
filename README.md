@@ -1,10 +1,10 @@
 # GameHub
 
-Bem-vindo ao GameHub! O Hub de jogos que não requer download.
+Welcome to GameHub! The game hub that requires no downloads.
 
-## 🚀 Link de Acesso
+## 🚀 Access Link
 
-Você pode acessar o GameHub através dos seguintes link:
+You can access GameHub through the following links:
 
 *   **Vercel:** [https://gamehubjogos.vercel.app](https://gamehubjogos.vercel.app)
-*   **Render:** [https://gamehubjogos.onrender.com](https://gamehubjogos.onrender.com)
+*   **Render:** [https://gamehubjogos.onrender.app](https://gamehubjogos.onrender.app)
