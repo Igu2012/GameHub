@@ -185,6 +185,12 @@
           "MobileFriendly": false
         },
         {
+          "Name": "Fireboy & Watergirl",
+          "ImageURL": "FireboyAndWatergirl/card.png",
+          "Link": "FireboyAndWatergirl/",
+          "MobileFriendly": false
+        },
+        {
           "Name": "Tank Trouble",
           "ImageURL": "TankTrouble/card.png",
           "Link": "TankTrouble/",
@@ -245,6 +251,12 @@
           "MobileFriendly": true
         },
         {
+          "Name": "Bloxorz",
+          "ImageURL": "Bloxorz/card.png",
+          "Link": "Bloxorz/",
+          "MobileFriendly": false
+        },
+        {
           "Name": "The Right Mix",
           "ImageURL": "TheRightMix/card.png",
           "Link": "TheRightMix/",
@@ -261,24 +273,6 @@
           "ImageURL": "BadPiggies/card.png",
           "Link": "BadPiggies/",
           "MobileFriendly": true
-        }
-      ]
-    },
-    {
-      "id": "puzzle",
-      "name": "Puzzle",
-      "games": [
-        {
-          "Name": "Fireboy & Watergirl",
-          "ImageURL": "FireboyAndWatergirl/card.png",
-          "Link": "FireboyAndWatergirl/",
-          "MobileFriendly": false
-        },
-        {
-          "Name": "Bloxorz",
-          "ImageURL": "Bloxorz/card.png",
-          "Link": "Bloxorz/",
-          "MobileFriendly": false
         }
       ]
     }
