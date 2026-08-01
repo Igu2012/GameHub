@@ -1,3 +1,6 @@
+<head>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
 <!-- Ported by Martin_MMC -->
 <script>
     launch();
@@ -8,6 +11,14 @@
                 .then(response => response.text())
                 .then(html => {
                     document.documentElement.innerHTML = html;
+
+                    const link = document.createElement('link');
+                    link.rel = 'icon';
+                    link.type = 'image/x-icon';
+                    link.href = 'favicon.ico';
+                    document.head.appendChild(link);
+                    document.title = 'Rocket Goal';
+        
 
                     document.documentElement.querySelectorAll('script').forEach(oldScript => {
                         const newScript = document.createElement('script');
