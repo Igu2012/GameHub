@@ -137,18 +137,6 @@
           "MobileFriendly": true
         },
         {
-          "Name": "Rocket Goal",
-          "ImageURL": "RocketGoal/card.png",
-          "Link": "RocketGoal/",
-          "MobileFriendly": true
-        },
-        {
-          "Name": "Football Legends",
-          "ImageURL": "FootballLegends/card.png",
-          "Link": "FootballLegends/",
-          "MobileFriendly": true
-        },
-        {
           "Name": "Boxing Random",
           "ImageURL": "BoxingRandom/card.png",
           "Link": "BoxingRandom/",
@@ -158,6 +146,18 @@
           "Name": "Volley Random",
           "ImageURL": "VolleyRandom/card.png",
           "Link": "VolleyRandom/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Rocket Goal",
+          "ImageURL": "RocketGoal/card.png",
+          "Link": "RocketGoal/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Football Legends",
+          "ImageURL": "FootballLegends/card.png",
+          "Link": "FootballLegends/",
           "MobileFriendly": true
         },
         {
