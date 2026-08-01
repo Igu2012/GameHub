@@ -149,3 +149,15 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://gamehubjogos.vercel.app/BoxingRandom/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/VolleyRandom/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/BasketballLegends/</loc>
+    <priority>0.8</priority>
+  </url>
+</urlset>

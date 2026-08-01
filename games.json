@@ -147,6 +147,24 @@
           "ImageURL": "FootballLegends/card.png",
           "Link": "FootballLegends/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "Boxing Random",
+          "ImageURL": "BoxingRandom/card.png",
+          "Link": "BoxingRandom/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Volley Random",
+          "ImageURL": "VolleyRandom/card.png",
+          "Link": "VolleyRandom/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Basketball Legends",
+          "ImageURL": "BasketballLegends/card.png",
+          "Link": "BasketballLegends/",
+          "MobileFriendly": true
         }
       ]
     },
