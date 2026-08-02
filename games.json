@@ -5,6 +5,12 @@
       "name": "Action",
       "games": [
         {
+          "Name": "20 Minutes Till Dawn",
+          "ImageURL": "20MinutesTillDawn/card.png",
+          "Link": "20MinutesTillDawn/",
+          "MobileFriendly": true
+        },
+        {
           "Name": "Subway Surfers",
           "ImageURL": "SubwaySurfers/card.png",
           "Link": "SubwaySurfers/",
