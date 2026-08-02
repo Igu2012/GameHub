@@ -77,7 +77,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gamehubjogos.vercel.app/Wrassling/</loc>
+    <loc>https://gamehubjogos.app/Wrassling/</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -110,6 +110,14 @@
   </url>
   <url>
     <loc>https://gamehubjogos.vercel.app/FireboyAndWatergirl/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/FireboyAndWatergirl2/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/FireboyAndWatergirl3/</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -158,12 +166,6 @@
   </url>
   <url>
     <loc>https://gamehubjogos.vercel.app/BasketballLegends/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://hubjogos.vercel.app/20MinutesTillDawn/</loc>
-    <lastmod>2026-08-02</lastmod>
-    <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 </urlset>

@@ -191,9 +191,21 @@
           "MobileFriendly": false
         },
         {
-          "Name": "Fireboy & Watergirl",
+          "Name": "Fireboy & Watergirl 1",
           "ImageURL": "FireboyAndWatergirl/card.png",
           "Link": "FireboyAndWatergirl/",
+          "MobileFriendly": false
+        },
+        {
+          "Name": "Fireboy & Watergirl 2",
+          "ImageURL": "FireboyAndWatergirl2/card.png",
+          "Link": "FireboyAndWatergirl2/",
+          "MobileFriendly": false
+        },
+        {
+          "Name": "Fireboy & Watergirl 3",
+          "ImageURL": "FireboyAndWatergirl3/card.png",
+          "Link": "FireboyAndWatergirl3/",
           "MobileFriendly": false
         },
         {
