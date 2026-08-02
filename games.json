@@ -263,12 +263,6 @@
           "MobileFriendly": false
         },
         {
-          "Name": "Henry Stickmin: Breaking the Bank",
-          "ImageURL": "HenryStickminBreakingTheBank/card.png",
-          "Link": "HenryStickminBreakingTheBank/",
-          "MobileFriendly": true
-        },
-        {
           "Name": "Bloxorz",
           "ImageURL": "Bloxorz/card.png",
           "Link": "Bloxorz/",
