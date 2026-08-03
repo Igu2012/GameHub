@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>
+   FOOSBALL
+  </title>
+  <link href="css/reset.css" rel="stylesheet" type="text/css"/>
+  <link href="css/main.css" rel="stylesheet" type="text/css"/>
+  <link href="css/orientation_utils.css" rel="stylesheet" type="text/css"/>
+  <style>
+    .orientation-msg-container {
+      background-color: #333 !important;
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 999999;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .phone-rotation-warning {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .phone-silhouette {
+      width: 120px;
+      height: 60px;
+      background-color: #000;
+      border-radius: 8px;
+      transform: rotate(-45deg);
+      position: relative;
+      border: 2px solid #1a1a1a;
+    }
+    
+    .phone-silhouette::after {
+      content: '';
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      background-color: #333;
+      border-radius: 50%;
+    }
+
+    /* Override ctl_utils behavior if needed */
+    body[data-orientation="portrait"] .orientation-msg-container {
+      display: flex !important;
+    }
+  </style>
+  <link href="css/ios_fullscreen.css" rel="stylesheet" type="text/css"/>
+  <link href="./favicon.ico" rel="shortcut icon" type="image/x-icon">
+   <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+   <meta content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" name="viewport">
+    <meta content="no" name="msapplication-tap-highlight"/>
+    <script src="js/poki-sdk.js" type="text/javascript"></script>
+    <script src="js/jquery-3.2.1.min.js" type="text/javascript">
+    </script>
+    <script src="js/createjs-2015.11.26.min.js" type="text/javascript">
+    </script>
+    <script src="js/platform.js" type="text/javascript">
+    </script>
+    <script src="js/ios_fullscreen.js" type="text/javascript">
+    </script>
+    <script src="js/howler.min.js" type="text/javascript">
+    </script>
+    <script src="js/screenfull.js" type="text/javascript">
+    </script>
+    <script src="js/ctl_utils.js" type="text/javascript">
+    </script>
+    <script src="js/sprite_lib.js" type="text/javascript">
+    </script>
+    <script src="js/settings.js" type="text/javascript">
+    </script>
+    <script src="js/CLang.js" type="text/javascript">
+    </script>
+    <script src="js/CPreloader.js" type="text/javascript">
+    </script>
+    <script src="js/CMain.js" type="text/javascript">
+    </script>
+    <script src="js/CStick.js" type="text/javascript">
+    </script>
+    <script src="js/CToggle.js" type="text/javascript">
+    </script>
+    <script src="js/CGfxButton.js" type="text/javascript">
+    </script>
+    <script src="js/CMenu.js" type="text/javascript">
+    </script>
+    <script src="js/CGame.js" type="text/javascript">
+    </script>
+    <script src="js/CInterface.js" type="text/javascript">
+    </script>
+    <script src="js/CCreditsPanel.js" type="text/javascript">
+    </script>
+    <script src="js/CAreYouSurePanel.js" type="text/javascript">
+    </script>
+    <script src="js/CEndPanel.js" type="text/javascript">
+    </script>
+    <script src="js/CEdgeModel.js" type="text/javascript">
+    </script>
+    <script src="js/CEdgeViewer.js" type="text/javascript">
+    </script>
+    <script src="js/CEdge.js" type="text/javascript">
+    </script>
+    <script src="js/CVector2.js" type="text/javascript">
+    </script>
+    <script src="js/CBall.js" type="text/javascript">
+    </script>
+    <script src="js/CSelectPlayers.js" type="text/javascript">
+    </script>
+    <script src="js/CScoreRod.js" type="text/javascript">
+    </script>
+    <script src="js/CLevelSettings.js" type="text/javascript">
+    </script>
+    <script src="js/CLevelBut.js" type="text/javascript">
+    </script>
+    <script src="js/CLevelMenu.js" type="text/javascript">
+    </script>
+    <script src="js/CPanelTutorial.js" type="text/javascript">
+    </script>
+    <script src="js/CPause.js" type="text/javascript">
+    </script>
+    <script src="js/CMsgBox.js" type="text/javascript">
+    </script>
+    <script src="js/CTextButton.js" type="text/javascript">
+    </script>
+    <script src="js/CCTLText.js" type="text/javascript">
+    </script>
+   </meta>
+  </link>
+ </head>
+ <body ondragstart="return false;" ondrop="return false;">
+  <div style="position: fixed; background-color: transparent; top: 0px; left: 0px; width: 100%; height: 100%">
+  </div>
+  <script>
+   $(document).ready(function(){
+                     var oMain = new CMain({  
+                                            level_menu_rows: 1,     //SET NUM ROW ON LEVEL MENU 
+                                            level_menu_cols: 5,     //SET NUM COLS ON LEVEL MENU
+                                            num_goal_friendly: 7,   //SET NUM GOAL FOR WIN IN FRIENDLY MODE
+                                            cpu_speed_friendly: 5  //SET CPU MOVEMENT SPEED, 10 = YOUR MOVEMENT SPEED
+                                           });
+                                           
+                                           
+                    $(oMain).on("start_session", function(evt) {
+                            if(getParamValue('ctl-arcade') === "true"){
+                                parent.__ctlArcadeStartSession();
+                            }
+                            //...ADD YOUR CODE HERE EVENTUALLY
+                    });
+                     
+                    $(oMain).on("end_session", function(evt) {
+                           if(getParamValue('ctl-arcade') === "true"){
+                               parent.__ctlArcadeEndSession();
+                           }
+                           //...ADD YOUR CODE HERE EVENTUALLY
+                    });
+                    
+                    $(oMain).on("save_score", function(evt,iScore, szMode) {
+                           if(getParamValue('ctl-arcade') === "true"){
+                               parent.__ctlArcadeSaveScore({score:iScore, mode: szMode});
+                           }
+                           //...ADD YOUR CODE HERE EVENTUALLY
+                    });
+
+                    $(oMain).on("start_level", function(evt, iLevel) {
+                           if(getParamValue('ctl-arcade') === "true"){
+                               parent.__ctlArcadeStartLevel({level:iLevel});
+                           }
+                           //...ADD YOUR CODE HERE EVENTUALLY
+                    });
+
+                    $(oMain).on("end_level", function(evt,iLevel) {
+                           if(getParamValue('ctl-arcade') === "true"){
+                               parent.__ctlArcadeEndLevel({level:iLevel});
+                           }
+                           //...ADD YOUR CODE HERE EVENTUALLY
+                    });
+                    
+                    $(oMain).on("show_interlevel_ad", function(evt) {
+                           if(getParamValue('ctl-arcade') === "true"){
+                               parent.__ctlArcadeShowInterlevelAD();
+                           }
+                    });
+                    
+                    $(oMain).on("share_event", function(evt, iScore) {
+                           if(getParamValue('ctl-arcade') === "true"){
+                               parent.__ctlArcadeShareEvent({   img: TEXT_SHARE_IMAGE,
+                                                                title: TEXT_SHARE_TITLE,
+                                                                msg: TEXT_SHARE_MSG1 + iScore + TEXT_SHARE_MSG2,
+                                                                msg_share: TEXT_SHARE_SHARE1 + iScore + TEXT_SHARE_SHARE1});
+                           }
+                           //...ADD YOUR CODE HERE EVENTUALLY
+                    });
+					 
+                    if(isIOS()){ 
+                        setTimeout(function(){sizeHandler();},200); 
+                    }else{ sizeHandler(); } 
+                                         
+           });
+  </script>
+  <div class="check-fonts">
+   <p class="check-font-1">
+    test 1
+   </p>
+  </div>
+  <canvas class="ani_hack" height="1080" id="canvas" width="1920">
+  </canvas>
+  <div class="orientation-msg-container" data-orientation="landscape">
+    <div class="phone-rotation-warning">
+      <div class="phone-silhouette"></div>
+    </div>
+  </div>
+  <div id="block_game" style="position: fixed; background-color: transparent; top: 0px; left: 0px; width: 100%; height: 100%; display:none">
+  </div>
+ </body>
+</html>

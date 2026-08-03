@@ -171,6 +171,12 @@
           "ImageURL": "BasketballLegends/card.png",
           "Link": "BasketballLegends/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "Foosball",
+          "ImageURL": "img/foosball.png",
+          "Link": "Foosball/",
+          "MobileFriendly": true
         }
       ]
     },
