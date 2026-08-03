@@ -141,6 +141,23 @@
  <body ondragstart="return false;" ondrop="return false;">
   <div style="position: fixed; background-color: transparent; top: 0px; left: 0px; width: 100%; height: 100%">
   </div>
+<script>
+    (function() {
+        function enableFullscreen() {
+            const docEl = document.documentElement;
+            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (requestFullScreen) {
+                requestFullScreen.call(docEl).catch(e => {});
+            }
+        }
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            ['touchstart', 'click', 'keydown'].forEach(event => {
+                window.addEventListener(event, enableFullscreen, { once: true });
+            });
+        }
+    })();
+</script>
   <script>
    $(document).ready(function(){
                      var oMain = new CMain({  
