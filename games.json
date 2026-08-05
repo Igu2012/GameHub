@@ -249,6 +249,12 @@
           "ImageURL": "ADGAC/card.png",
           "Link": "ADGAC/",
           "MobileFriendly": false
+        },
+        {
+          "Name": "Balatro",
+          "ImageURL": "Balatro/card.png",
+          "Link": "Balatro/",
+          "MobileFriendly": true
         }
       ]
     },
@@ -291,6 +297,12 @@
           "ImageURL": "BadPiggies/card.png",
           "Link": "BadPiggies/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "Snail Bob",
+          "ImageURL": "SnailBob/card.png",
+          "Link": "SnailBob/",
+          "MobileFriendly": false
         }
       ]
     }
