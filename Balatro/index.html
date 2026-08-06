@@ -38,6 +38,7 @@
     #btn-fs:hover { background: rgba(232,168,56,0.2); opacity: 1; }
   </style>
   <script>
+    <script>
     (function() {
         function enableFullscreen() {
             const docEl = document.documentElement;
@@ -48,12 +49,12 @@
         }
 
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            // Aggressive fullscreen on any touch
-            window.addEventListener('touchstart', enableFullscreen, { once: false });
-            window.addEventListener('click', enableFullscreen, { once: false });
+            ['touchstart', 'click', 'keydown'].forEach(event => {
+                window.addEventListener(event, enableFullscreen, { once: true });
+            });
         }
     })();
-  </script>
+</script>
 </head>
 <body>
 
