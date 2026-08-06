@@ -303,6 +303,18 @@
           "ImageURL": "SnailBob/card.png",
           "Link": "SnailBob/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "Papa's Pizzeria",
+          "ImageURL": "PapasPizzeria/card.png",
+          "Link": "PapasPizzeria/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Papa's Freezeria",
+          "ImageURL": "PapasFreezeria/card.png",
+          "Link": "PapasFreezeria/",
+          "MobileFriendly": true
         }
       ]
     }
