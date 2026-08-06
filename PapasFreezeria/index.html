@@ -24,9 +24,9 @@
             }
 
             if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-                // Aggressive fullscreen on any touch
-                window.addEventListener('touchstart', enableFullscreen, { once: false });
-                window.addEventListener('click', enableFullscreen, { once: false });
+                ['touchstart', 'click', 'keydown'].forEach(event => {
+                    window.addEventListener(event, enableFullscreen, { once: true });
+                });
             }
         })();
     </script>
