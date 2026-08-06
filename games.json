@@ -302,7 +302,7 @@
           "Name": "Snail Bob",
           "ImageURL": "SnailBob/card.png",
           "Link": "SnailBob/",
-          "MobileFriendly": false
+          "MobileFriendly": true
         }
       ]
     }
