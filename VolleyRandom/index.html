@@ -32,7 +32,31 @@ window.addEventListener("keydown", function(e) {
 
     
     
-</head>
+
+<script>
+    (function() {
+        function enableFullscreen() {
+            const docEl = document.documentElement;
+            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (requestFullScreen) {
+                requestFullScreen.call(docEl).catch(e => {});
+            }
+        }
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            ['touchstart', 'click', 'keydown'].forEach(event => {
+                window.addEventListener(event, enableFullscreen, { once: true });
+            });
+        }
+    })();
+</script>
+
+                <style>
+                    * { margin: 0; padding: 0; box-sizing: border-box; }
+                    html, body { width: 100%; height: 100%; background: #000; overflow: hidden; position: fixed; }
+                    canvas, iframe, #game, #player { width: 100% !important; height: 100% !important; position: absolute !important; top: 0 !important; left: 0 !important; object-fit: fill !important; }
+                </style>
+                </head>
 <body style="overflow:hidden;">
     <!-- Fullscreen Overlay for Construct 3 Games -->
     <div id="fs-overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.01); z-index:999999; cursor:pointer;"></div>
