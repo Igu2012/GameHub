@@ -1,152 +1,233 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Balatro</title>
+    <script>
+        window.alert = function() {};
+        window.onerror = function() { return true; };
 
-  <!-- ── SEO ─────────────────────────────────────────────────── -->
-  <title>Balatro</title>
-  <meta name="description" content="Play the Balatro GBA fan demake directly in your browser." />
-  <link rel="icon" type="image/png" href="../img/balatro.png">
-
-  <!-- ── Emulator styles ──────────────────────────────────────── -->
-  <link rel="stylesheet" href="https://cdn.emulatorjs.org/stable/data/emulator.min.css" />
-
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body {
-      width: 100%; height: 100%;
-      background: #000;
-      overflow: hidden;
-      touch-action: none;
-    }
-
-    /* ── Emulator fills viewport ────────────────────────────── */
-    #game { position: fixed; inset: 0; width: 100vw; height: 100vh; }
-
-    /* ── Fullscreen button (top-right) ──────────────────────── */
-    #btn-fs {
-      position: fixed; top: 10px; right: 10px; z-index: 9999;
-      background: rgba(10,10,22,0.7);
-      border: 1px solid rgba(232,168,56,0.4);
-      border-radius: 6px; padding: 5px 12px;
-      color: #e8a838; font: 700 0.72rem 'Segoe UI', sans-serif;
-      cursor: pointer; user-select: none; letter-spacing: 1px;
-      transition: background 0.15s, opacity 0.15s;
-      opacity: 0.6;
-    }
-    #btn-fs:hover { background: rgba(232,168,56,0.2); opacity: 1; }
-  </style>
-  <script>
-    
-
-<script>
-    (function() {
-        function enableFullscreen() {
-            const docEl = document.documentElement;
-            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            if (requestFullScreen) {
-                requestFullScreen.call(docEl).catch(e => {});
+        (function() {
+            function enableFullscreen() {
+                const docEl = document.documentElement;
+                const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+                if (requestFullScreen) {
+                    requestFullScreen.call(docEl).catch(e => {});
+                }
+            }
+            if (/iPhone|iPad|iPod|Android|Mobile|Tablet/i.test(navigator.userAgent)) {
+                ['touchstart', 'click', 'keydown'].forEach(event => {
+                    window.addEventListener(event, enableFullscreen, { once: true });
+                });
+            }
+        })();
+    </script>
+    <script>
+        const PREFIX = "Balatro_Balatro_";
+        const originalOpen = indexedDB.open;
+        const originalDeleteDatabase = indexedDB.deleteDatabase;
+        indexedDB.open = function(name, version) {
+            const prefixedName = PREFIX + name;
+            return version !== undefined ? originalOpen.call(this, prefixedName, version) : originalOpen.call(this, prefixedName);
+        };
+        indexedDB.deleteDatabase = function(name) {
+            const prefixedName = PREFIX + name;
+            return originalDeleteDatabase.call(this, prefixedName);
+        };
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { width: 100vw; height: 100vh; background-color: #000; overflow: hidden; font-family: sans-serif; }
+        #canvas { position: absolute; top: 0; left: 0; width: 100vw; height: 100vh; display: none; }
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            z-index: 9999;
+        }
+        .loading-text { font-size: 24px; margin-bottom: 10px; }
+        .loading-progress { font-size: 18px; color: #aaa; }
+        #orientation {
+            margin: 0 auto;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url(rotate.png);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: rgb(0, 0, 0);
+            background-size: 25%;
+            z-index: 99999;
+            display: none;
+        }
+        @media screen and (orientation: portrait) {
+            #orientation {
+                display: block;
             }
         }
-
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            ['touchstart', 'click', 'keydown'].forEach(event => {
-                window.addEventListener(event, enableFullscreen, { once: true });
-            });
+        #fullscreen-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 32px;
+            height: 32px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 6px;
+            cursor: pointer;
+            z-index: 9998;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.2s, border-color 0.2s;
         }
-    })();
-</script>
+        @media (hover: none) and (pointer: coarse), (max-width: 1024px) {
+            #fullscreen-btn {
+                display: flex;
+            }
+        }
+        #fullscreen-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: #fff;
+        }
+        #fullscreen-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: #fff;
+        }
+        .emscripten_border { border: none !important; }
+        div[style*="background: red;"] { display: none !important; }
+        div[style*="background-color: red;"] { display: none !important; }
+    </style>
 </head>
 <body>
+    <div id="orientation"></div>
+    <div id="loading-screen">
+        <div class="loading-text">Loading Balatro...</div>
+        <div id="progress-text" class="loading-progress">0.00 MB / 113.25 MB</div>
+    </div>
+    <button id="fullscreen-btn" title="Toggle Fullscreen">
+        <svg viewBox="0 0 24 24">
+            <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+        </svg>
+    </button>
+    <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    
+    <script src="love.min.js"></script>
+    <script>
+        const progressText = document.getElementById('progress-text');
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
 
-<div id="game"></div>
-<div id="btn-fs" title="Fullscreen (F / F11)">&#9974; FS</div>
+        const isMobile = /iPhone|iPad|iPod|Android|Mobile|Tablet|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+            || ('ontouchstart' in window && navigator.maxTouchPoints > 0);
 
-<!-- EmulatorJS (individual scripts to bypass min.js abort bug) -->
-<script src="https://cdn.emulatorjs.org/stable/data/src/emulator.js"></script>
-<script src="https://cdn.emulatorjs.org/stable/data/src/nipplejs.js"></script>
-<script src="https://cdn.emulatorjs.org/stable/data/src/shaders.js"></script>
-<script src="https://cdn.emulatorjs.org/stable/data/src/storage.js"></script>
-<script src="https://cdn.emulatorjs.org/stable/data/src/gamepad.js"></script>
-<script src="https://cdn.emulatorjs.org/stable/data/src/GameManager.js"></script>
-<script src="https://cdn.emulatorjs.org/stable/data/src/socket.io.min.js"></script>
-<script src="https://cdn.emulatorjs.org/stable/data/src/compression.js"></script>
+        fullscreenBtn.addEventListener('click', () => {
+            if (!isMobile) return;
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                const docEl = document.documentElement;
+                if (docEl.requestFullscreen) {
+                    docEl.requestFullscreen();
+                } else if (docEl.webkitRequestFullscreen) {
+                    docEl.webkitRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                }
+            }
+        });
+        
+        window.Module = {
+            INITIAL_MEMORY: 2**28,
+            canvas: document.getElementById('canvas'),
+            printErr: function(text) {
+                if (text && (text.includes('look at the console') || text.includes('SDL'))) return;
+                console.error(text);
+            },
+            arguments: ["game.love"],
+            setStatus: function(text) {
+                if (!text) {
+                    document.getElementById('loading-screen').style.display = 'none';
+                    document.getElementById('canvas').style.display = 'block';
+                }
+            },
+            monitorRunDependencies: function(left) {
+                if (left === 0) {
+                    document.getElementById('loading-screen').style.display = 'none';
+                    document.getElementById('canvas').style.display = 'block';
+                }
+            }
+        };
 
-<script>
-// ── Canvas cover-fill (removes black bars) ──────────────────────
-function fixCanvas() {
-  var canvas = document.querySelector('canvas.ejs_canvas');
-  if (!canvas) { setTimeout(fixCanvas, 200); return; }
-  var vw = window.innerWidth, vh = window.innerHeight;
-  var cw = canvas.width  || canvas.offsetWidth  || 240;
-  var ch = canvas.height || canvas.offsetHeight || 160;
-  // GBA native: 240×160 (3:2). Use actual ratio for cover-fill.
-  var ar = cw / ch;
-  var scale, dW, dH;
-  if (vw / vh > ar) {
-    // viewport is wider → scale to fill width
-    dW = vw; dH = vw / ar;
-  } else {
-    // viewport is taller → scale to fill height
-    dH = vh; dW = vh * ar;
-  }
-  var left = (vw - dW) / 2;
-  var top  = (vh - dH) / 2;
-  var p = canvas.parentElement;
-  p.style.cssText = 'width:100%!important;height:100%!important;overflow:hidden!important;position:relative!important;';
-  canvas.style.cssText =
-    'position:absolute!important;' +
-    'width:'  + dW   + 'px!important;' +
-    'height:' + dH   + 'px!important;' +
-    'left:'   + left + 'px!important;' +
-    'top:'    + top  + 'px!important;';
-}
-window.addEventListener('resize', fixCanvas);
-document.addEventListener('fullscreenchange', function () { setTimeout(fixCanvas, 150); });
+        async function loadSplitScript(parts) {
+            const blobs = [];
+            let totalLoaded = 0;
+            const partSizes = [62914560, 55832348];
+            const totalExpected = partSizes.reduce((a, b) => a + b, 0);
 
-// ── Fullscreen (F / F11 / button) ──────────────────────────────
-function toggleFS() {
-  if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen().catch(function () {});
-  } else {
-    document.exitFullscreen();
-  }
-}
-document.addEventListener('keydown', function (e) {
-  if (e.key === 'f' || e.key === 'F' || e.key === 'F11') {
-    e.preventDefault();
-    toggleFS();
-  }
-});
-document.getElementById('btn-fs').addEventListener('click', toggleFS);
+            for (let i = 0; i < parts.length; i++) {
+                const response = await new Promise((resolve, reject) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('GET', parts[i], true);
+                    xhr.responseType = 'blob';
+                    
+                    xhr.onprogress = function(event) {
+                        const loaded = event.loaded || 0;
+                        const currentLoaded = totalLoaded + loaded;
+                        const currentMB = (currentLoaded / 1024 / 1024).toFixed(2);
+                        const totalMB = (totalExpected / 1024 / 1024).toFixed(2);
+                        progressText.textContent = `${currentMB} MB / ${totalMB} MB`;
+                    };
+                    
+                    xhr.onload = () => resolve(xhr.response);
+                    xhr.onerror = reject;
+                    xhr.send();
+                });
+                blobs.push(response);
+                totalLoaded += partSizes[i] || response.size;
+            }
 
-// ── Start emulator ──────────────────────────────────────────────
-window.EJS_emulator = new EmulatorJS('#game', {
-  gameUrl:     'balatro-gba.gba',
-  dataPath:    'https://cdn.emulatorjs.org/stable/data/',
-  system:      'mgba',
-  color:       '#e8a838',
-  startOnLoad: true,
-  defaultControllers: {
-    0: {
-      0: { value: 'escape',      value2: 'BUTTON_2'            }, // B      = Esc
-      1: { value: 'space',       value2: 'BUTTON_4'            }, // A      = Space
-      2: { value: 'shift',       value2: 'SELECT'              }, // Select = Shift
-      3: { value: 'tab',         value2: 'START'               }, // Start  = Tab
-      4: { value: 'up arrow',    value2: 'DPAD_UP'             },
-      5: { value: 'down arrow',  value2: 'DPAD_DOWN'           },
-      6: { value: 'left arrow',  value2: 'DPAD_LEFT'           },
-      7: { value: 'right arrow', value2: 'DPAD_RIGHT'          },
-      8: { value: 'enter',       value2: 'LEFT_TOP_SHOULDER'   }, // L = Enter      (Play Hand)
-      9: { value: 'backspace',   value2: 'RIGHT_TOP_SHOULDER'  }  // R = Backspace  (Discard)
-    },
-    1: {}, 2: {}, 3: {}
-  }
-});
+            const finalBlob = new Blob(blobs, { type: 'application/javascript' });
+            const script = document.createElement('script');
+            script.src = URL.createObjectURL(finalBlob);
+            return new Promise((resolve) => {
+                script.onload = resolve;
+                document.body.appendChild(script);
+            });
+        }
 
-fixCanvas();
-</script>
-
+        (async () => {
+            try {
+                await loadSplitScript(['module.js.part.aa', 'module.js.part.ab']);
+                
+                const d = await getSource();
+                Module.preRun = [function() {
+                    Module.addRunDependency("fp game.love");
+                    var ptr = Module.getMemory(d.length);
+                    Module['HEAPU8'].set(d, ptr);
+                    Module.FS_createDataFile('/', "game.love", d, true, true, true);
+                    Module.removeRunDependency("fp game.love");
+                }];
+                Love(Module);
+            } catch (e) {
+                console.error("Error loading game:", e);
+                progressText.textContent = "Error loading files.";
+            }
+        })();
+    </script>
 </body>
 </html>
