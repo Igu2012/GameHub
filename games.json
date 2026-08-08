@@ -245,16 +245,16 @@
           "MobileFriendly": false
         },
         {
-          "Name": "A Difficult Game About Climbing",
-          "ImageURL": "ADGAC/card.png",
-          "Link": "ADGAC/",
-          "MobileFriendly": false
-        },
-        {
           "Name": "Balatro",
           "ImageURL": "Balatro/card.png",
           "Link": "Balatro/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "A Difficult Game About Climbing",
+          "ImageURL": "ADGAC/card.png",
+          "Link": "ADGAC/",
+          "MobileFriendly": false
         }
       ]
     },
