@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
+    <script>
+        (function() {
+            function enableFullscreen() {
+                const docEl = document.documentElement;
+                const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+                if (requestFullScreen) {
+                    requestFullScreen.call(docEl).catch(e => {});
+                }
+            }
+            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+                ['touchstart', 'click', 'keydown'].forEach(event => {
+                    window.addEventListener(event, enableFullscreen, { once: true });
+                });
+            }
+        })();
+        var gameInstance = UnityLoader.instantiate("gameContainer", "Build/Bad Piggies.json", {onProgress: UnityProgress});
+    </script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -35,23 +52,7 @@
     </style>
     <script src="TemplateData/UnityProgress.js"></script>
     <script src="Build/UnityLoader.js"></script>
-    <script>
-        (function() {
-            function enableFullscreen() {
-                const docEl = document.documentElement;
-                const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-                if (requestFullScreen) {
-                    requestFullScreen.call(docEl).catch(e => {});
-                }
-            }
-            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-                ['touchstart', 'click', 'keydown'].forEach(event => {
-                    window.addEventListener(event, enableFullscreen, { once: true });
-                });
-            }
-        })();
-        var gameInstance = UnityLoader.instantiate("gameContainer", "Build/Bad Piggies.json", {onProgress: UnityProgress});
-    </script>
+    
 
 <script>
     (function() {

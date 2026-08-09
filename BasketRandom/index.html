@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script>
+    (function() {
+        function enableFullscreen() {
+            const docEl = document.documentElement;
+            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (requestFullScreen) {
+                requestFullScreen.call(docEl).catch(e => {});
+            }
+        }
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            ['touchstart', 'click', 'keydown'].forEach(event => {
+                window.addEventListener(event, enableFullscreen, { once: true });
+            });
+        }
+    })();
+</script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     
@@ -32,23 +49,7 @@ window.addEventListener("keydown", function(e) {
 
 
 
-<script>
-    (function() {
-        function enableFullscreen() {
-            const docEl = document.documentElement;
-            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            if (requestFullScreen) {
-                requestFullScreen.call(docEl).catch(e => {});
-            }
-        }
 
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            ['touchstart', 'click', 'keydown'].forEach(event => {
-                window.addEventListener(event, enableFullscreen, { once: true });
-            });
-        }
-    })();
-</script>
 
                 <style>
                     * { margin: 0; padding: 0; box-sizing: border-box; }

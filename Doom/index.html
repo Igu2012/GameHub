@@ -15,6 +15,23 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   gtag('config', 'G-1D8RGMK92S');
 </script>
 <head>
+    <script>
+    (function() {
+        function enableFullscreen() {
+            const docEl = document.documentElement;
+            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (requestFullScreen) {
+                requestFullScreen.call(docEl).catch(e => {});
+            }
+        }
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            ['touchstart', 'click', 'keydown'].forEach(event => {
+                window.addEventListener(event, enableFullscreen, { once: true });
+            });
+        }
+    })();
+</script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     
@@ -70,23 +87,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 
 
-<script>
-    (function() {
-        function enableFullscreen() {
-            const docEl = document.documentElement;
-            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            if (requestFullScreen) {
-                requestFullScreen.call(docEl).catch(e => {});
-            }
-        }
 
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            ['touchstart', 'click', 'keydown'].forEach(event => {
-                window.addEventListener(event, enableFullscreen, { once: true });
-            });
-        }
-    })();
-</script>
 </head>
 <body>
 <!-- Google Tag Manager (noscript) -->

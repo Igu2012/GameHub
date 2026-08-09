@@ -1,6 +1,23 @@
 <!doctype html>
 <html>
 <head>
+    <script>
+    (function() {
+        function enableFullscreen() {
+            const docEl = document.documentElement;
+            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (requestFullScreen) {
+                requestFullScreen.call(docEl).catch(e => {});
+            }
+        }
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            ['touchstart', 'click', 'keydown'].forEach(event => {
+                window.addEventListener(event, enableFullscreen, { once: true });
+            });
+        }
+    })();
+</script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     <title>Plants vs Zombies</title>
@@ -38,23 +55,7 @@
     </style>
     
 
-<script>
-    (function() {
-        function enableFullscreen() {
-            const docEl = document.documentElement;
-            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            if (requestFullScreen) {
-                requestFullScreen.call(docEl).catch(e => {});
-            }
-        }
 
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            ['touchstart', 'click', 'keydown'].forEach(event => {
-                window.addEventListener(event, enableFullscreen, { once: true });
-            });
-        }
-    })();
-</script>
 </head>
 <body style="margin:0; background:#000; display:flex; justify-content:center; align-items:center; height:100vh; overflow:hidden">
   <base href="https://cdn.jsdelivr.net/gh/web-ports/pvz@latest/">

@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
+    <script>
+    (function() {
+        function enableFullscreen() {
+            const docEl = document.documentElement;
+            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (requestFullScreen) {
+                requestFullScreen.call(docEl).catch(e => {});
+            }
+        }
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            ['touchstart', 'click', 'keydown'].forEach(event => {
+                window.addEventListener(event, enableFullscreen, { once: true });
+            });
+        }
+    })();
+</script>
     <link rel="icon" type="image/png" href="../img/20minutestilldawn.png">
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -60,23 +77,7 @@
     </style>
     
 
-<script>
-    (function() {
-        function enableFullscreen() {
-            const docEl = document.documentElement;
-            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            if (requestFullScreen) {
-                requestFullScreen.call(docEl).catch(e => {});
-            }
-        }
 
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            ['touchstart', 'click', 'keydown'].forEach(event => {
-                window.addEventListener(event, enableFullscreen, { once: true });
-            });
-        }
-    })();
-</script>
 </head>
 <body>
     <div id="unity-container">

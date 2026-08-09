@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
+    <script>
+    (function() {
+        function enableFullscreen() {
+            const docEl = document.documentElement;
+            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
+            if (requestFullScreen) {
+                requestFullScreen.call(docEl).catch(e => {});
+            }
+        }
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+            ['touchstart', 'click', 'keydown'].forEach(event => {
+                window.addEventListener(event, enableFullscreen, { once: true });
+            });
+        }
+    })();
+</script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     
@@ -25,23 +42,7 @@ body { background: #231F20; color: #fff; font-family: sans-serif; margin: 0; ove
 
 
 
-<script>
-    (function() {
-        function enableFullscreen() {
-            const docEl = document.documentElement;
-            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            if (requestFullScreen) {
-                requestFullScreen.call(docEl).catch(e => {});
-            }
-        }
 
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            ['touchstart', 'click', 'keydown'].forEach(event => {
-                window.addEventListener(event, enableFullscreen, { once: true });
-            });
-        }
-    })();
-</script>
 </head>
 <body>
 <div id="unity-container">
