@@ -177,6 +177,12 @@
           "ImageURL": "img/foosball.png",
           "Link": "Foosball/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "Classic Pool Game",
+          "ImageURL": "ClassicPoolGame/card.png",
+          "Link": "ClassicPoolGame/",
+          "MobileFriendly": false
         }
       ]
     },
@@ -219,12 +225,6 @@
           "ImageURL": "TankTrouble/card.png",
           "Link": "TankTrouble/",
           "MobileFriendly": false
-        },
-        {
-          "Name": "Classic Pool Game",
-          "ImageURL": "ClassicPoolGame/card.png",
-          "Link": "ClassicPoolGame/",
-          "MobileFriendly": true
         }
       ]
     },
