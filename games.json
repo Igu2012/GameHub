@@ -221,9 +221,9 @@
           "MobileFriendly": false
         },
         {
-          "Name": "8 Ball Pool",
-          "ImageURL": "8BallPool/card.png",
-          "Link": "8BallPool/",
+          "Name": "Classic Pool Game",
+          "ImageURL": "ClassicPoolGame/card.png",
+          "Link": "ClassicPoolGame/",
           "MobileFriendly": true
         }
       ]
