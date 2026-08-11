@@ -177,12 +177,6 @@
           "ImageURL": "img/foosball.png",
           "Link": "Foosball/",
           "MobileFriendly": true
-        },
-        {
-          "Name": "8 Ball Pool",
-          "ImageURL": "8BallPool/card.png",
-          "Link": "8BallPool/",
-          "MobileFriendly": true
         }
       ]
     },
