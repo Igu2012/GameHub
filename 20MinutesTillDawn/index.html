@@ -18,7 +18,7 @@
         }
     })();
 </script>
-    <link rel="icon" type="image/png" href="../img/20minutestilldawn.png">
+    <link rel="icon" type="image/png" href="favicon.ico">
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
@@ -147,7 +147,7 @@
                 mergeFiles(getParts("Build/20minutes.wasm", 2)),
             ]);
             var buildUrl = "Build";
-            var loaderUrl = buildUrl + "/20-minutes.loader.js";
+            var loaderUrl = buildUrl + "/20minutes.loader.js";
             var config = {
                 dataUrl: dataUrl,
                 frameworkUrl: "Build/20minutes.framework.js",
@@ -182,6 +182,10 @@
                 }).catch((message) => {
                     alert(message);
                 });
+            };
+            script.onerror = () => {
+                statusText.textContent = "Erro ao carregar o inicializador do jogo.";
+                console.error("Não foi possível carregar:", loaderUrl);
             };
             document.body.appendChild(script);
         })();

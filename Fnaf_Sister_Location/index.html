@@ -193,9 +193,12 @@
         const map = new Map();
 
         function updateProgress(text, percent) {
-            document.title = percent + '% ' + gametitle
-            document.getElementById('percentage').innerHTML = percent + '%';
-            document.getElementById('bar').style.width = percent + '%';
+            const safePercent = Number.isFinite(percent)
+                ? Math.max(0, Math.min(100, Math.floor(percent)))
+                : 0;
+            document.title = safePercent + '% ' + gametitle;
+            document.getElementById('percentage').innerHTML = safePercent + '%';
+            document.getElementById('bar').style.width = safePercent + '%';
             document.getElementById('stage').innerHTML = text;
         }
 
@@ -320,7 +323,10 @@
                         }).then((data) => {
                             buffers.push(data);
                             loadedSize += data.byteLength;
-                            updateProgress('LOCATING ARCHIVE...', Math.floor((loadedSize / totalSize / 2) * 100));
+                            const progress = Number.isFinite(totalSize) && totalSize > 0
+                                ? Math.floor((loadedSize / totalSize) * 50)
+                                : Math.floor(((index + 1) / fileParts.length) * 50);
+                            updateProgress('LOCATING ARCHIVE...', progress);
                             fetchPart(index + 1);
                         }).catch(reject);
                     }

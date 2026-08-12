@@ -16,7 +16,6 @@
                 });
             }
         })();
-        var gameInstance = UnityLoader.instantiate("gameContainer", "Build/Bad Piggies.json", {onProgress: UnityProgress});
     </script>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <meta charset="utf-8">
@@ -76,5 +75,19 @@
     <div class="webgl-content">
         <div id="gameContainer"></div>
     </div>
+    <script>
+        window.addEventListener("load", function () {
+            if (typeof UnityLoader === "undefined") {
+                console.error("UnityLoader não foi carregado.");
+                return;
+            }
+
+            window.gameInstance = UnityLoader.instantiate(
+                "gameContainer",
+                "Build/Bad Piggies.json",
+                { onProgress: UnityProgress }
+            );
+        });
+    </script>
 </body>
 </html>

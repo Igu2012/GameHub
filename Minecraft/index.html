@@ -191,11 +191,9 @@
                 const gameLink = this.getAttribute('data-link');
                 const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-                if (isMobile) {
-                    window.location.href = gameLink; 
-                } else {
-                    window.open(gameLink, '_blank');
-                }
+                // Abre no mesmo contexto e remove a tela de versões do histórico.
+                // Assim, o botão Voltar do navegador retorna ao GameHub.
+                window.location.replace(gameLink);
             });
         });
     </script>

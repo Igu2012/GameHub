@@ -20,6 +20,25 @@
             }
         })();
     </script>
+
+        <script>
+            (function () {
+                const isMobileDevice = /iPhone|iPad|iPod|Android|Mobile|Tablet/i.test(navigator.userAgent)
+                    || ('ontouchstart' in window && navigator.maxTouchPoints > 0);
+
+                if (isMobileDevice || !window.Element) return;
+
+                ['requestFullscreen', 'webkitRequestFullscreen', 'mozRequestFullScreen', 'msRequestFullscreen']
+                    .forEach(function (method) {
+                        const nativeMethod = Element.prototype[method];
+                        if (typeof nativeMethod !== 'function') return;
+                        Element.prototype[method] = function () {
+                            // Impede chamadas automáticas da engine no desktop.
+                            return Promise.resolve();
+                        };
+                    });
+            })();
+        </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui">
     <link rel="icon" type="image/png" href="favicon.png">
@@ -94,7 +113,7 @@
             align-items: center;
             transition: background-color 0.2s, border-color 0.2s;
         }
-        @media (hover: none) and (pointer: coarse), (max-width: 1024px) {
+        @media (hover: none) and (pointer: coarse) {
             #fullscreen-btn {
                 display: flex;
             }

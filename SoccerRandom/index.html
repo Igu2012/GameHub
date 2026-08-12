@@ -66,6 +66,12 @@ window.addEventListener("keydown", function(e) {
     <script>
         (function() {
             const overlay = document.getElementById('fs-overlay');
+            const isMobile = /iPhone|iPad|iPod|Android|Mobile|Tablet/i.test(navigator.userAgent);
+            if (!isMobile) {
+                overlay.remove();
+                return;
+            }
+
             function enableFullscreen() {
                 const docEl = document.documentElement;
                 const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
