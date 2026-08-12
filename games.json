@@ -321,6 +321,30 @@
           "ImageURL": "PapasFreezeria/card.png",
           "Link": "PapasFreezeria/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "Papa's Burgeria",
+          "ImageURL": "PapasBurgeria/card.png",
+          "Link": "PapasBurgeria/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Papa's Pastaria",
+          "ImageURL": "PapasPastaria/card.png",
+          "Link": "PapasPastaria/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Snail Bob 2",
+          "ImageURL": "SnailBob2/card.png",
+          "Link": "SnailBob2/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Snail Bob 3",
+          "ImageURL": "SnailBob3/card.png",
+          "Link": "SnailBob3/",
+          "MobileFriendly": true
         }
       ]
     }

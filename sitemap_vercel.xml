@@ -180,4 +180,20 @@
     <loc>https://gamehubjogos.vercel.app/SnailBob/</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/PapasBurgeria/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/PapasPastaria/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/SnailBob2/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/SnailBob3/</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>
