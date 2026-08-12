@@ -311,9 +311,21 @@
           "MobileFriendly": true
         },
         {
-          "Name": "Snail Bob",
+          "Name": "Snail Bob 1",
           "ImageURL": "SnailBob/card.png",
           "Link": "SnailBob/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Snail Bob 2",
+          "ImageURL": "SnailBob2/card.png",
+          "Link": "SnailBob2/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Snail Bob 3",
+          "ImageURL": "SnailBob3/card.png",
+          "Link": "SnailBob3/",
           "MobileFriendly": true
         },
         {
@@ -338,18 +350,6 @@
           "Name": "Papa's Pastaria",
           "ImageURL": "PapasPastaria/card.png",
           "Link": "PapasPastaria/",
-          "MobileFriendly": true
-        },
-        {
-          "Name": "Snail Bob 2",
-          "ImageURL": "SnailBob2/card.png",
-          "Link": "SnailBob2/",
-          "MobileFriendly": true
-        },
-        {
-          "Name": "Snail Bob 3",
-          "ImageURL": "SnailBob3/card.png",
-          "Link": "SnailBob3/",
           "MobileFriendly": true
         }
       ]
