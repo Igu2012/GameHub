@@ -123,6 +123,12 @@
           "ImageURL": "BaldiRemastered/card.png",
           "Link": "BaldiRemastered/",
           "MobileFriendly": false
+        },
+        {
+          "Name": "Buckshot Roulette",
+          "ImageURL": "BuckshotRoulette/card.png",
+          "Link": "BuckshotRoulette/",
+          "MobileFriendly": true
         }
       ]
     },

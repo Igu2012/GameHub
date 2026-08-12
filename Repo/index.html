@@ -1,194 +1,155 @@
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
-    <script>
-    (function() {
-        function enableFullscreen() {
-            const docEl = document.documentElement;
-            const requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            if (requestFullScreen) {
-                requestFullScreen.call(docEl).catch(e => {});
-            }
-        }
-
-        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-            ['touchstart', 'click', 'keydown'].forEach(event => {
-                window.addEventListener(event, enableFullscreen, { once: true });
-            });
-        }
-    })();
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>R.E.P.O.</title>
+  <link rel="icon" href="favicon.ico">
+  <script>
+(function () {
+  const isMobile = /iPhone|iPad|iPod|Android|Mobile|Tablet/i.test(navigator.userAgent);
+  if (!isMobile) return;
+  function enableFullscreen() {
+    const root = document.documentElement;
+    const request = root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen;
+    if (request && !document.fullscreenElement && !document.webkitFullscreenElement) {
+      request.call(root).catch(() => {});
+    }
+  }
+  ['touchstart', 'click', 'keydown'].forEach((eventName) => {
+    window.addEventListener(eventName, enableFullscreen, { once: true, passive: eventName === 'touchstart' });
+  });
+})();
 </script>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
-    <title>R.E.P.O</title>
-    <style>
-        html, body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            height: 100%;
-            width: 100%;
-            background: #000;
-        }
-
-        #unity-container {
-            width: 100%;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-
-        #loading-screen { 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 100%; 
-            background: #000; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            z-index: 9999; 
-        }
-        .loading-content { text-align: center; }
-        .loading-text { color: white; font-size: 32px; font-family: sans-serif; margin-bottom: 20px; letter-spacing: 2px; }
-        .progress-container { width: 300px; height: 10px; background: #333; border-radius: 5px; overflow: hidden; }
-        .progress-bar { width: 0%; height: 100%; background: white; transition: width 0.3s ease; }
-    </style>
-
-
-
-
+  <style>
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #111; color: #fff; font-family: Arial, sans-serif; }
+#game-container { position: relative; width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+canvas { width: 100%; height: 100%; display: block; background: #000; outline: none; }
+#loading-ui { position: absolute; z-index: 10; width: min(320px, 72vw); text-align: center; pointer-events: none; }
+#status-text { font-size: 14px; text-transform: uppercase; letter-spacing: 1px; color: #f4f4f4; }
+#bar-container { width: 100%; height: 6px; margin-top: 12px; overflow: hidden; border-radius: 4px; background: #343434; }
+#bar-fill { width: 0%; height: 100%; border-radius: 4px; background: #ededed; transition: width 0.12s linear; }
+#error-box { display: none; margin-top: 14px; color: #ff8d8d; font-size: 12px; line-height: 1.4; }
+</style>
 </head>
 <body>
+  <div id="game-container">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <div id="loading-ui"><div id="status-text">loading data</div><div id="bar-container"><div id="bar-fill"></div></div><div id="error-box"></div></div>
+  </div>
+  <script>
+const canvas = document.querySelector('#unity-canvas');
+const loadingUI = document.querySelector('#loading-ui');
+const statusText = document.querySelector('#status-text');
+const barFill = document.querySelector('#bar-fill');
+const errorBox = document.querySelector('#error-box');
+let loadedBytes = 0;
+let expectedBytes = 0;
 
-    <div id="loading-screen">
-      <div class="loading-content">
-        <div class="loading-text">LOADING... 0%</div>
-        <div class="progress-container"><div class="progress-bar"></div></div>
-      </div>
-    </div>
-
-    <div id="unity-container" class="unity-desktop" hidden>
-        <canvas id="unity-canvas" tabindex="-1"></canvas>
-    </div>
-
-    <script>
-        var container = document.querySelector("#unity-container");
-        var canvas = document.querySelector("#unity-canvas");
-        
-        let max = 0;
-        let done = 0;
-
-        function updateProgress() {
-            const progress = (done / max) * 100;
-            const bar = document.querySelector(".progress-bar");
-            const text = document.querySelector(".loading-text");
-            if (bar) bar.style.width = progress + "%";
-            if (text) text.textContent = `LOADING... ${Math.round(progress)}%`;
-        }
-
-        function mergeFiles(fileParts) {
-            return new Promise((resolve, reject) => {
-                let buffers = [];
-
-                function fetchPart(index) {
-                    if (index >= fileParts.length) {
-                        let mergedBlob = new Blob(buffers);
-                        let mergedFileUrl = URL.createObjectURL(mergedBlob);
-                        resolve(mergedFileUrl);
-                        return;
-                    }
-                    const partUrl = fileParts[index];
-                    fetch(partUrl).then((response) => {
-                        if (!response.ok) {
-                            const contentType = response.headers.get("Content-Type");
-                            if (contentType && contentType.includes("text/html")) {
-                                throw new Error(`File not found or server returned HTML for: ${partUrl} (Status: ${response.status})`);
-                            } else {
-                                throw new Error(`Failed to load file: ${partUrl} (Status: ${response.status})`);
-                            }
-                        }
-                        return response.arrayBuffer();
-                    }).then((data) => {
-                        buffers.push(data);
-                        done++;
-                        updateProgress();
-                        fetchPart(index + 1);
-                    }).catch(reject);
-                }
-                fetchPart(0);
-            });
-        }
-
-        function getParts(file, start, end) {
-            let parts = [];
-            for (let i = start; i <= end; i++) {
-                parts.push(file + ".part" + i);
-            }
-            max += end;
-            return parts;
-        }
-
-        Promise.all([
-            mergeFiles(getParts("Build/NewestBuild.wasm.gz", 1, 3)),
-            mergeFiles(getParts("Build/NewestBuild.data.gz", 1, 16))
-        ]).then(([wasmUrl, dataUrl]) => {
-            container.hidden = false;
-            var buildUrl = "Build";
-            var loaderUrl = buildUrl + "/NewestBuild.loader.js";
-            var config = {
-                dataUrl: dataUrl,
-                frameworkUrl: buildUrl + "/NewestBuild.framework.js.gz",
-                codeUrl: wasmUrl,
-                streamingAssetsUrl: "StreamingAssets",
-                companyName: "Stupid Game",
-                productName: "R.E.P.O",
-                productVersion: "0.1"
-            };
-
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                canvas.style.width = window.innerWidth + "px";
-                canvas.style.height = window.innerHeight + "px";
-            }
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-
-            var script = document.createElement("script");
-            script.src = loaderUrl;
-            script.onload = () => {
-                createUnityInstance(canvas, config, (progress) => {
-                    // Unity internal progress
-                }).then((unityInstance) => {
-                    document.getElementById("loading-screen").style.display = "none";
-                }).catch((message) => {
-                    alert(message);
-                });
-            };
-            document.body.appendChild(script);
-        }).catch(err => {
-            console.error(err);
-            alert("Error loading game: " + err.message);
-        });
-
-        // Fullscreen Logic
-        function toggleFullScreen() {
-            var doc = window.document;
-            var docEl = doc.documentElement;
-            var request = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-            if (!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-                if (request) request.call(docEl).catch(e => {});
-            }
-        }
-        setInterval(toggleFullScreen, 2000);
-        ['click', 'touchstart', 'keydown'].forEach(ev => window.addEventListener(ev, toggleFullScreen, { passive: true }));
-    </script>
+function formatMB(bytes) {
+  return (bytes / (1024 * 1024)).toFixed(2);
+}
+function updateDownloadStatus() {
+  const progress = expectedBytes > 0 ? Math.min(100, (loadedBytes / expectedBytes) * 100) : 0;
+  barFill.style.width = progress + '%';
+  statusText.textContent = expectedBytes > 0
+    ? `loading... ${formatMB(loadedBytes)} MB / ${formatMB(expectedBytes)} MB`
+    : `loading... ${formatMB(loadedBytes)} MB`;
+}
+async function fetchWithProgress(url) {
+  const response = await fetch(url);
+  if (!response.ok || !response.body) throw new Error(`Unable to load ${url} (${response.status})`);
+  const length = Number(response.headers.get('content-length')) || 0;
+  expectedBytes += length;
+  updateDownloadStatus();
+  const reader = response.body.getReader();
+  const chunks = [];
+  let received = 0;
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+    received += value.byteLength;
+    loadedBytes += value.byteLength;
+    updateDownloadStatus();
+  }
+  const output = new Uint8Array(received);
+  let offset = 0;
+  for (const chunk of chunks) { output.set(chunk, offset); offset += chunk.byteLength; }
+  return output.buffer;
+}
+async function mergeFiles(parts) {
+  const buffers = await Promise.all(parts.map(fetchWithProgress));
+  return URL.createObjectURL(new Blob(buffers));
+}
+function partNames(file, count, padding) {
+  return Array.from({ length: count }, (_, index) => {
+    const number = String(index + 1).padStart(padding, '0');
+    return `${file}.part${number}`;
+  });
+}
+function showError(error) {
+  console.error(error);
+  statusText.textContent = 'loading failed';
+  errorBox.textContent = error && error.message ? error.message : String(error);
+  errorBox.style.display = 'block';
+}
+async function bootUnity(options) {
+  try {
+    const [dataUrl, wasmUrl] = await Promise.all([
+      mergeFiles(partNames(options.dataFile, options.dataParts, options.padding || 0)),
+      mergeFiles(partNames(options.wasmFile, options.wasmParts, options.padding || 0)),
+    ]);
+    const config = {
+      dataUrl,
+      frameworkUrl: options.frameworkUrl,
+      codeUrl: wasmUrl,
+      streamingAssetsUrl: 'StreamingAssets',
+      companyName: options.companyName,
+      productName: options.productName,
+      productVersion: options.productVersion,
+    };
+    if (/iPhone|iPad|iPod|Android|Mobile|Tablet/i.test(navigator.userAgent)) {
+      config.devicePixelRatio = 1;
+    } else {
+      const resize = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+      };
+      resize();
+      window.addEventListener('resize', resize);
+    }
+    statusText.textContent = 'starting game';
+    barFill.style.width = '100%';
+    const script = document.createElement('script');
+    script.src = options.loaderUrl;
+    script.onload = () => createUnityInstance(canvas, config, (progress) => {
+      barFill.style.width = (100 * progress) + '%';
+      statusText.textContent = 'starting game';
+    }).then(() => { loadingUI.style.display = 'none'; }).catch(showError);
+    script.onerror = () => showError(new Error(`Unable to load ${options.loaderUrl}`));
+    document.body.appendChild(script);
+  } catch (error) {
+    showError(error);
+  }
+}
+</script>
+  <script>
+bootUnity({
+  dataFile: 'Build/NewestBuild.data.gz',
+  dataParts: 16,
+  wasmFile: 'Build/NewestBuild.wasm.gz',
+  wasmParts: 3,
+  padding: 0,
+  frameworkUrl: 'Build/NewestBuild.framework.js.gz',
+  loaderUrl: 'Build/NewestBuild.loader.js',
+  companyName: 'Stupid Game',
+  productName: 'R.E.P.O.',
+  productVersion: '0.1',
+});
+</script>
 </body>
 </html>
