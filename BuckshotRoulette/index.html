@@ -47,7 +47,8 @@ canvas { width: 100%; height: 100%; display: block; background: #000; outline: n
   const barFill = document.querySelector('#bar-fill');
   const errorBox = document.querySelector('#error-box');
   let loadedBytes = 0;
-  let expectedBytes = 0;
+  // Soma fixa de todos os arquivos .pck e .wasm divididos do jogo.
+  const expectedBytes = 388150053;
   function formatMB(bytes) { return (bytes / (1024 * 1024)).toFixed(2); }
   function update() {
     const percent = expectedBytes ? Math.min(100, 100 * loadedBytes / expectedBytes) : 0;
@@ -57,7 +58,6 @@ canvas { width: 100%; height: 100%; display: block; background: #000; outline: n
   async function fetchPart(url) {
     const response = await fetch(url);
     if (!response.ok || !response.body) throw new Error(`Unable to load ${url} (${response.status})`);
-    expectedBytes += Number(response.headers.get('content-length')) || 0;
     update();
     const reader = response.body.getReader();
     const chunks = []; let received = 0;
