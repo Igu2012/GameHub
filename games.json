@@ -29,6 +29,30 @@
           "MobileFriendly": true
         },
         {
+          "Name": "Moto X3M 2",
+          "ImageURL": "MotoX3M2/card.png",
+          "Link": "MotoX3M2/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Moto X3M Winter",
+          "ImageURL": "MotoX3MWinter/card.png",
+          "Link": "MotoX3MWinter/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Moto X3M Pool Party",
+          "ImageURL": "MotoX3MPoolParty/card.png",
+          "Link": "MotoX3MPoolParty/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Moto X3M Spooky Land",
+          "ImageURL": "MotoX3MSpookyLand/card.png",
+          "Link": "MotoX3MSpookyLand/",
+          "MobileFriendly": true
+        },
+        {
           "Name": "Level Devil",
           "ImageURL": "LevelDevil/card.png",
           "Link": "LevelDevil/",
@@ -231,6 +255,12 @@
           "ImageURL": "TankTrouble/card.png",
           "Link": "TankTrouble/",
           "MobileFriendly": false
+        },
+        {
+          "Name": "Thumb Fighter",
+          "ImageURL": "ThumbFighter/card.jpg",
+          "Link": "ThumbFighter/",
+          "MobileFriendly": true
         }
       ]
     },
