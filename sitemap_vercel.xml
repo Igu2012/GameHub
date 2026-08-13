@@ -5,6 +5,10 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://gamehubjogos.vercel.app/20MinutesTillDawn/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://gamehubjogos.vercel.app/SubwaySurfers/</loc>
     <priority>0.8</priority>
   </url>
@@ -49,6 +53,18 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://gamehubjogos.vercel.app/GettingOverIt/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/Repo/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/PvZ/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://gamehubjogos.vercel.app/Fnaf_1/</loc>
     <priority>0.8</priority>
   </url>
@@ -81,6 +97,10 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://gamehubjogos.vercel.app/BuckshotRoulette/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://gamehubjogos.vercel.app/SoccerRandom/</loc>
     <priority>0.8</priority>
   </url>
@@ -89,51 +109,39 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://gamehubjogos.vercel.app/BoxingRandom/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/VolleyRandom/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://gamehubjogos.vercel.app/RocketGoal/</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gamehubjogos.app/Wrassling/</loc>
+    <loc>https://gamehubjogos.vercel.app/FootballLegends/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/BasketballLegends/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/Foosball/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/ClassicPoolGame/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/Wrassling/</loc>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://gamehubjogos.vercel.app/BadIceCream/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/Minecraft/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/DuckLife1/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/DuckLife2/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/DuckLife3/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/DuckLife4/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/DuckLife5/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/HenryStickminBreakingTheBank/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/TheRightMix/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/AngryBirds1/</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -161,14 +169,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gamehubjogos.vercel.app/Bloxorz/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/GettingOverIt/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://gamehubjogos.vercel.app/TankTrouble/</loc>
     <priority>0.8</priority>
   </url>
@@ -177,7 +177,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gamehubjogos.vercel.app/FootballLegends/</loc>
+    <loc>https://gamehubjogos.vercel.app/Minecraft/</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -189,31 +189,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gamehubjogos.vercel.app/PvZ/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/BadPiggies/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://gamehubjogos.vercel.app/ADGAC/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/BoxingRandom/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/VolleyRandom/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/BasketballLegends/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/BasketballLegends/</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -221,15 +197,43 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://gamehubjogos.vercel.app/DuckLife1/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/DuckLife2/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/DuckLife3/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/DuckLife4/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/DuckLife5/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/Bloxorz/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/TheRightMix/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/AngryBirds1/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/BadPiggies/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://gamehubjogos.vercel.app/SnailBob/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/PapasBurgeria/</loc>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://gamehubjogos.vercel.app/PapasPastaria/</loc>
     <priority>0.8</priority>
   </url>
   <url>
@@ -261,7 +265,19 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://gamehubjogos.vercel.app/BuckshotRoulette/</loc>
+    <loc>https://gamehubjogos.vercel.app/PapasPizzeria/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/PapasFreezeria/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/PapasBurgeria/</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/PapasPastaria/</loc>
     <priority>0.8</priority>
   </url>
 </urlset>
