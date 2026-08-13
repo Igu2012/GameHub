@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-R1ZCLH6XCR');
+</script>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui, shrink-to-fit=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+
+    <title>Snail Bob 7 Fantasy Story</title>
+
+    <link rel="stylesheet" href="assets/css/app.css" type="text/css" />
+
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<style>
+  #orientation {
+    width: 100%; height: 100%; display: none; position: fixed; inset: 0;
+    z-index: 2147483647; background-color: #000;
+  }
+  #orientation p {
+    font: 40px Arial, sans-serif; color: #fff; text-align: center; width: 80%;
+    position: fixed; top: 50%; margin: 0; transform: translate(15%, -50%);
+  }
+  @media (max-width: 767px) { #orientation p { font-size: 30px; } }
+</style>
+
+<script>
+(() => {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (!isMobile) return;
+  const enterFullscreen = () => {
+    const root = document.documentElement;
+    const request = root.requestFullscreen || root.mozRequestFullScreen || root.webkitRequestFullScreen || root.msRequestFullscreen;
+    if (request && !document.fullscreenElement && !document.webkitFullscreenElement) {
+      Promise.resolve(request.call(root)).catch(() => {});
+    }
+  };
+  const updateOrientation = () => {
+    const notice = document.getElementById('orientation');
+    if (notice) notice.style.display = window.matchMedia('(orientation: portrait)').matches ? 'block' : 'none';
+  };
+  ['touchstart', 'click', 'keydown'].forEach((eventName) => window.addEventListener(eventName, enterFullscreen, { once: true }));
+  window.addEventListener('orientationchange', updateOrientation);
+  window.addEventListener('resize', updateOrientation);
+  document.addEventListener('DOMContentLoaded', updateOrientation);
+})();
+</script>
+</head>
+
+<body style="overflow:hidden;">
+    
+    <div id="content"></div>
+    <div id="orientation" class="orientation-msg-container" data-orientation="landscape" aria-live="polite">
+  <p class="orientation-msg-text">GIRE O DISPOSITIVO</p>
+</div>
+    <div id="loader">Loading ...</div>
+
+    <script type="text/javascript">
+        var gtag;
+
+
+
+        var gameName = "snailbob-7.min.js";
+
+
+
+
+
+
+        //This all here is for cache busting;
+        function addScript(src, buster, callback) {
+            var s = document.createElement('script');
+            s.setAttribute('src', src + '?v=' + buster);
+            if (typeof callback === 'function') {
+                s.onload = callback;
+            }
+            document.body.appendChild(s);
+        }
+
+        window.addEventListener("touchmove", function(event) {
+            event.preventDefault();
+        }, false);
+        if (typeof window.devicePixelRatio != 'undefined' && window.devicePixelRatio > 2) {
+            var meta = document.getElementById("viewport");
+            meta.setAttribute('content', 'width=device-width, initial-scale=' + (2 / window.devicePixelRatio) + ', user-scalable=no');
+        }
+
+
+        addScript('version.js', Date.now(), function() {
+
+            addScript(gameName, version, function() {
+                var game = new SnailBob.Main();
+            });
+
+        });
+    </script>
+</body>
+
+</html>

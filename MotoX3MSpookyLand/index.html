@@ -13,25 +13,37 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <link rel="stylesheet" href="assets/css/app.css" type="text/css" />
-      <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="apple-touch-icon" href="card.png">
+      <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
   <meta name="theme-color" content="#111111">
 <title>Moto X3M Spooky Land</title>
 
+
   <script>
     (() => {
-      const isMobile = /iPhone|iPad|iPod|Android|Mobile|Tablet/i.test(navigator.userAgent);
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       if (!isMobile) return;
+
       const enableFullscreen = () => {
         const root = document.documentElement;
-        const request = root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen;
+        const request = root.requestFullscreen || root.mozRequestFullScreen || root.webkitRequestFullScreen || root.msRequestFullscreen;
         if (request && !document.fullscreenElement && !document.webkitFullscreenElement) {
           Promise.resolve(request.call(root)).catch(() => {});
         }
       };
-      ['touchstart', 'pointerdown', 'keydown'].forEach((eventName) => {
-        window.addEventListener(eventName, enableFullscreen, { once: true, passive: eventName !== 'keydown' });
+
+      const updateOrientation = () => {
+        const notice = document.getElementById('orientation');
+        if (!notice) return;
+        notice.style.display = window.matchMedia('(orientation: portrait)').matches ? 'block' : 'none';
+      };
+
+      ['touchstart', 'click', 'keydown'].forEach((eventName) => {
+        window.addEventListener(eventName, enableFullscreen, { once: true });
       });
+      window.addEventListener('orientationchange', updateOrientation);
+      window.addEventListener('resize', updateOrientation);
+      document.addEventListener('DOMContentLoaded', updateOrientation);
     })();
   </script>
 </head>

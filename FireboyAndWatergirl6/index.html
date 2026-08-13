@@ -1,0 +1,106 @@
+
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta name="robots" content="noindex,nofollow" />
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="cache-control" content="no-cache">
+        <meta http-equiv="expires" content="0">
+        <meta http-equiv="pragma" content="no-cache">
+        
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Fireboy &amp; Watergirl Fairy Tales</title>
+
+        <meta name="description" content="">
+
+        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+        <link rel="manifest" href="manifest.json">
+        <link rel="apple-touch-icon" href="icon-60x60.27cf1c05e49cb739.png">
+        
+
+        <meta name="apple-mobile-web-app-title" content="Fireboy &amp; Watergirl Fairy Tales">
+
+
+       
+        <!-- Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-RT0QL1DRZ4Z"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-RT0QLDRZ4Z', {send_page_view: false});
+            gtag('event', 'page_view', {page_title: 'start', page_path: '/'})
+        </script>
+        <!-- End Google Analytics --> 
+
+
+    <link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+
+<style>
+  #orientation {
+    width: 100%; height: 100%; display: none; position: fixed; inset: 0;
+    z-index: 2147483647; background-color: #000;
+  }
+  #orientation p {
+    font: 40px Arial, sans-serif; color: #fff; text-align: center; width: 80%;
+    position: fixed; top: 50%; margin: 0; transform: translate(15%, -50%);
+  }
+  @media (max-width: 767px) { #orientation p { font-size: 30px; } }
+</style>
+
+<script>
+(() => {
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  if (!isMobile) return;
+  const enterFullscreen = () => {
+    const root = document.documentElement;
+    const request = root.requestFullscreen || root.mozRequestFullScreen || root.webkitRequestFullScreen || root.msRequestFullscreen;
+    if (request && !document.fullscreenElement && !document.webkitFullscreenElement) {
+      Promise.resolve(request.call(root)).catch(() => {});
+    }
+  };
+  const updateOrientation = () => {
+    const notice = document.getElementById('orientation');
+    if (notice) notice.style.display = window.matchMedia('(orientation: portrait)').matches ? 'block' : 'none';
+  };
+  ['touchstart', 'click', 'keydown'].forEach((eventName) => window.addEventListener(eventName, enterFullscreen, { once: true }));
+  window.addEventListener('orientationchange', updateOrientation);
+  window.addEventListener('resize', updateOrientation);
+  document.addEventListener('DOMContentLoaded', updateOrientation);
+})();
+</script>
+</head>
+
+    <body style="margin: 0px; overflow: hidden;">
+<div id="orientation" class="orientation-msg-container" data-orientation="landscape" aria-live="polite">
+  <p class="orientation-msg-text">GIRE O DISPOSITIVO</p>
+</div>
+
+        <script type="text/javascript">
+            window.requireNode = window.require;
+            window.require = undefined; 
+        </script>
+        
+        <!-- build:js scripts/main.js -->
+        <script data-main="js/init.0d0bdc0ab090025d.js" src="bower_components/requirejs/require.js"></script>
+        <!-- endbuild -->
+        
+        <div id="root">
+            <div id="container"></div>
+            <div id="hammer"></div>
+            <div id="debug-fps" style="color:#ff0000; position: absolute; top: 0; left: 20px;"></div>
+        </div>
+        
+        
+    </body>
+</html>

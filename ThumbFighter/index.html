@@ -21,27 +21,29 @@
       user-select: none;
     }
 
-    #rotate-device {
+    #orientation {
+      width: 100%;
+      height: 100%;
       display: none;
       position: fixed;
-      z-index: 2147483647;
       inset: 0;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 14px;
-      padding: 24px;
-      background: #000;
-      color: #fff;
-      font: 700 18px/1.3 Arial, sans-serif;
-      text-align: center;
+      z-index: 2147483647;
+      background-color: #000;
     }
 
-    #rotate-device svg { width: 76px; height: 76px; fill: none; stroke: currentColor; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
-    #rotate-device p { margin: 0; max-width: 270px; }
+    #orientation p {
+      font: 40px Arial, sans-serif;
+      color: #fff;
+      text-align: center;
+      width: 80%;
+      position: fixed;
+      top: 50%;
+      margin: 0;
+      transform: translate(15%, -50%);
+    }
 
-    @media (max-width: 900px) and (orientation: portrait) {
-      #rotate-device.is-visible { display: flex; }
+    @media (max-width: 767px) {
+      #orientation p { font-size: 30px; }
     }
   </style>
   <script>
@@ -55,21 +57,17 @@
         if (request && !document.fullscreenElement && !document.webkitFullscreenElement) {
           Promise.resolve(request.call(root)).catch(() => {});
         }
-        if (screen.orientation && screen.orientation.lock) {
-          screen.orientation.lock('landscape').catch(() => {});
-        }
       };
 
-      ['touchstart', 'pointerdown', 'keydown'].forEach((eventName) => {
-        window.addEventListener(eventName, enterMobileFullscreen, { once: true, passive: eventName !== 'keydown' });
+      ['touchstart', 'click', 'keydown'].forEach((eventName) => {
+        window.addEventListener(eventName, enterMobileFullscreen, { once: true });
       });
     })();
   </script>
 </head>
 <body>
-  <div id="rotate-device" aria-live="polite" aria-label="Gire o dispositivo para jogar">
-    <svg viewBox="0 0 100 100" aria-hidden="true"><rect x="26" y="15" width="48" height="70" rx="6"></rect><path d="M19 32a38 38 0 0 1 56-14"></path><path d="m69 10 8 9-12 3"></path><path d="M81 68a38 38 0 0 1-56 14"></path><path d="m31 90-8-9 12-3"></path></svg>
-    <p>Gire o celular para jogar</p>
+  <div id="orientation" class="orientation-msg-container" data-orientation="landscape" aria-live="polite">
+    <p class="orientation-msg-text">GIRE O DISPOSITIVO</p>
   </div>
   <script>
     if (location.protocol.substr(0, 4) === 'file') {
@@ -78,10 +76,13 @@
 
     (() => {
       const isMobile = /iPhone|iPad|iPod|Android|Mobile|Tablet/i.test(navigator.userAgent);
-      const rotateNotice = document.getElementById('rotate-device');
+      const orientationNotice = document.getElementById('orientation');
       const updateOrientationNotice = () => {
-        const portrait = window.matchMedia('(orientation: portrait)').matches;
-        rotateNotice.classList.toggle('is-visible', isMobile && portrait);
+        if (!isMobile) {
+          orientationNotice.style.display = 'none';
+          return;
+        }
+        orientationNotice.style.display = window.matchMedia('(orientation: portrait)').matches ? 'block' : 'none';
       };
       window.addEventListener('resize', updateOrientationNotice);
       window.addEventListener('orientationchange', updateOrientationNotice);

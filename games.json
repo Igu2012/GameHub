@@ -251,6 +251,24 @@
           "MobileFriendly": false
         },
         {
+          "Name": "Fireboy & Watergirl 4 Crystal Temple",
+          "ImageURL": "FireboyAndWatergirl4/card.png",
+          "Link": "FireboyAndWatergirl4/",
+          "MobileFriendly": false
+        },
+        {
+          "Name": "Fireboy & Watergirl 5 Elements",
+          "ImageURL": "FireboyAndWatergirl5/card.png",
+          "Link": "FireboyAndWatergirl5/",
+          "MobileFriendly": false
+        },
+        {
+          "Name": "Fireboy & Watergirl 6 Fairy Tales",
+          "ImageURL": "FireboyAndWatergirl6/card.png",
+          "Link": "FireboyAndWatergirl6/",
+          "MobileFriendly": false
+        },
+        {
           "Name": "Tank Trouble",
           "ImageURL": "TankTrouble/card.png",
           "Link": "TankTrouble/",
@@ -317,6 +335,24 @@
           "MobileFriendly": false
         },
         {
+          "Name": "Duck Life 3",
+          "ImageURL": "DuckLife3/card.png",
+          "Link": "DuckLife3/",
+          "MobileFriendly": false
+        },
+        {
+          "Name": "Duck Life 4",
+          "ImageURL": "DuckLife4/card.png",
+          "Link": "DuckLife4/",
+          "MobileFriendly": false
+        },
+        {
+          "Name": "Duck Life 5: Treasure Hunt",
+          "ImageURL": "DuckLife5/card.png",
+          "Link": "DuckLife5/",
+          "MobileFriendly": false
+        },
+        {
           "Name": "Bloxorz",
           "ImageURL": "Bloxorz/card.png",
           "Link": "Bloxorz/",
@@ -356,6 +392,36 @@
           "Name": "Snail Bob 3",
           "ImageURL": "SnailBob3/card.png",
           "Link": "SnailBob3/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Snail Bob 4",
+          "ImageURL": "SnailBob4/card.png",
+          "Link": "SnailBob4/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Snail Bob 5",
+          "ImageURL": "SnailBob5/card.png",
+          "Link": "SnailBob5/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Snail Bob 6",
+          "ImageURL": "SnailBob6/card.png",
+          "Link": "SnailBob6/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Snail Bob 7",
+          "ImageURL": "SnailBob7/card.png",
+          "Link": "SnailBob7/",
+          "MobileFriendly": true
+        },
+        {
+          "Name": "Snail Bob 8",
+          "ImageURL": "SnailBob8/card.png",
+          "Link": "SnailBob8/",
           "MobileFriendly": true
         },
         {
