@@ -11,12 +11,6 @@
           "MobileFriendly": false
         },
         {
-          "Name": "Cuphead",
-          "ImageURL": "Cuphead/card.webp",
-          "Link": "Cuphead/",
-          "MobileFriendly": false
-        },
-        {
           "Name": "Subway Surfers",
           "ImageURL": "SubwaySurfers/card.png",
           "Link": "SubwaySurfers/",
@@ -99,6 +93,12 @@
           "ImageURL": "PvZ/card.png",
           "Link": "PvZ/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "Cuphead",
+          "ImageURL": "Cuphead/card.webp",
+          "Link": "Cuphead/",
+          "MobileFriendly": false
         }
       ]
     },

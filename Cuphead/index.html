@@ -13,12 +13,11 @@
     html, body { width: 100%; min-height: 100%; margin: 0; overflow: hidden; background: #111; }
     #unity-container { position: fixed; inset: 0; display: grid; place-items: center; background: #111; }
     #unity-canvas { width: 100vw; height: 100vh; display: block; background: #111; }
-    #loading-ui { position: fixed; inset: 0; z-index: 10; display: grid; place-content: center; gap: 14px; padding: 24px; text-align: center; background: #111; color: #fff5d6; }
-    #loading-title { margin: 0; color: #ffd640; font-size: clamp(26px, 6vw, 48px); font-weight: 900; letter-spacing: .06em; text-shadow: 3px 3px 0 #bd2227; }
-    #loading-status { min-height: 22px; font-size: clamp(13px, 2.4vw, 16px); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
-    #progress-track { width: min(78vw, 420px); height: 18px; overflow: hidden; border: 3px solid #fff5d6; border-radius: 999px; background: #2a2a2a; box-shadow: 3px 3px 0 #bd2227; }
-    #progress-fill { width: 0; height: 100%; background: linear-gradient(90deg, #f5c525 0%, #ffd640 55%, #fff5d6 100%); transition: width .12s linear; }
-    #progress-detail { min-height: 18px; font-size: 14px; font-variant-numeric: tabular-nums; }
+    #loading-ui { position: fixed; inset: 0; z-index: 10; display: grid; place-content: center; gap: 10px; padding: 24px; text-align: center; background: #111; color: #fff; }
+    #loading-status { min-height: 20px; font-size: 15px; font-weight: 600; }
+    #progress-track { width: min(72vw, 320px); height: 6px; overflow: hidden; border-radius: 999px; background: #3a3a3a; }
+    #progress-fill { width: 0; height: 100%; background: #ffffff; transition: width .12s linear; }
+    #progress-detail { min-height: 18px; color: #bdbdbd; font-size: 13px; font-variant-numeric: tabular-nums; }
     #loading-error { display: none; max-width: min(90vw, 640px); color: #ffb0b0; font-size: 14px; line-height: 1.45; }
     #orientation { display: none; position: fixed; inset: 0; z-index: 30; place-items: center; padding: 24px; background: #000; color: #fff; font-size: clamp(22px, 8vw, 42px); font-weight: 900; letter-spacing: .08em; text-align: center; }
   </style>
@@ -26,8 +25,7 @@
 <body>
   <div id="unity-container"><canvas id="unity-canvas" width="960" height="600" tabindex="-1" aria-label="Cuphead"></canvas></div>
   <div id="loading-ui" role="status" aria-live="polite">
-    <h1 id="loading-title">CUPHEAD</h1>
-    <div id="loading-status">Preparando carregamento</div>
+    <div id="loading-status">Carregando...</div>
     <div id="progress-track" aria-hidden="true"><div id="progress-fill"></div></div>
     <div id="progress-detail">0.00 MB / 1294.63 MB</div>
     <div id="loading-error"></div>
