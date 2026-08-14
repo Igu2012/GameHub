@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, viewport-fit=cover, user-scalable=no, shrink-to-fit=yes">
+  <meta name="theme-color" content="#111111">
+  <meta name="description" content="Jogue Cuphead online no GameHub.">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Cuphead</title>
+  <style>
+    :root { color-scheme: dark; background: #111; font-family: Arial, Helvetica, sans-serif; }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; margin: 0; overflow: hidden; background: #111; }
+    #unity-container { position: fixed; inset: 0; display: grid; place-items: center; background: #111; }
+    #unity-canvas { width: 100vw; height: 100vh; display: block; background: #111; }
+    #loading-ui { position: fixed; inset: 0; z-index: 10; display: grid; place-content: center; gap: 14px; padding: 24px; text-align: center; background: #111; color: #fff5d6; }
+    #loading-title { margin: 0; color: #ffd640; font-size: clamp(26px, 6vw, 48px); font-weight: 900; letter-spacing: .06em; text-shadow: 3px 3px 0 #bd2227; }
+    #loading-status { min-height: 22px; font-size: clamp(13px, 2.4vw, 16px); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    #progress-track { width: min(78vw, 420px); height: 18px; overflow: hidden; border: 3px solid #fff5d6; border-radius: 999px; background: #2a2a2a; box-shadow: 3px 3px 0 #bd2227; }
+    #progress-fill { width: 0; height: 100%; background: linear-gradient(90deg, #f5c525 0%, #ffd640 55%, #fff5d6 100%); transition: width .12s linear; }
+    #progress-detail { min-height: 18px; font-size: 14px; font-variant-numeric: tabular-nums; }
+    #loading-error { display: none; max-width: min(90vw, 640px); color: #ffb0b0; font-size: 14px; line-height: 1.45; }
+    #orientation { display: none; position: fixed; inset: 0; z-index: 30; place-items: center; padding: 24px; background: #000; color: #fff; font-size: clamp(22px, 8vw, 42px); font-weight: 900; letter-spacing: .08em; text-align: center; }
+  </style>
+</head>
+<body>
+  <div id="unity-container"><canvas id="unity-canvas" width="960" height="600" tabindex="-1" aria-label="Cuphead"></canvas></div>
+  <div id="loading-ui" role="status" aria-live="polite">
+    <h1 id="loading-title">CUPHEAD</h1>
+    <div id="loading-status">Preparando carregamento</div>
+    <div id="progress-track" aria-hidden="true"><div id="progress-fill"></div></div>
+    <div id="progress-detail">0.00 MB / 1294.63 MB</div>
+    <div id="loading-error"></div>
+  </div>
+  <div id="orientation">GIRE O DISPOSITIVO</div>
+
+  <!-- Web port by crackers (woahhcrackers): https://github.com/woahhcrackers/CupheadWeb -->
+  <script>
+    (() => {
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const orientation = document.getElementById('orientation');
+      const updateOrientation = () => {
+        if (isMobile) orientation.style.display = window.matchMedia('(orientation: portrait)').matches ? 'grid' : 'none';
+      };
+      updateOrientation();
+      window.addEventListener('orientationchange', updateOrientation);
+      window.addEventListener('resize', updateOrientation);
+      if (!isMobile) return;
+      const enableFullscreen = () => {
+        const root = document.documentElement;
+        const request = root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen;
+        if (request && !document.fullscreenElement && !document.webkitFullscreenElement) Promise.resolve(request.call(root)).catch(() => {});
+      };
+      ['touchstart', 'click', 'keydown'].forEach(eventName => window.addEventListener(eventName, enableFullscreen, { once: true, passive: eventName === 'touchstart' }));
+    })();
+
+    const canvas = document.getElementById('unity-canvas');
+    const loadingUI = document.getElementById('loading-ui');
+    const loadingStatus = document.getElementById('loading-status');
+    const progressFill = document.getElementById('progress-fill');
+    const progressDetail = document.getElementById('progress-detail');
+    const loadingError = document.getElementById('loading-error');
+    const DATA_PARTS = Array.from({ length: 26 }, (_, index) => `Build/Cuphead.data.${String(index + 1).padStart(3, '0')}`);
+    const WASM_URL = 'Build/Cuphead.wasm';
+    const TOTAL_BYTES = 1357515176;
+    let downloadedBytes = 0;
+
+    const formatMB = bytes => `${(bytes / 1048576).toFixed(2)} MB`;
+    function updateDownloadProgress(message = 'Baixando arquivos do jogo') {
+      progressFill.style.width = `${Math.min(92, (downloadedBytes / TOTAL_BYTES) * 92)}%`;
+      loadingStatus.textContent = message;
+      progressDetail.textContent = `${formatMB(downloadedBytes)} / ${formatMB(TOTAL_BYTES)}`;
+    }
+    async function fetchWithProgress(url) {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok || !response.body) throw new Error(`Não foi possível baixar ${url}.`);
+      const reader = response.body.getReader();
+      const chunks = [];
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+        downloadedBytes += value.byteLength;
+        updateDownloadProgress();
+      }
+      return new Blob(chunks);
+    }
+    async function combineDataParts() {
+      const chunks = [];
+      for (let index = 0; index < DATA_PARTS.length; index += 1) {
+        loadingStatus.textContent = `Baixando arquivo ${index + 1} de ${DATA_PARTS.length}`;
+        chunks.push(await fetchWithProgress(DATA_PARTS[index]));
+      }
+      return URL.createObjectURL(new Blob(chunks));
+    }
+    function showError(error) {
+      console.error(error);
+      loadingStatus.textContent = 'Não foi possível iniciar o Cuphead';
+      loadingError.style.display = 'block';
+      loadingError.textContent = 'Atualize a página para tentar novamente. Verifique também sua conexão com a internet.';
+    }
+    (async () => {
+      try {
+        const [dataUrl, codeBlob] = await Promise.all([combineDataParts(), fetchWithProgress(WASM_URL)]);
+        const codeUrl = URL.createObjectURL(codeBlob);
+        loadingStatus.textContent = 'Iniciando o jogo';
+        progressFill.style.width = '94%';
+        const loaderScript = document.createElement('script');
+        loaderScript.src = 'Build/Cuphead.loader.js';
+        loaderScript.onload = () => {
+          createUnityInstance(canvas, {
+            dataUrl, frameworkUrl: 'Build/Cuphead.framework.js', codeUrl, streamingAssetsUrl: 'StreamingAssets',
+            companyName: 'crackers', productName: 'Cuphead', productVersion: '1.0'
+          }, progress => {
+            progressFill.style.width = `${94 + Math.max(0, Math.min(1, progress)) * 6}%`;
+            loadingStatus.textContent = 'Iniciando o jogo';
+          }).then(() => {
+            progressFill.style.width = '100%';
+            progressDetail.textContent = `${formatMB(TOTAL_BYTES)} / ${formatMB(TOTAL_BYTES)}`;
+            loadingStatus.textContent = 'Pronto';
+            setTimeout(() => { loadingUI.style.display = 'none'; }, 250);
+          }).catch(showError);
+        };
+        loaderScript.onerror = () => showError(new Error('Não foi possível carregar o inicializador do Cuphead.'));
+        document.body.appendChild(loaderScript);
+      } catch (error) { showError(error); }
+    })();
+  </script>
+</body>
+</html>
