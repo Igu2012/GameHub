@@ -350,7 +350,7 @@
           "Name": "Duck Life 5: Treasure Hunt",
           "ImageURL": "DuckLife5/card.png",
           "Link": "DuckLife5/",
-          "MobileFriendly": false
+          "MobileFriendly": true
         },
         {
           "Name": "Bloxorz",
