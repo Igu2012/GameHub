@@ -15,7 +15,7 @@ GameHub is a browser-based game hub. Games open directly in the browser with no 
 
 | Source | Attribution scope |
 |---|---|
-| [plasma4/cookieclicker](https://github.com/plasma4/cookieclicker) | Cookie Clicker mobile webport. GameHub uses its touch-enabled variant, with fullscreen requested only after the first interaction on mobile devices. The original game is by Orteil / Playsaurus. |
+| [plasma4/cookieclicker](https://github.com/plasma4/cookieclicker) | Cookie Clicker mobile webport. The original game is by Orteil / Playsaurus. |
 | [woahhcrackers/CupheadWeb](https://github.com/woahhcrackers/CupheadWeb) | Cuphead webport by crackers / woahhcrackers. |
 | [genizy/web-port](https://github.com/genizy/web-port) | Public credit list for Buckshot Roulette, R.E.P.O., and FNAF. |
 | [irv77/hd_fnaf](https://github.com/irv77/hd_fnaf) | Webport for the FNAF games used by GameHub. |
