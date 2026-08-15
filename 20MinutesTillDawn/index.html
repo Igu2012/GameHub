@@ -199,8 +199,8 @@
                 });
             };
             script.onerror = () => {
-                statusText.textContent = "Erro ao carregar o inicializador do jogo.";
-                console.error("Não foi possível carregar:", loaderUrl);
+                statusText.textContent = "Failed to load the game loader.";
+                console.error("Could not load:", loaderUrl);
             };
             document.body.appendChild(script);
         })();
