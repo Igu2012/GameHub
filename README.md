@@ -20,6 +20,7 @@ Os créditos de autores, estúdios e portadores devem permanecer vinculados às 
 | Jogo | Créditos, origem ou situação da atribuição |
 |---|---|
 | 20 Minutes Till Dawn | Origem/autoria do webport não preservada com clareza nos arquivos atualmente incluídos; esta entrada pode ser atualizada mediante comprovação da fonte. |
+| Cookie Clicker | Webport móvel por [plasma4/cookieclicker](https://github.com/plasma4/cookieclicker); jogo original por Orteil / Playsaurus. |
 | Cuphead | Webport por [crackers / woahhcrackers](https://github.com/woahhcrackers/CupheadWeb). |
 | Subway Surfers | Origem/autoria do webport não preservada com clareza nos arquivos atualmente incluídos; esta entrada pode ser atualizada mediante comprovação da fonte. |
 | Doom | Atribuição local preservada: `lelbois`. |

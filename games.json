@@ -95,6 +95,12 @@
           "MobileFriendly": true
         },
         {
+          "Name": "Cookie Clicker",
+          "ImageURL": "CookieClicker/card.webp",
+          "Link": "CookieClicker/",
+          "MobileFriendly": true
+        },
+        {
           "Name": "Cuphead",
           "ImageURL": "Cuphead/card.webp",
           "Link": "Cuphead/",
