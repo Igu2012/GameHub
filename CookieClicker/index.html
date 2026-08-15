@@ -11,6 +11,24 @@
 	var PRESETMODS=[];
 	var LOCAL=(App || !window.location.hostname || window.location.hostname==='localhost' || window.location.hostname==='127.0.0.1');
 </script>
+<script>
+  (function () {
+    if (!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) return;
+    let fullscreenRequested = false;
+    const enterFullscreen = function () {
+      if (fullscreenRequested) return;
+      const root = document.documentElement;
+      const request = root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen;
+      if (request && !document.fullscreenElement && !document.webkitFullscreenElement) {
+        fullscreenRequested = true;
+        Promise.resolve(request.call(root)).catch(function () { fullscreenRequested = false; });
+      }
+    };
+    ['touchstart', 'click', 'keydown'].forEach(function (eventName) {
+      window.addEventListener(eventName, enterFullscreen, { once: true, passive: eventName === 'touchstart' });
+    });
+  })();
+</script>
 
 <!-- external -->
 <script type="text/javascript">
