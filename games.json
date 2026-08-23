@@ -285,12 +285,6 @@
           "ImageURL": "TankTrouble/card.png",
           "Link": "TankTrouble/",
           "MobileFriendly": false
-        },
-        {
-          "Name": "Thumb Fighter",
-          "ImageURL": "ThumbFighter/card.jpg",
-          "Link": "ThumbFighter/",
-          "MobileFriendly": true
         }
       ]
     },
