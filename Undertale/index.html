@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, viewport-fit=cover, user-scalable=no, shrink-to-fit=yes">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Play Undertale online on GameHub.">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Undertale</title>
+  <style>
+    :root { color-scheme: dark; background: #000; font-family: Arial, Helvetica, sans-serif; }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; margin: 0; overflow: hidden; background: #000; }
+    body { display: grid; place-items: center; }
+    canvas.emscripten { display: none; max-width: 100vw; max-height: 100vh; background: #000; image-rendering: pixelated; image-rendering: crisp-edges; }
+    canvas.active { animation: fadeIn .35s ease-out; opacity: 1; }
+    canvas.paused { filter: blur(2px) grayscale(1); }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .loading { position: fixed; inset: 0; z-index: 10; display: grid; place-content: center; justify-items: center; gap: 12px; padding: 24px; background: #000; color: #fff; text-align: center; pointer-events: none; }
+    .spinner { width: 32px; height: 32px; border: 4px solid #fff; border-top-color: #ff3b3b; border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #status { min-height: 20px; font-weight: 700; }
+    #progress { width: min(76vw, 360px); height: 8px; accent-color: #ff3b3b; }
+    #download-detail { min-height: 18px; color: #c9c9c9; font-size: 13px; font-variant-numeric: tabular-nums; }
+    #message-container { display: none; position: fixed; inset: 0 auto auto 0; z-index: 20; width: 100%; min-height: 50px; padding: 12px 24px; background: rgba(0, 0, 0, .62); color: #fff; font-family: monospace; }
+    #messages { margin-left: 24px; }
+    #pauseMenuContainer { position: fixed; inset: 0; z-index: 25; display: grid; place-items: center; background: rgba(0, 0, 0, .45); }
+    #pauseMenuContainer[hidden] { display: none; }
+    #pauseMenu { display: grid; gap: 10px; min-width: 220px; padding: 28px; background: #17111f; border: 1px solid #fa1e4e; border-radius: 8px; }
+    #pauseMenu button { padding: 12px 20px; color: #fff; background: #fa1e4e; border: 0; border-radius: 5px; font: 700 16px Arial, sans-serif; }
+    #pauseMenu button#quitButton { background: #513044; }
+    #output-container, #output { display: none; }
+  </style>
+</head>
+<body>
+  <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex="-1" aria-label="Undertale"></canvas>
+  <div id="pauseMenuContainer" hidden>
+    <div id="pauseMenuBorder"><div id="pauseMenu">
+      <button id="resumeButton" onclick="resume()">Resume</button>
+      <button id="quitButton" onclick="quitIfSupported()">Quit</button>
+    </div></div>
+  </div>
+  <div class="loading" id="loading" role="status" aria-live="polite">
+    <div class="spinner" id="spinner"></div>
+    <div id="status">Preparing download...</div>
+    <progress value="0" max="100" id="progress"></progress>
+    <div id="download-detail">0.00 MB / 112.69 MB</div>
+  </div>
+  <div id="message-container"><div id="messages"></div></div>
+  <div id="output-container"><textarea id="output" aria-hidden="true"></textarea></div>
+
+  <!-- Local web port source: https://github.com/bandit968thegamer-ops/undertale/tree/main/undertale -->
+  <script>
+    (() => {
+      const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+      if (!isMobile) return;
+      const enableFullscreen = () => {
+        const root = document.documentElement;
+        const request = root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen;
+        if (request && !document.fullscreenElement && !document.webkitFullscreenElement) {
+          Promise.resolve(request.call(root)).catch(() => {});
+        }
+      };
+      ['touchstart', 'click', 'keydown'].forEach(eventName => {
+        window.addEventListener(eventName, enableFullscreen, { once: true, passive: eventName === 'touchstart' });
+      });
+    })();
+
+    const loaderStatusElement = document.getElementById('status');
+    const loaderProgressElement = document.getElementById('progress');
+    const loaderDetailElement = document.getElementById('download-detail');
+    const loaderSpinnerElement = document.getElementById('spinner');
+    const TOTAL_BYTES = 118165133;
+    let downloadedBytes = 0;
+    const formatMB = bytes => `${(bytes / 1048576).toFixed(2)} MB`;
+    const setDownloadProgress = message => {
+      loaderProgressElement.max = TOTAL_BYTES;
+      loaderProgressElement.value = downloadedBytes;
+      loaderStatusElement.textContent = message;
+      loaderDetailElement.textContent = `${formatMB(downloadedBytes)} / ${formatMB(TOTAL_BYTES)}`;
+    };
+
+    async function fetchArrayBuffer(url, message) {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok || !response.body) throw new Error(`Could not download ${url}.`);
+      const reader = response.body.getReader();
+      const chunks = [];
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+        downloadedBytes += value.byteLength;
+        setDownloadProgress(message);
+      }
+      return new Blob(chunks).arrayBuffer();
+    }
+
+    function appendScript(url) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = url;
+        script.onload = resolve;
+        script.onerror = () => reject(new Error(`Could not load ${url}.`));
+        document.body.appendChild(script);
+      });
+    }
+
+    async function startGame() {
+      try {
+        const parts = [];
+        for (let index = 1; index <= 5; index += 1) {
+          parts.push(await fetchArrayBuffer(`game.unx.part${index}`, `Downloading game file ${index} of 5`));
+        }
+        const [runnerData, wasmBinary] = await Promise.all([
+          fetchArrayBuffer('runner.data', 'Downloading game data'),
+          fetchArrayBuffer('runner.wasm', 'Downloading game runtime')
+        ]);
+        const gameUnxUrl = URL.createObjectURL(new Blob(parts));
+        const originalFetch = window.fetch;
+        window.fetch = async function (...args) {
+          const [resource, options] = args;
+          if (typeof resource === 'string' && resource.includes('game.unx')) return originalFetch.call(this, gameUnxUrl, options);
+          if (resource instanceof Request && resource.url.includes('game.unx')) return originalFetch.call(this, new Request(gameUnxUrl, resource), options);
+          return originalFetch.apply(this, args);
+        };
+        const originalOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+          const localUrl = typeof url === 'string' && url.includes('game.unx') ? gameUnxUrl : url;
+          return originalOpen.call(this, method, localUrl, ...rest);
+        };
+        loaderStatusElement.textContent = 'Starting game...';
+        loaderDetailElement.textContent = '';
+        await appendScript('index.js');
+        Module.getPreloadedPackage = () => runnerData;
+        Module.wasmBinary = new Uint8Array(wasmBinary);
+        await appendScript('runner.js');
+      } catch (error) {
+        console.error(error);
+        loaderSpinnerElement.style.display = 'none';
+        loaderStatusElement.textContent = 'Could not start Undertale';
+        loaderDetailElement.textContent = 'Refresh the page to try again.';
+      }
+    }
+    startGame();
+  </script>
+</body>
+</html>

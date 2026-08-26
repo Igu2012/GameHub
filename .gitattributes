@@ -1,0 +1,5 @@
+# Preserve game payloads byte-for-byte and exclude them from text diffs and whitespace checks.
+Undertale/runner.data -text -diff
+Undertale/game.unx.part* -text -diff
+Undertale/runner.wasm -text -diff
+Undertale/*.ogg -text -diff

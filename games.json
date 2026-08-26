@@ -101,6 +101,12 @@
           "MobileFriendly": true
         },
         {
+          "Name": "Block Breaker",
+          "ImageURL": "BlockBreaker/card.webp",
+          "Link": "BlockBreaker/",
+          "MobileFriendly": true
+        },
+        {
           "Name": "Cuphead",
           "ImageURL": "Cuphead/card.webp",
           "Link": "Cuphead/",
@@ -321,6 +327,12 @@
           "ImageURL": "Balatro/card.png",
           "Link": "Balatro/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "Undertale",
+          "ImageURL": "Undertale/card.webp",
+          "Link": "Undertale/",
+          "MobileFriendly": false
         }
       ]
     },
