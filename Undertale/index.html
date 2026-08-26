@@ -17,10 +17,11 @@
     canvas.paused { filter: blur(2px) grayscale(1); }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .loading { position: fixed; inset: 0; z-index: 10; display: grid; place-content: center; justify-items: center; gap: 12px; padding: 24px; background: #000; color: #fff; text-align: center; pointer-events: none; }
-    .spinner { display: none; }
-    #status { min-height: 20px; font-weight: 700; font-size: 16px; }
-    #progress { width: min(72vw, 300px); height: 5px; accent-color: #fff; }
-    #download-detail { display: none; }
+    .spinner { width: 32px; height: 32px; border: 4px solid #fff; border-top-color: #ff3b3b; border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #status { min-height: 20px; font-weight: 700; }
+    #progress { width: min(76vw, 360px); height: 8px; accent-color: #ff3b3b; }
+    #download-detail { min-height: 18px; color: #c9c9c9; font-size: 13px; font-variant-numeric: tabular-nums; }
     #message-container { display: none; position: fixed; inset: 0 auto auto 0; z-index: 20; width: 100%; min-height: 50px; padding: 12px 24px; background: rgba(0, 0, 0, .62); color: #fff; font-family: monospace; }
     #messages { margin-left: 24px; }
     #pauseMenuContainer { position: fixed; inset: 0; z-index: 25; display: grid; place-items: center; background: rgba(0, 0, 0, .45); }
@@ -41,9 +42,9 @@
   </div>
   <div class="loading" id="loading" role="status" aria-live="polite">
     <div class="spinner" id="spinner"></div>
-    <div id="status">Loading...</div>
+    <div id="status">Preparing download...</div>
     <progress value="0" max="100" id="progress"></progress>
-    <div id="download-detail" aria-hidden="true"></div>
+    <div id="download-detail">0.00 MB / 112.69 MB</div>
   </div>
   <div id="message-container"><div id="messages"></div></div>
   <div id="output-container"><textarea id="output" aria-hidden="true"></textarea></div>
@@ -72,13 +73,14 @@
     const TOTAL_BYTES = 118165133;
     let downloadedBytes = 0;
     const formatMB = bytes => `${(bytes / 1048576).toFixed(2)} MB`;
-    const setDownloadProgress = () => {
+    const setDownloadProgress = message => {
       loaderProgressElement.max = TOTAL_BYTES;
       loaderProgressElement.value = downloadedBytes;
-      loaderStatusElement.textContent = 'Loading...';
+      loaderStatusElement.textContent = message;
+      loaderDetailElement.textContent = `${formatMB(downloadedBytes)} / ${formatMB(TOTAL_BYTES)}`;
     };
 
-    async function fetchArrayBuffer(url) {
+    async function fetchArrayBuffer(url, message) {
       const response = await fetch(url, { cache: 'no-store' });
       if (!response.ok || !response.body) throw new Error(`Could not download ${url}.`);
       const reader = response.body.getReader();
@@ -88,7 +90,7 @@
         if (done) break;
         chunks.push(value);
         downloadedBytes += value.byteLength;
-        setDownloadProgress();
+        setDownloadProgress(message);
       }
       return new Blob(chunks).arrayBuffer();
     }
@@ -107,11 +109,11 @@
       try {
         const parts = [];
         for (let index = 1; index <= 5; index += 1) {
-          parts.push(await fetchArrayBuffer(`game.unx.part${index}`));
+          parts.push(await fetchArrayBuffer(`game.unx.part${index}`, `Downloading game file ${index} of 5`));
         }
         const [runnerData, wasmBinary] = await Promise.all([
-          fetchArrayBuffer('runner.data'),
-          fetchArrayBuffer('runner.wasm')
+          fetchArrayBuffer('runner.data', 'Downloading game data'),
+          fetchArrayBuffer('runner.wasm', 'Downloading game runtime')
         ]);
         const gameUnxUrl = URL.createObjectURL(new Blob(parts));
         const originalFetch = window.fetch;
@@ -126,23 +128,19 @@
           const localUrl = typeof url === 'string' && url.includes('game.unx') ? gameUnxUrl : url;
           return originalOpen.call(this, method, localUrl, ...rest);
         };
-        loaderStatusElement.textContent = 'Loading...';
+        loaderStatusElement.textContent = 'Starting game...';
+        loaderDetailElement.textContent = '';
         await appendScript('index.js');
-        const loadingElement = document.getElementById('loading');
-        const canvasElement = document.getElementById('canvas');
         const originalPrint = Module.print;
-        Module.setStatus = () => {
-          loaderStatusElement.textContent = 'Loading...';
-          loaderProgressElement.hidden = false;
-        };
+        let gameReady = false;
         Module.print = function (...args) {
           originalPrint.apply(this, args);
-          if (args.join(' ').includes('Entering main loop.')) {
-            requestAnimationFrame(() => requestAnimationFrame(() => {
-              canvasElement.style.display = 'block';
-              canvasElement.classList.add('active');
-              loadingElement.style.display = 'none';
-            }));
+          if (!gameReady && args.join(' ').includes('Entering main loop.')) {
+            gameReady = true;
+            requestAnimationFrame(() => {
+              document.getElementById('canvas').classList.add('active');
+              document.getElementById('loading').style.display = 'none';
+            });
           }
         };
         Module.getPreloadedPackage = () => runnerData;
