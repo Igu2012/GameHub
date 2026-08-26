@@ -101,12 +101,6 @@
           "MobileFriendly": true
         },
         {
-          "Name": "Block Breaker",
-          "ImageURL": "BlockBreaker/card.webp",
-          "Link": "BlockBreaker/",
-          "MobileFriendly": true
-        },
-        {
           "Name": "Cuphead",
           "ImageURL": "Cuphead/card.webp",
           "Link": "Cuphead/",

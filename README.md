@@ -18,7 +18,6 @@ GameHub is a browser-based game hub. Games open directly in the browser with no 
 | [plasma4/cookieclicker](https://github.com/plasma4/cookieclicker) | Cookie Clicker mobile webport. The original game is by Orteil / Playsaurus. |
 | [woahhcrackers/CupheadWeb](https://github.com/woahhcrackers/CupheadWeb) | Cuphead webport by crackers / woahhcrackers. |
 | [bandit968thegamer-ops/undertale](https://github.com/bandit968thegamer-ops/undertale/tree/main/undertale) | Undertale browser port source integrated as local files. |
-| [Google Block Breaker](https://www.google.com/fbx?fbx=block_breaker&fbxga=0&hl=en&origin=www.google.com) | Reference page and public visual assets for the local Block Breaker implementation. |
 | [genizy/web-port](https://github.com/genizy/web-port) | Public credit list for Buckshot Roulette, R.E.P.O., and FNAF. |
 | [irv77/hd_fnaf](https://github.com/irv77/hd_fnaf) | Webport for the FNAF games used by GameHub. |
 | [web-ports/pvz](https://github.com/web-ports/pvz) | Plants vs Zombies webport source. |
