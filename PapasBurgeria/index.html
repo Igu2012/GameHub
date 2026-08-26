@@ -28,6 +28,11 @@
         html, body { width: 100%; height: 100%; background: #000; overflow: hidden; }
         #player { width: 100%; height: 100%; }
     </style>
+    <script>
+  window.RufflePlayer = window.RufflePlayer || {};
+  window.RufflePlayer.config = { ...(window.RufflePlayer.config || {}), contextMenu: "off" };
+</script>
+
     <script src="ruffle.js"></script>
 
     

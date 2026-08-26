@@ -78,7 +78,7 @@
       loaderStatusElement.textContent = 'Loading...';
     };
 
-    async function fetchArrayBuffer(url, message) {
+    async function fetchArrayBuffer(url) {
       const response = await fetch(url, { cache: 'no-store' });
       if (!response.ok || !response.body) throw new Error(`Could not download ${url}.`);
       const reader = response.body.getReader();
@@ -88,7 +88,7 @@
         if (done) break;
         chunks.push(value);
         downloadedBytes += value.byteLength;
-        setDownloadProgress(message);
+        setDownloadProgress();
       }
       return new Blob(chunks).arrayBuffer();
     }
@@ -107,11 +107,11 @@
       try {
         const parts = [];
         for (let index = 1; index <= 5; index += 1) {
-          parts.push(await fetchArrayBuffer(`game.unx.part${index}`, `Downloading game file ${index} of 5`));
+          parts.push(await fetchArrayBuffer(`game.unx.part${index}`));
         }
         const [runnerData, wasmBinary] = await Promise.all([
-          fetchArrayBuffer('runner.data', 'Downloading game data'),
-          fetchArrayBuffer('runner.wasm', 'Downloading game runtime')
+          fetchArrayBuffer('runner.data'),
+          fetchArrayBuffer('runner.wasm')
         ]);
         const gameUnxUrl = URL.createObjectURL(new Blob(parts));
         const originalFetch = window.fetch;
@@ -130,13 +130,21 @@
         await appendScript('index.js');
         const loadingElement = document.getElementById('loading');
         const canvasElement = document.getElementById('canvas');
-        const loadingObserver = new MutationObserver(() => {
-          if (canvasElement.style.display === 'block') {
-            loadingElement.style.display = 'none';
-            loadingObserver.disconnect();
+        const originalPrint = Module.print;
+        Module.setStatus = () => {
+          loaderStatusElement.textContent = 'Loading...';
+          loaderProgressElement.hidden = false;
+        };
+        Module.print = function (...args) {
+          originalPrint.apply(this, args);
+          if (args.join(' ').includes('Entering main loop.')) {
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+              canvasElement.style.display = 'block';
+              canvasElement.classList.add('active');
+              loadingElement.style.display = 'none';
+            }));
           }
-        });
-        loadingObserver.observe(canvasElement, { attributes: true, attributeFilter: ['style', 'class'] });
+        };
         Module.getPreloadedPackage = () => runnerData;
         Module.wasmBinary = new Uint8Array(wasmBinary);
         await appendScript('runner.js');
