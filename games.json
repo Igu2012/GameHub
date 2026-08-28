@@ -6,91 +6,91 @@
       "games": [
         {
           "Name": "20 Minutes Till Dawn",
-          "ImageURL": "20MinutesTillDawn/card.png",
+          "ImageURL": "20MinutesTillDawn/card.webp",
           "Link": "20MinutesTillDawn/",
           "MobileFriendly": false
         },
         {
           "Name": "Subway Surfers",
-          "ImageURL": "SubwaySurfers/card.png",
+          "ImageURL": "SubwaySurfers/card.webp",
           "Link": "SubwaySurfers/",
           "MobileFriendly": false
         },
         {
           "Name": "Doom",
-          "ImageURL": "Doom/card.png",
+          "ImageURL": "Doom/card.webp",
           "Link": "Doom/",
           "MobileFriendly": false
         },
         {
           "Name": "Moto X3M",
-          "ImageURL": "MotoX3M/card.png",
+          "ImageURL": "MotoX3M/card.webp",
           "Link": "MotoX3M/",
           "MobileFriendly": true
         },
         {
           "Name": "Moto X3M 2",
-          "ImageURL": "MotoX3M2/card.png",
+          "ImageURL": "MotoX3M2/card.webp",
           "Link": "MotoX3M2/",
           "MobileFriendly": true
         },
         {
           "Name": "Moto X3M Winter",
-          "ImageURL": "MotoX3MWinter/card.png",
+          "ImageURL": "MotoX3MWinter/card.webp",
           "Link": "MotoX3MWinter/",
           "MobileFriendly": true
         },
         {
           "Name": "Moto X3M Pool Party",
-          "ImageURL": "MotoX3MPoolParty/card.png",
+          "ImageURL": "MotoX3MPoolParty/card.webp",
           "Link": "MotoX3MPoolParty/",
           "MobileFriendly": true
         },
         {
           "Name": "Moto X3M Spooky Land",
-          "ImageURL": "MotoX3MSpookyLand/card.png",
+          "ImageURL": "MotoX3MSpookyLand/card.webp",
           "Link": "MotoX3MSpookyLand/",
           "MobileFriendly": true
         },
         {
           "Name": "Level Devil",
-          "ImageURL": "LevelDevil/card.png",
+          "ImageURL": "LevelDevil/card.webp",
           "Link": "LevelDevil/",
           "MobileFriendly": true
         },
         {
           "Name": "Friday Night Funkin",
-          "ImageURL": "Funkin/card.png",
+          "ImageURL": "Funkin/card.webp",
           "Link": "Funkin/",
           "MobileFriendly": true
         },
         {
           "Name": "Geometry Dash",
-          "ImageURL": "GeometryDash/card.png",
+          "ImageURL": "GeometryDash/card.webp",
           "Link": "GeometryDash/",
           "MobileFriendly": true
         },
         {
           "Name": "Happy Wheels",
-          "ImageURL": "HappyWheels/card.png",
+          "ImageURL": "HappyWheels/card.webp",
           "Link": "HappyWheels/",
           "MobileFriendly": false
         },
         {
           "Name": "Getting Over It",
-          "ImageURL": "GettingOverIt/card.png",
+          "ImageURL": "GettingOverIt/card.webp",
           "Link": "GettingOverIt/",
           "MobileFriendly": false
         },
         {
           "Name": "Repo",
-          "ImageURL": "Repo/card.png",
+          "ImageURL": "Repo/card.webp",
           "Link": "Repo/",
           "MobileFriendly": false
         },
         {
           "Name": "Plants vs Zombies",
-          "ImageURL": "PvZ/card.png",
+          "ImageURL": "PvZ/card.webp",
           "Link": "PvZ/",
           "MobileFriendly": true
         },
@@ -114,49 +114,55 @@
       "games": [
         {
           "Name": "Fnaf 1",
-          "ImageURL": "Fnaf_1/card.png",
+          "ImageURL": "Fnaf_1/card.webp",
           "Link": "Fnaf_1/",
           "MobileFriendly": true
         },
         {
           "Name": "Fnaf 2",
-          "ImageURL": "Fnaf_2/card.png",
+          "ImageURL": "Fnaf_2/card.webp",
           "Link": "Fnaf_2/",
           "MobileFriendly": true
         },
         {
           "Name": "Fnaf 3",
-          "ImageURL": "Fnaf_3/card.png",
+          "ImageURL": "Fnaf_3/card.webp",
           "Link": "Fnaf_3/",
           "MobileFriendly": true
         },
         {
           "Name": "Fnaf 4",
-          "ImageURL": "Fnaf_4/card.png",
+          "ImageURL": "Fnaf_4/card.webp",
           "Link": "Fnaf_4/",
           "MobileFriendly": true
         },
         {
           "Name": "Fnaf Sister Location",
-          "ImageURL": "Fnaf_Sister_Location/card.png",
+          "ImageURL": "Fnaf_Sister_Location/card.webp",
           "Link": "Fnaf_Sister_Location/",
           "MobileFriendly": true
         },
         {
           "Name": "Fnaf Ultimate Custom Night",
-          "ImageURL": "Fnaf_Ultimate_Custom_Night/card.png",
+          "ImageURL": "Fnaf_Ultimate_Custom_Night/card.webp",
           "Link": "Fnaf_Ultimate_Custom_Night/",
           "MobileFriendly": true
         },
         {
           "Name": "Granny 1",
-          "ImageURL": "Granny1/card.png",
+          "ImageURL": "Granny1/card.webp",
           "Link": "Granny1/",
           "MobileFriendly": false
         },
         {
+          "Name": "Granny: Chapter Two",
+          "ImageURL": "Granny2/card.webp",
+          "Link": "Granny2/",
+          "MobileFriendly": false
+        },
+        {
           "Name": "Baldi's Basics Remastered",
-          "ImageURL": "BaldiRemastered/card.png",
+          "ImageURL": "BaldiRemastered/card.webp",
           "Link": "BaldiRemastered/",
           "MobileFriendly": false
         },
@@ -174,43 +180,43 @@
       "games": [
         {
           "Name": "Soccer Random",
-          "ImageURL": "SoccerRandom/card.png",
+          "ImageURL": "SoccerRandom/card.webp",
           "Link": "SoccerRandom/",
           "MobileFriendly": true
         },
         {
           "Name": "Basket Random",
-          "ImageURL": "BasketRandom/card.png",
+          "ImageURL": "BasketRandom/card.webp",
           "Link": "BasketRandom/",
           "MobileFriendly": true
         },
         {
           "Name": "Boxing Random",
-          "ImageURL": "BoxingRandom/card.png",
+          "ImageURL": "BoxingRandom/card.webp",
           "Link": "BoxingRandom/",
           "MobileFriendly": true
         },
         {
           "Name": "Volley Random",
-          "ImageURL": "VolleyRandom/card.png",
+          "ImageURL": "VolleyRandom/card.webp",
           "Link": "VolleyRandom/",
           "MobileFriendly": true
         },
         {
           "Name": "Rocket Goal",
-          "ImageURL": "RocketGoal/card.png",
+          "ImageURL": "RocketGoal/card.webp",
           "Link": "RocketGoal/",
           "MobileFriendly": true
         },
         {
           "Name": "Football Legends",
-          "ImageURL": "FootballLegends/card.png",
+          "ImageURL": "FootballLegends/card.webp",
           "Link": "FootballLegends/",
           "MobileFriendly": true
         },
         {
           "Name": "Basketball Legends",
-          "ImageURL": "BasketballLegends/card.png",
+          "ImageURL": "BasketballLegends/card.webp",
           "Link": "BasketballLegends/",
           "MobileFriendly": true
         },
@@ -222,7 +228,7 @@
         },
         {
           "Name": "Classic Pool Game",
-          "ImageURL": "ClassicPoolGame/card.png",
+          "ImageURL": "ClassicPoolGame/card.webp",
           "Link": "ClassicPoolGame/",
           "MobileFriendly": false
         }
@@ -234,13 +240,13 @@
       "games": [
         {
           "Name": "Wrassling",
-          "ImageURL": "Wrassling/card.png",
+          "ImageURL": "Wrassling/card.webp",
           "Link": "Wrassling/",
           "MobileFriendly": true
         },
         {
           "Name": "Bad Ice Cream",
-          "ImageURL": "BadIceCream/card.png",
+          "ImageURL": "BadIceCream/card.webp",
           "Link": "BadIceCream/",
           "MobileFriendly": false
         },
@@ -264,25 +270,25 @@
         },
         {
           "Name": "Fireboy & Watergirl 4 Crystal Temple",
-          "ImageURL": "FireboyAndWatergirl4/card.png",
+          "ImageURL": "FireboyAndWatergirl4/card.webp",
           "Link": "FireboyAndWatergirl4/",
           "MobileFriendly": false
         },
         {
           "Name": "Fireboy & Watergirl 5 Elements",
-          "ImageURL": "FireboyAndWatergirl5/card.png",
+          "ImageURL": "FireboyAndWatergirl5/card.webp",
           "Link": "FireboyAndWatergirl5/",
           "MobileFriendly": false
         },
         {
           "Name": "Fireboy & Watergirl 6 Fairy Tales",
-          "ImageURL": "FireboyAndWatergirl6/card.png",
+          "ImageURL": "FireboyAndWatergirl6/card.webp",
           "Link": "FireboyAndWatergirl6/",
           "MobileFriendly": false
         },
         {
           "Name": "Tank Trouble",
-          "ImageURL": "TankTrouble/card.png",
+          "ImageURL": "TankTrouble/card.webp",
           "Link": "TankTrouble/",
           "MobileFriendly": false
         }
@@ -294,31 +300,43 @@
       "games": [
         {
           "Name": "Minecraft",
-          "ImageURL": "Minecraft/card.png",
+          "ImageURL": "Minecraft/card.webp",
           "Link": "Minecraft/",
           "MobileFriendly": true
         },
         {
           "Name": "Crazy Cattle 3D",
-          "ImageURL": "CrazyCattle3D/card.png",
+          "ImageURL": "CrazyCattle3D/card.webp",
           "Link": "CrazyCattle3D/",
           "MobileFriendly": false
         },
         {
           "Name": "Celeste",
-          "ImageURL": "Celeste/card.png",
+          "ImageURL": "Celeste/card.webp",
           "Link": "Celeste/",
           "MobileFriendly": false
         },
         {
+          "Name": "Hollow Knight",
+          "ImageURL": "HollowKnight/card.webp",
+          "Link": "HollowKnight/",
+          "MobileFriendly": false
+        },
+        {
+          "Name": "Hollow Knight: Silksong",
+          "ImageURL": "HollowKnightSilksong/card.webp",
+          "Link": "HollowKnightSilksong/",
+          "MobileFriendly": false
+        },
+        {
           "Name": "A Difficult Game About Climbing",
-          "ImageURL": "ADGAC/card.png",
+          "ImageURL": "ADGAC/card.webp",
           "Link": "ADGAC/",
           "MobileFriendly": false
         },
         {
           "Name": "Balatro",
-          "ImageURL": "Balatro/card.png",
+          "ImageURL": "Balatro/card.webp",
           "Link": "Balatro/",
           "MobileFriendly": true
         },
@@ -336,127 +354,127 @@
       "games": [
         {
           "Name": "Duck Life 1",
-          "ImageURL": "DuckLife1/card.png",
+          "ImageURL": "DuckLife1/card.webp",
           "Link": "DuckLife1/",
           "MobileFriendly": false
         },
         {
           "Name": "Duck Life 2",
-          "ImageURL": "DuckLife2/card.png",
+          "ImageURL": "DuckLife2/card.webp",
           "Link": "DuckLife2/",
           "MobileFriendly": false
         },
         {
           "Name": "Duck Life 3",
-          "ImageURL": "DuckLife3/card.png",
+          "ImageURL": "DuckLife3/card.webp",
           "Link": "DuckLife3/",
           "MobileFriendly": false
         },
         {
           "Name": "Duck Life 4",
-          "ImageURL": "DuckLife4/card.png",
+          "ImageURL": "DuckLife4/card.webp",
           "Link": "DuckLife4/",
           "MobileFriendly": false
         },
         {
           "Name": "Duck Life 5: Treasure Hunt",
-          "ImageURL": "DuckLife5/card.png",
+          "ImageURL": "DuckLife5/card.webp",
           "Link": "DuckLife5/",
           "MobileFriendly": true
         },
         {
           "Name": "Bloxorz",
-          "ImageURL": "Bloxorz/card.png",
+          "ImageURL": "Bloxorz/card.webp",
           "Link": "Bloxorz/",
           "MobileFriendly": false
         },
         {
           "Name": "The Right Mix",
-          "ImageURL": "TheRightMix/card.png",
+          "ImageURL": "TheRightMix/card.webp",
           "Link": "TheRightMix/",
           "MobileFriendly": true
         },
         {
           "Name": "Angry Birds 1",
-          "ImageURL": "AngryBirds1/card.png",
+          "ImageURL": "AngryBirds1/card.webp",
           "Link": "AngryBirds1/",
           "MobileFriendly": true
         },
         {
           "Name": "Bad Piggies",
-          "ImageURL": "BadPiggies/card.png",
+          "ImageURL": "BadPiggies/card.webp",
           "Link": "BadPiggies/",
           "MobileFriendly": true
         },
         {
           "Name": "Snail Bob 1",
-          "ImageURL": "SnailBob/card.png",
+          "ImageURL": "SnailBob/card.webp",
           "Link": "SnailBob/",
           "MobileFriendly": true
         },
         {
           "Name": "Snail Bob 2",
-          "ImageURL": "SnailBob2/card.png",
+          "ImageURL": "SnailBob2/card.webp",
           "Link": "SnailBob2/",
           "MobileFriendly": true
         },
         {
           "Name": "Snail Bob 3",
-          "ImageURL": "SnailBob3/card.png",
+          "ImageURL": "SnailBob3/card.webp",
           "Link": "SnailBob3/",
           "MobileFriendly": true
         },
         {
           "Name": "Snail Bob 4",
-          "ImageURL": "SnailBob4/card.png",
+          "ImageURL": "SnailBob4/card.webp",
           "Link": "SnailBob4/",
           "MobileFriendly": true
         },
         {
           "Name": "Snail Bob 5",
-          "ImageURL": "SnailBob5/card.png",
+          "ImageURL": "SnailBob5/card.webp",
           "Link": "SnailBob5/",
           "MobileFriendly": true
         },
         {
           "Name": "Snail Bob 6",
-          "ImageURL": "SnailBob6/card.png",
+          "ImageURL": "SnailBob6/card.webp",
           "Link": "SnailBob6/",
           "MobileFriendly": true
         },
         {
           "Name": "Snail Bob 7",
-          "ImageURL": "SnailBob7/card.png",
+          "ImageURL": "SnailBob7/card.webp",
           "Link": "SnailBob7/",
           "MobileFriendly": true
         },
         {
           "Name": "Snail Bob 8",
-          "ImageURL": "SnailBob8/card.png",
+          "ImageURL": "SnailBob8/card.webp",
           "Link": "SnailBob8/",
           "MobileFriendly": true
         },
         {
           "Name": "Papa's Pizzeria",
-          "ImageURL": "PapasPizzeria/card.png",
+          "ImageURL": "PapasPizzeria/card.webp",
           "Link": "PapasPizzeria/",
           "MobileFriendly": true
         },
         {
           "Name": "Papa's Freezeria",
-          "ImageURL": "PapasFreezeria/card.png",
+          "ImageURL": "PapasFreezeria/card.webp",
           "Link": "PapasFreezeria/",
           "MobileFriendly": true
         },
         {
           "Name": "Papa's Burgeria",
-          "ImageURL": "PapasBurgeria/card.png",
+          "ImageURL": "PapasBurgeria/card.webp",
           "Link": "PapasBurgeria/",
           "MobileFriendly": true
         },
         {
           "Name": "Papa's Pastaria",
-          "ImageURL": "PapasPastaria/card.png",
+          "ImageURL": "PapasPastaria/card.webp",
           "Link": "PapasPastaria/",
           "MobileFriendly": true
         }

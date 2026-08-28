@@ -22,7 +22,10 @@ GameHub is a browser-based game hub. Games open directly in the browser with no 
 | [irv77/hd_fnaf](https://github.com/irv77/hd_fnaf) | Webport for the FNAF games used by GameHub. |
 | [web-ports/pvz](https://github.com/web-ports/pvz) | Plants vs Zombies webport source. |
 | [W0W53R/web-balatro](https://github.com/W0W53R/web-balatro) | Reference for the Balatro adaptation and its technology credits. |
-| [Verdini/celeste-classic-web](https://github.com/Verdini/celeste-classic-web) | Celeste Classic web port and preserved original credits. |
+| [web-ports/celeste](https://github.com/web-ports/celeste) | Celeste .NET/WebAssembly webport source integrated as local files. |
+| [web-ports/granny-2](https://github.com/web-ports/granny-2) | Granny: Chapter Two Unity webport source integrated as local files. |
+| [aukak/hollow-knight](https://github.com/aukak/hollow-knight) | Hollow Knight Unity webport source integrated as local files. |
+| [web-ports/hollow-knight-silksong](https://github.com/web-ports/hollow-knight-silksong) | Hollow Knight: Silksong Unity webport source integrated as local files. |
 | [martinmmcyt/rocket-goal](https://github.com/martinmmcyt/rocket-goal) | Rocket Goal webport source. |
 
 ## Availability note
