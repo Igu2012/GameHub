@@ -3,3 +3,17 @@ Undertale/runner.data -text -diff
 Undertale/game.unx.part* -text -diff
 Undertale/runner.wasm -text -diff
 Undertale/*.ogg -text -diff
+
+# Imported web-port payloads. Keep game data and runtime binaries out of text diffs.
+Granny2/Build/*.unityweb -text -diff
+Granny2/Build/*.part* -text -diff
+HollowKnight/Build/*.part* -text -diff
+HollowKnight/Build/*.wasm -text -diff
+HollowKnight/StreamingAssets/** -text -diff
+HollowKnightSilksong/Build/*.unityweb -text -diff
+HollowKnightSilksong/StreamingAssets/** -text -diff
+Celeste/_framework/*.wasm -text -diff
+Celeste/_framework/*.dat -text -diff
+Celeste/_framework/*.part* -text -diff
+Celeste/_framework/data/*.part* -text -diff
+Celeste/assets/*.png -text -diff

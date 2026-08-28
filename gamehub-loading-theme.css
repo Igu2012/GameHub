@@ -2,7 +2,7 @@
 .gamehub-loading {
   --gamehub-load-accent: #ff3b3b;
   --gamehub-load-surface: #070707;
-  display: grid !important;
+  display: grid;
   gap: 11px;
   justify-items: stretch;
   align-content: center;
@@ -42,6 +42,7 @@
 .gamehub-loading #progress-track {
   width: min(76vw, 380px);
   max-width: 100%;
+  justify-self: center;
   height: 8px;
   margin: 0;
   overflow: hidden;
@@ -55,6 +56,7 @@
   height: 100%;
   border-radius: 0;
   background: var(--gamehub-load-accent);
+  box-shadow: 0 0 10px rgba(255, 255, 255, .28);
   box-shadow: 0 0 10px color-mix(in srgb, var(--gamehub-load-accent) 65%, transparent);
 }
 
@@ -80,4 +82,55 @@
 
 @media (max-width: 380px) {
   .gamehub-loading { padding: 18px; gap: 9px; }
+}
+
+/* Individual dark palettes: every game keeps a black foundation while using its own atmosphere. */
+.gamehub-loading[data-loading-style="dawn"] {
+  background: radial-gradient(circle at 50% 118%, rgba(129, 230, 101, .20), transparent 43%), linear-gradient(145deg, #020602 0%, #080e08 100%);
+  border-color: rgba(154, 230, 110, .55);
+}
+.gamehub-loading[data-loading-style="arcade"] {
+  background: repeating-linear-gradient(135deg, rgba(255, 75, 75, .07) 0 1px, transparent 1px 8px), linear-gradient(145deg, #090101, #050505 66%);
+  border-color: rgba(255, 75, 75, .58);
+}
+.gamehub-loading[data-loading-style="chalkboard"] {
+  background: repeating-linear-gradient(0deg, rgba(167, 227, 75, .035) 0 1px, transparent 1px 7px), linear-gradient(145deg, #071005, #020402 70%);
+  border-color: rgba(167, 227, 75, .58);
+}
+.gamehub-loading[data-loading-style="rust"] {
+  background: radial-gradient(ellipse at 50% 0%, rgba(239, 106, 74, .18), transparent 57%), linear-gradient(135deg, #0c0503, #030303 78%);
+  border-color: rgba(239, 106, 74, .58);
+}
+.gamehub-loading[data-loading-style="sepia"] {
+  background: radial-gradient(circle at 50% 42%, rgba(240, 200, 70, .13), transparent 57%), linear-gradient(145deg, #151107, #080806 70%);
+  border-color: rgba(240, 200, 70, .58);
+}
+.gamehub-loading[data-loading-style="summit"] {
+  background: linear-gradient(180deg, rgba(78, 117, 145, .20), transparent 46%), linear-gradient(145deg, #060a0d, #010203 78%);
+  border-color: rgba(169, 205, 224, .52);
+}
+.gamehub-loading[data-loading-style="haunted"] {
+  background: radial-gradient(ellipse at 50% 112%, rgba(214, 73, 73, .19), transparent 49%), linear-gradient(145deg, #100303, #020202 71%);
+  border-color: rgba(214, 73, 73, .62);
+}
+.gamehub-loading[data-loading-style="garden"] {
+  background: radial-gradient(circle at 50% 105%, rgba(143, 218, 81, .19), transparent 47%), repeating-linear-gradient(90deg, rgba(143, 218, 81, .025) 0 1px, transparent 1px 9px), #030703;
+  border-color: rgba(143, 218, 81, .60);
+}
+.gamehub-loading[data-loading-style="scanner"] {
+  background: repeating-linear-gradient(0deg, rgba(101, 216, 255, .045) 0 1px, transparent 1px 5px), radial-gradient(circle at 50% 0%, rgba(101, 216, 255, .15), transparent 55%), #020607;
+  border-color: rgba(101, 216, 255, .60);
+}
+
+.gamehub-loading[data-loading-style="abyss"] {
+  background: radial-gradient(ellipse at 50% 112%, rgba(85, 126, 177, .20), transparent 49%), radial-gradient(circle at 50% 0%, rgba(222, 233, 255, .08), transparent 40%), #03070e;
+  border-color: rgba(179, 205, 240, .58);
+}
+.gamehub-loading[data-loading-style="silk"] {
+  background: radial-gradient(ellipse at 50% 0%, rgba(203, 47, 72, .18), transparent 51%), repeating-linear-gradient(135deg, rgba(224, 67, 93, .035) 0 1px, transparent 1px 7px), #0d0205;
+  border-color: rgba(224, 67, 93, .63);
+}
+.gamehub-loading[data-loading-style="sky"] {
+  background: radial-gradient(ellipse at 50% 112%, rgba(109, 190, 231, .21), transparent 50%), linear-gradient(145deg, #06111a, #020508 74%);
+  border-color: rgba(109, 190, 231, .62);
 }
