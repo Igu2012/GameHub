@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, viewport-fit=cover, user-scalable=no, shrink-to-fit=yes">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Play Granny: Chapter Two online on GameHub.">
+  <title>Granny: Chapter Two</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="TemplateData/style.css">
+  <link rel="stylesheet" href="../gamehub-loading-theme.css">
+  <script src="TemplateData/UnityProgress.js"></script>
+  <script src="Build/UnityLoader.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #000; }
+    #unityContainer, #unityContainer canvas { width: 100vw !important; height: 100vh !important; }
+    #unityContainer canvas { display: block; background: #000; outline: none; }
+    #loading-ui { position: fixed; inset: 0; z-index: 10; width: auto; text-align: center; pointer-events: none; }
+  </style>
+  <script>
+    (() => {
+      const isMobile = /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent);
+      if (!isMobile) return;
+      const enableFullscreen = () => {
+        const root = document.documentElement;
+        const request = root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen;
+        if (request && !document.fullscreenElement && !document.webkitFullscreenElement) Promise.resolve(request.call(root)).catch(() => {});
+      };
+      ['touchstart', 'click', 'keydown'].forEach(eventName => window.addEventListener(eventName, enableFullscreen, { once: true, passive: eventName === 'touchstart' }));
+    })();
+  </script>
+</head>
+<body>
+  <div class="webgl-content"><div id="unityContainer"></div></div>
+  <div id="loading-ui" class="gamehub-loading" data-loading-style="haunted" style="--gamehub-load-accent: #d64949;" role="status" aria-live="polite">
+    <div id="status-text">Preparing download</div>
+    <div id="bar-container" aria-hidden="true"><div id="bar-fill"></div></div>
+    <div id="progress-detail">0.00 MB / 304.68 MB</div>
+    <div id="error-box"></div>
+  </div>
+  <!-- Local web port source: https://github.com/web-ports/granny-2 -->
+  <script>
+    const loadingUI = document.getElementById('loading-ui');
+    const statusText = document.getElementById('status-text');
+    const barFill = document.getElementById('bar-fill');
+    const progressDetail = document.getElementById('progress-detail');
+    const errorBox = document.getElementById('error-box');
+    const TOTAL_DATA_BYTES = 319483028;
+    let loadedBytes = 0;
+
+    const formatMB = bytes => `${(bytes / 1048576).toFixed(2)} MB`;
+    const updateProgress = message => {
+      const safeBytes = Math.min(loadedBytes, TOTAL_DATA_BYTES);
+      barFill.style.width = `${Math.min(100, (safeBytes / TOTAL_DATA_BYTES) * 100)}%`;
+      statusText.textContent = message;
+      progressDetail.textContent = `${formatMB(safeBytes)} / ${formatMB(TOTAL_DATA_BYTES)}`;
+    };
+
+    async function fetchWithProgress(url) {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok || !response.body) throw new Error(`Could not download ${url}.`);
+      const reader = response.body.getReader();
+      const chunks = [];
+      let received = 0;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+        received += value.byteLength;
+        loadedBytes += value.byteLength;
+        updateProgress('Downloading game files');
+      }
+      const output = new Uint8Array(received);
+      let offset = 0;
+      for (const chunk of chunks) { output.set(chunk, offset); offset += chunk.byteLength; }
+      return output.buffer;
+    }
+
+    async function mergeFiles(parts, cacheKey) {
+      const cache = await caches.open('granny2-cache');
+      const cached = await cache.match(cacheKey);
+      if (cached) {
+        const blob = await cached.blob();
+        loadedBytes += blob.size;
+        updateProgress('Loading saved game files');
+        return URL.createObjectURL(blob);
+      }
+      const buffers = await Promise.all(parts.map(fetchWithProgress));
+      const blob = new Blob(buffers);
+      await cache.put(cacheKey, new Response(blob));
+      return URL.createObjectURL(blob);
+    }
+
+    function getParts(file, count) {
+      return Array.from({ length: count }, (_, index) => `${file}.part${index + 1}`);
+    }
+
+    function showError(error) {
+      console.error(error);
+      statusText.textContent = 'Could not start Granny 2';
+      errorBox.textContent = 'Refresh the page to try again.';
+      errorBox.style.display = 'block';
+    }
+
+    (async () => {
+      try {
+        updateProgress('Preparing download');
+        const dataUrl = await mergeFiles(getParts('Build/Granny2.data.unityweb', 16), 'Granny2.data.unityweb');
+        const originalOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function(method, url, ...rest) {
+          const localUrl = typeof url === 'string' && url.includes('Granny2.data.unityweb') ? dataUrl : url;
+          return originalOpen.call(this, method, localUrl, ...rest);
+        };
+        statusText.textContent = 'Starting game';
+        progressDetail.textContent = `${formatMB(TOTAL_DATA_BYTES)} / ${formatMB(TOTAL_DATA_BYTES)}`;
+        barFill.style.width = '100%';
+        let gameReady = false;
+        UnityLoader.instantiate('unityContainer', 'Build/Granny2.json', {
+          onProgress: (instance, progress) => {
+            statusText.textContent = progress >= 1 ? 'Ready' : 'Starting game';
+            if (progress >= 1 && !gameReady) {
+              gameReady = true;
+              setTimeout(() => { loadingUI.style.display = 'none'; }, 250);
+            }
+          }
+        });
+      } catch (error) { showError(error); }
+    })();
+  </script>
+</body>
+</html>
