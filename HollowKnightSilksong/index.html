@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, viewport-fit=cover, user-scalable=no, shrink-to-fit=yes">
+  <meta name="theme-color" content="#0d0205">
+  <meta name="description" content="Play Hollow Knight: Silksong online on GameHub.">
+  <title>Hollow Knight: Silksong</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="../gamehub-loading-theme.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #000; }
+    #unity-container, #unity-canvas { width: 100%; height: 100%; }
+    #unity-canvas { display: block; background: #000; outline: none; }
+    #loading-ui { position: fixed; inset: 0; z-index: 10; text-align: center; pointer-events: none; }
+    #save-button { position: fixed; z-index: 20; top: 12px; right: 12px; display: none; padding: 9px 13px; color: #ffe9ea; background: rgba(18, 2, 6, .9); border: 1px solid rgba(224, 67, 93, .60); font: 700 12px Arial, sans-serif; letter-spacing: .04em; cursor: pointer; }
+    #save-button:hover { background: rgba(86, 13, 27, .94); }
+  </style>
+  <script>
+    (() => {
+      const isMobile = /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent);
+      if (!isMobile) return;
+      const enableFullscreen = () => {
+        const root = document.documentElement;
+        const request = root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen;
+        if (request && !document.fullscreenElement && !document.webkitFullscreenElement) Promise.resolve(request.call(root)).catch(() => {});
+      };
+      ['touchstart', 'click', 'keydown'].forEach(eventName => window.addEventListener(eventName, enableFullscreen, { once: true, passive: eventName === 'touchstart' }));
+    })();
+  </script>
+</head>
+<body>
+  <div id="unity-container"><canvas id="unity-canvas" tabindex="-1" aria-label="Hollow Knight: Silksong"></canvas></div>
+  <div id="loading-ui" class="gamehub-loading" data-loading-style="silk" style="--gamehub-load-accent: #e0435d;" role="status" aria-live="polite">
+    <div id="status-text">Preparing game files</div>
+    <div id="bar-container" aria-hidden="true"><div id="bar-fill"></div></div>
+    <div id="progress-detail">0.00 MB / 1986.64 MB</div>
+    <div id="error-box"></div>
+  </div>
+  <button id="save-button" type="button">DOWNLOAD SAVE</button>
+  <!-- Local web port source: https://github.com/web-ports/hollow-knight-silksong -->
+  <script src="jszip.js"></script>
+  <script>
+    const canvas = document.getElementById('unity-canvas');
+    const loadingUI = document.getElementById('loading-ui');
+    const statusText = document.getElementById('status-text');
+    const barFill = document.getElementById('bar-fill');
+    const progressDetail = document.getElementById('progress-detail');
+    const errorBox = document.getElementById('error-box');
+    const saveButton = document.getElementById('save-button');
+    const CACHE_NAME = 'gamehub-hollow-knight-silksong-v1';
+    const TOTAL_ARCHIVE_BYTES = 2083139638;
+    const originalFetch = window.fetch.bind(window);
+    let loadedBytes = 0;
+
+    const formatMB = bytes => `${(bytes / 1048576).toFixed(2)} MB`;
+    function renderProgress(message) {
+      const complete = Math.min(loadedBytes, TOTAL_ARCHIVE_BYTES);
+      statusText.textContent = message;
+      progressDetail.textContent = `${formatMB(complete)} / ${formatMB(TOTAL_ARCHIVE_BYTES)}`;
+      barFill.style.width = `${Math.min(100, complete / TOTAL_ARCHIVE_BYTES * 100)}%`;
+    }
+    function showError(error) {
+      console.error(error);
+      statusText.textContent = 'Could not start Silksong';
+      errorBox.textContent = 'Refresh the page to try again.';
+      errorBox.style.display = 'block';
+    }
+    async function cacheIsReady() {
+      const cache = await caches.open(CACHE_NAME);
+      return Boolean(await cache.match('CACHE_COMPLETE'));
+    }
+    async function clearOldCaches() {
+      const cacheNames = await caches.keys();
+      await Promise.all(cacheNames.filter(name => name.startsWith('gamehub-hollow-knight-silksong-') && name !== CACHE_NAME).map(name => caches.delete(name)));
+    }
+    window.fetch = async function(resource, options) {
+      const url = typeof resource === 'string' ? resource : resource.url;
+      const cleanPath = url.split('/').pop();
+      const cache = await caches.open(CACHE_NAME);
+      const cached = await cache.match(cleanPath);
+      return cached || originalFetch(resource, options);
+    };
+    async function fetchWithProgress(url) {
+      const response = await originalFetch(url, { cache: 'no-store' });
+      if (!response.ok || !response.body) throw new Error(`Could not download ${url}.`);
+      const reader = response.body.getReader();
+      const chunks = [];
+      let received = 0;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+        received += value.byteLength;
+        loadedBytes += value.byteLength;
+        renderProgress('Downloading game files');
+      }
+      const buffer = new Uint8Array(received);
+      let offset = 0;
+      for (const chunk of chunks) { buffer.set(chunk, offset); offset += chunk.byteLength; }
+      return buffer.buffer;
+    }
+    function partNames(file, count) {
+      return Array.from({ length: count }, (_, index) => `${file}.part${index + 1}`);
+    }
+    async function unzipAndCache(zipBlob) {
+      statusText.textContent = 'Preparing game files';
+      progressDetail.textContent = 'Unpacking local assets';
+      barFill.style.width = '100%';
+      const zip = await JSZip.loadAsync(zipBlob);
+      const files = Object.values(zip.files).filter(file => !file.dir);
+      const cache = await caches.open(CACHE_NAME);
+      let processed = 0;
+      const batchSize = 8;
+      for (let index = 0; index < files.length; index += batchSize) {
+        const batch = files.slice(index, index + batchSize);
+        await Promise.all(batch.map(async file => {
+          const blob = await file.async('blob');
+          await cache.put(file.name, new Response(blob));
+          processed += 1;
+        }));
+        statusText.textContent = `Preparing game files (${processed}/${files.length})`;
+        await new Promise(resolve => setTimeout(resolve, 0));
+      }
+      await cache.put('CACHE_COMPLETE', new Response('ok'));
+    }
+    function unityShowBanner(message, type) {
+      if (type === 'error') console.error(message); else console.warn(message);
+    }
+    async function launch() {
+      const buildUrl = 'Build';
+      const config = {
+        dataUrl: `${buildUrl}/w-pt.data.unityweb`,
+        frameworkUrl: `${buildUrl}/w-pt.framework.js.unityweb`,
+        codeUrl: `${buildUrl}/w-pt.wasm.unityweb`,
+        streamingAssetsUrl: 'StreamingAssets',
+        companyName: 'EDUrocks Group, Truffled, GN-Math',
+        productName: 'Hollow Knight: Silksong',
+        productVersion: '1.0',
+        showBanner: unityShowBanner
+      };
+      const script = document.createElement('script');
+      script.src = `${buildUrl}/w-pt.loader.js`;
+      script.onload = () => createUnityInstance(canvas, config, progress => {
+        statusText.textContent = progress >= 1 ? 'Ready' : 'Starting game';
+        progressDetail.textContent = progress >= 1 ? `${formatMB(TOTAL_ARCHIVE_BYTES)} / ${formatMB(TOTAL_ARCHIVE_BYTES)}` : 'Loading game runtime';
+        if (progress >= 1) setTimeout(() => { loadingUI.style.display = 'none'; saveButton.style.display = 'block'; }, 250);
+      }).catch(showError);
+      script.onerror = () => showError(new Error('Could not load the game runtime.'));
+      document.body.appendChild(script);
+    }
+    (async () => {
+      try {
+        await clearOldCaches();
+        if (!(await cacheIsReady())) {
+          renderProgress('Downloading game files');
+          const parts = partNames('StreamingAssets/aa/WebGL.zip', 100);
+          const buffers = await Promise.all(parts.map(fetchWithProgress));
+          await unzipAndCache(new Blob(buffers));
+        } else {
+          loadedBytes = TOTAL_ARCHIVE_BYTES;
+          renderProgress('Loading cached game files');
+        }
+        await launch();
+      } catch (error) { showError(error); }
+    })();
+
+    const openDatabase = name => new Promise((resolve, reject) => { const request = indexedDB.open(name); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
+    const readStore = (database, store) => new Promise((resolve, reject) => { const request = database.transaction([store], 'readonly').objectStore(store).getAll(); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
+    saveButton.addEventListener('click', async () => {
+      try {
+        const databases = await indexedDB.databases();
+        const save = {};
+        for (const info of databases) {
+          const database = await openDatabase(info.name);
+          for (const store of database.objectStoreNames) {
+            try {
+              const data = await readStore(database, store);
+              if (data && data.length) save[`${info.name}/${store}`] = data.map(item => item?.contents instanceof Uint8Array ? { ...item, contents: Array.from(item.contents) } : item);
+            } catch (_) {}
+          }
+          database.close();
+        }
+        if (!Object.keys(save).length) throw new Error('No save found.');
+        const blob = new Blob([JSON.stringify(save)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'hollow-knight-silksong-save.json';
+        link.click();
+        URL.revokeObjectURL(url);
+      } catch (error) { alert(error.message || 'Could not download the save.'); }
+    });
+  </script>
+</body>
+</html>
