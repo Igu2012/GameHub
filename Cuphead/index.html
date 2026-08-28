@@ -21,10 +21,11 @@
     #loading-error { display: none; max-width: min(90vw, 640px); color: #ffb0b0; font-size: 14px; line-height: 1.45; }
     #orientation { display: none; position: fixed; inset: 0; z-index: 30; place-items: center; padding: 24px; background: #000; color: #fff; font-size: clamp(22px, 8vw, 42px); font-weight: 900; letter-spacing: .08em; text-align: center; }
   </style>
+  <link rel="stylesheet" href="../gamehub-loading-theme.css">
 </head>
 <body>
   <div id="unity-container"><canvas id="unity-canvas" width="960" height="600" tabindex="-1" aria-label="Cuphead"></canvas></div>
-  <div id="loading-ui" role="status" aria-live="polite">
+  <div id="loading-ui" class="gamehub-loading" style="--gamehub-load-accent: #f0c846;" role="status" aria-live="polite">
     <div id="loading-status">Loading...</div>
     <div id="progress-track" aria-hidden="true"><div id="progress-fill"></div></div>
     <div id="progress-detail">0.00 MB / 1294.63 MB</div>

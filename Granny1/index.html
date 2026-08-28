@@ -32,11 +32,12 @@ canvas { width: 100%; height: 100%; display: block; background: #000; outline: n
 #bar-fill { width: 0%; height: 100%; border-radius: 4px; background: #ededed; transition: width 0.12s linear; }
 #error-box { display: none; margin-top: 14px; color: #ff8d8d; font-size: 12px; line-height: 1.4; }
 </style>
+  <link rel="stylesheet" href="../gamehub-loading-theme.css">
 </head>
 <body>
   <div id="game-container">
     <canvas id="unity-canvas" tabindex="-1"></canvas>
-    <div id="loading-ui"><div id="status-text">loading data</div><div id="bar-container"><div id="bar-fill"></div></div><div id="error-box"></div></div>
+    <div id="loading-ui" class="gamehub-loading" style="--gamehub-load-accent: #d8d8d8;"><div id="status-text">loading data</div><div id="bar-container"><div id="bar-fill"></div></div><div id="error-box"></div></div>
   </div>
   <script>
 const canvas = document.querySelector('#unity-canvas');

@@ -32,11 +32,12 @@ canvas { width: 100%; height: 100%; display: block; background: #000; outline: n
 #bar-fill { width: 0%; height: 100%; border-radius: 4px; background: #ededed; transition: width 0.12s linear; }
 #error-box { display: none; margin-top: 14px; color: #ff8d8d; font-size: 12px; line-height: 1.4; }
 </style>
+  <link rel="stylesheet" href="../gamehub-loading-theme.css">
 </head>
 <body>
   <div id="game-container">
     <canvas id="unity-canvas" tabindex="-1"></canvas>
-    <div id="loading-ui"><div id="status-text">loading data</div><div id="bar-container"><div id="bar-fill"></div></div><div id="error-box"></div></div>
+    <div id="loading-ui" class="gamehub-loading" style="--gamehub-load-accent: #ff5757;"><div id="status-text">Preparing download</div><div id="bar-container"><div id="bar-fill"></div></div><div id="progress-detail">0.00 MB / 659.69 MB</div><div id="error-box"></div></div>
   </div>
   <script>
 const canvas = document.querySelector('#unity-canvas');
@@ -44,8 +45,10 @@ const loadingUI = document.querySelector('#loading-ui');
 const statusText = document.querySelector('#status-text');
 const barFill = document.querySelector('#bar-fill');
 const errorBox = document.querySelector('#error-box');
+const progressDetail = document.querySelector('#progress-detail');
+const TOTAL_PAYLOAD_BYTES = 691732588;
 let loadedBytes = 0;
-let expectedBytes = 0;
+let expectedBytes = TOTAL_PAYLOAD_BYTES;
 
 function formatMB(bytes) {
   return (bytes / (1024 * 1024)).toFixed(2);
@@ -53,15 +56,12 @@ function formatMB(bytes) {
 function updateDownloadStatus() {
   const progress = expectedBytes > 0 ? Math.min(100, (loadedBytes / expectedBytes) * 100) : 0;
   barFill.style.width = progress + '%';
-  statusText.textContent = expectedBytes > 0
-    ? `loading... ${formatMB(loadedBytes)} MB / ${formatMB(expectedBytes)} MB`
-    : `loading... ${formatMB(loadedBytes)} MB`;
+  statusText.textContent = 'Downloading game files';
+  progressDetail.textContent = `${formatMB(Math.min(loadedBytes, expectedBytes))} MB / ${formatMB(expectedBytes)} MB`;
 }
 async function fetchWithProgress(url) {
   const response = await fetch(url);
   if (!response.ok || !response.body) throw new Error(`Unable to load ${url} (${response.status})`);
-  const length = Number(response.headers.get('content-length')) || 0;
-  expectedBytes += length;
   updateDownloadStatus();
   const reader = response.body.getReader();
   const chunks = [];
@@ -97,6 +97,7 @@ function showError(error) {
 }
 async function bootUnity(options) {
   try {
+    updateDownloadStatus();
     const [dataUrl, wasmUrl] = await Promise.all([
       mergeFiles(partNames(options.dataFile, options.dataParts, options.padding || 0)),
       mergeFiles(partNames(options.wasmFile, options.wasmParts, options.padding || 0)),
@@ -122,13 +123,14 @@ async function bootUnity(options) {
       resize();
       window.addEventListener('resize', resize);
     }
-    statusText.textContent = 'starting game';
+    statusText.textContent = 'Starting game';
+    progressDetail.textContent = `${formatMB(expectedBytes)} MB / ${formatMB(expectedBytes)} MB`;
     barFill.style.width = '100%';
     const script = document.createElement('script');
     script.src = options.loaderUrl;
     script.onload = () => createUnityInstance(canvas, config, (progress) => {
-      barFill.style.width = (100 * progress) + '%';
-      statusText.textContent = 'starting game';
+      barFill.style.width = '100%';
+      statusText.textContent = 'Starting game';
     }).then(() => { loadingUI.style.display = 'none'; }).catch(showError);
     script.onerror = () => showError(new Error(`Unable to load ${options.loaderUrl}`));
     document.body.appendChild(script);
