@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, viewport-fit=cover, user-scalable=no, shrink-to-fit=yes">
+  <meta name="theme-color" content="#03070e">
+  <meta name="description" content="Play Hollow Knight online on GameHub.">
+  <title>Hollow Knight</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="../gamehub-loading-theme.css">
+  <style>
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #000; }
+    #unity-canvas { width: 100vw; height: 100vh; display: block; background: #000; outline: none; }
+    #loading-ui { position: fixed; inset: 0; z-index: 10; text-align: center; pointer-events: none; }
+    #save-button { position: fixed; z-index: 20; top: 12px; right: 12px; display: none; padding: 9px 13px; color: #eaf3ff; background: rgba(5, 11, 21, .88); border: 1px solid rgba(179, 205, 240, .55); font: 700 12px Arial, sans-serif; letter-spacing: .04em; cursor: pointer; }
+    #save-button:hover { background: rgba(33, 53, 82, .95); }
+  </style>
+  <script>
+    (() => {
+      const isMobile = /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent);
+      if (!isMobile) return;
+      const enableFullscreen = () => {
+        const root = document.documentElement;
+        const request = root.requestFullscreen || root.webkitRequestFullscreen || root.mozRequestFullScreen || root.msRequestFullscreen;
+        if (request && !document.fullscreenElement && !document.webkitFullscreenElement) Promise.resolve(request.call(root)).catch(() => {});
+      };
+      ['touchstart', 'click', 'keydown'].forEach(eventName => window.addEventListener(eventName, enableFullscreen, { once: true, passive: eventName === 'touchstart' }));
+    })();
+  </script>
+</head>
+<body>
+  <canvas id="unity-canvas" aria-label="Hollow Knight"></canvas>
+  <div id="loading-ui" class="gamehub-loading" data-loading-style="abyss" style="--gamehub-load-accent: #b3cdf0;" role="status" aria-live="polite">
+    <div id="status-text">Preparing download</div>
+    <div id="bar-container" aria-hidden="true"><div id="bar-fill"></div></div>
+    <div id="progress-detail">0.00 MB / 912.81 MB</div>
+    <div id="error-box"></div>
+  </div>
+  <button id="save-button" type="button">DOWNLOAD SAVE</button>
+  <!-- Local web port source: https://github.com/aukak/hollow-knight -->
+  <script>
+    const canvas = document.getElementById('unity-canvas');
+    const loadingUI = document.getElementById('loading-ui');
+    const statusText = document.getElementById('status-text');
+    const barFill = document.getElementById('bar-fill');
+    const progressDetail = document.getElementById('progress-detail');
+    const errorBox = document.getElementById('error-box');
+    const saveButton = document.getElementById('save-button');
+    const TOTAL_PAYLOAD_BYTES = 957147063;
+    let loadedBytes = 0;
+
+    const formatMB = bytes => `${(bytes / 1048576).toFixed(2)} MB`;
+    function updateProgress(message) {
+      const complete = Math.min(loadedBytes, TOTAL_PAYLOAD_BYTES);
+      statusText.textContent = message;
+      progressDetail.textContent = `${formatMB(complete)} / ${formatMB(TOTAL_PAYLOAD_BYTES)}`;
+      barFill.style.width = `${Math.min(100, complete / TOTAL_PAYLOAD_BYTES * 100)}%`;
+    }
+    async function fetchWithProgress(url) {
+      const response = await fetch(url, { cache: 'no-store' });
+      if (!response.ok || !response.body) throw new Error(`Could not download ${url}.`);
+      const reader = response.body.getReader();
+      const chunks = [];
+      let size = 0;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+        size += value.byteLength;
+        loadedBytes += value.byteLength;
+        updateProgress('Downloading game files');
+      }
+      const output = new Uint8Array(size);
+      let offset = 0;
+      for (const chunk of chunks) { output.set(chunk, offset); offset += chunk.byteLength; }
+      return output.buffer;
+    }
+    function partNames(file, count) {
+      return Array.from({ length: count }, (_, index) => `${file}.part${index + 1}`);
+    }
+    async function mergeParts(parts) {
+      const buffers = await Promise.all(parts.map(fetchWithProgress));
+      return URL.createObjectURL(new Blob(buffers));
+    }
+    function showError(error) {
+      console.error(error);
+      statusText.textContent = 'Could not start Hollow Knight';
+      errorBox.textContent = 'Refresh the page to try again.';
+      errorBox.style.display = 'block';
+    }
+    (async () => {
+      try {
+        updateProgress('Preparing download');
+        const [dataUrl, codeUrl] = await Promise.all([
+          mergeParts(partNames('Build/hktruffled.data', 45)),
+          mergeParts(partNames('Build/hktruffled.wasm', 2))
+        ]);
+        statusText.textContent = 'Starting game';
+        progressDetail.textContent = `${formatMB(TOTAL_PAYLOAD_BYTES)} / ${formatMB(TOTAL_PAYLOAD_BYTES)}`;
+        barFill.style.width = '100%';
+        const loader = document.createElement('script');
+        loader.src = 'Build/hktruffled.loader.js';
+        loader.onload = () => createUnityInstance(canvas, {
+          dataUrl,
+          frameworkUrl: 'Build/hktruffled.framework.js',
+          codeUrl,
+          streamingAssetsUrl: 'StreamingAssets',
+          companyName: 'Team Cherry',
+          productName: 'Hollow Knight',
+          productVersion: '1.0'
+        }, progress => {
+          statusText.textContent = progress >= 1 ? 'Ready' : 'Starting game';
+          if (progress >= 1) setTimeout(() => { loadingUI.style.display = 'none'; saveButton.style.display = 'block'; }, 250);
+        }).catch(showError);
+        loader.onerror = () => showError(new Error('Could not load the game runtime.'));
+        document.body.appendChild(loader);
+      } catch (error) { showError(error); }
+    })();
+
+    const openDatabase = name => new Promise((resolve, reject) => { const request = indexedDB.open(name); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
+    const readStore = (database, store) => new Promise((resolve, reject) => { const request = database.transaction([store], 'readonly').objectStore(store).getAll(); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
+    saveButton.addEventListener('click', async () => {
+      try {
+        const databases = await indexedDB.databases();
+        const save = {};
+        for (const info of databases) {
+          const database = await openDatabase(info.name);
+          for (const store of database.objectStoreNames) {
+            try {
+              const data = await readStore(database, store);
+              if (data && data.length) save[`${info.name}/${store}`] = data.map(item => item?.contents instanceof Uint8Array ? { ...item, contents: Array.from(item.contents) } : item);
+            } catch (_) {}
+          }
+          database.close();
+        }
+        if (!Object.keys(save).length) throw new Error('No save found.');
+        const blob = new Blob([JSON.stringify(save)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'hollow-knight-save.json';
+        link.click();
+        URL.revokeObjectURL(url);
+      } catch (error) { alert(error.message || 'Could not download the save.'); }
+    });
+  </script>
+</body>
+</html>
