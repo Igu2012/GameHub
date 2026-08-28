@@ -75,9 +75,12 @@ function renderSection(container, cat) {
         const card = document.createElement('a');
         card.href = window.GameHubAssets ? GameHubAssets.gamePageUrl(game.Link) : game.Link;
         card.className = 'game-card';
+        const imagePath = String(game.ImageURL || '').startsWith('img/')
+            ? game.ImageURL
+            : (window.GameHubAssets ? GameHubAssets.gameAssetUrl(game.Link, game.ImageURL.split('/').pop()) : game.ImageURL);
         card.innerHTML = `
             <div class="game-card-image">
-                <img src="${game.ImageURL}" alt="${game.Name}" loading="lazy" width="600" height="600">
+                <img src="${imagePath}" alt="${game.Name}" loading="lazy" width="600" height="600">
             </div>
             <div class="game-card-content">
                 <span class="game-card-name">${game.Name}</span>
