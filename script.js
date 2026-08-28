@@ -73,11 +73,11 @@ function renderSection(container, cat) {
     
     cat.games.forEach(game => {
         const card = document.createElement('a');
-        card.href = game.Link;
+        card.href = window.GameHubAssets ? GameHubAssets.gamePageUrl(game.Link) : game.Link;
         card.className = 'game-card';
         card.innerHTML = `
             <div class="game-card-image">
-                <img src="${game.ImageURL}" alt="${game.Name}" loading="lazy">
+                <img src="${game.ImageURL}" alt="${game.Name}" loading="lazy" width="600" height="600">
             </div>
             <div class="game-card-content">
                 <span class="game-card-name">${game.Name}</span>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#09091b">
+  <title>GameHub</title>
+  <link rel="icon" href="favicon.ico">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    :root { color-scheme: dark; }
+    body.game-page { min-height: 100vh; margin: 0; background: #09091b; color: #fff; }
+    .game-page-header { display: flex; align-items: center; justify-content: space-between; gap: 14px; max-width: 1120px; margin: 0 auto; padding: 22px 22px 14px; }
+    .game-page-brand { color: #fff; font-weight: 800; letter-spacing: .08em; text-decoration: none; text-transform: uppercase; }
+    .game-page-title { overflow: hidden; margin: 0; color: #f5f5ff; font-size: clamp(1rem, 2vw, 1.35rem); text-align: center; text-overflow: ellipsis; white-space: nowrap; }
+    .game-page-actions { display: flex; flex-shrink: 0; gap: 8px; }
+    .game-page-button { border: 1px solid #606078; border-radius: 7px; padding: 9px 12px; color: #fff; background: #17172c; cursor: pointer; font: inherit; }
+    .game-page-button:hover, .game-page-button:focus-visible { border-color: #fff; background: #24243d; outline: none; }
+    .game-frame-wrap { position: relative; width: min(92vw, 1080px); height: min(76vh, 700px); min-height: 330px; margin: 20px auto 44px; overflow: hidden; border: 1px solid #44445c; border-radius: 10px; background: #000; box-shadow: 0 16px 44px rgba(0,0,0,.38); }
+    #gameFrame { display: block; width: 100%; height: 100%; border: 0; background: #000; }
+    .game-page-status { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; color: #ddd; background: #05050b; text-align: center; }
+    .game-page-status.is-hidden { display: none; }
+    .game-page-error { color: #ffbdbd; }
+    @media (max-width: 600px) {
+      .game-page-header { padding: 14px 12px 8px; }
+      .game-page-brand { font-size: .78rem; }
+      .game-page-title { font-size: .95rem; }
+      .game-page-button { padding: 8px 9px; font-size: .8rem; }
+      .game-frame-wrap { width: 100%; height: calc(100vh - 82px); min-height: 360px; margin: 8px 0 0; border-right: 0; border-left: 0; border-radius: 0; }
+    }
+  </style>
+</head>
+<body class="game-page">
+  <header class="game-page-header">
+    <a id="backToGameHub" class="game-page-brand" href="./">GameHub</a>
+    <h1 id="gamePageTitle" class="game-page-title">Loading game...</h1>
+    <div class="game-page-actions">
+      <button id="fullscreenButton" class="game-page-button" type="button">Fullscreen</button>
+      <button id="backButton" class="game-page-button" type="button">Back</button>
+    </div>
+  </header>
+  <main>
+    <div id="gameFrameWrap" class="game-frame-wrap">
+      <div id="gameStatus" class="game-page-status">Loading game...</div>
+      <iframe id="gameFrame" title="Game" allow="fullscreen; autoplay; gamepad; pointer-lock" allowfullscreen></iframe>
+    </div>
+  </main>
+  <script src="asset-host.js"></script>
+  <script src="play.js"></script>
+</body>
+</html>

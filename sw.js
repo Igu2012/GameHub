@@ -1,9 +1,13 @@
-const CACHE_NAME = 'gamehub-v1';
+const CACHE_NAME = 'gamehub-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
   '/style.css',
   '/script.js',
+  '/asset-host.js',
+  '/play.html',
+  '/play.js',
+  '/games.json',
   '/manifest.json',
   '/logo.png',
   '/favicon.ico'
