@@ -24,11 +24,21 @@
     #download-detail { min-height: 18px; color: #c9c9c9; font-size: 13px; font-variant-numeric: tabular-nums; }
     #message-container { display: none; position: fixed; inset: 0 auto auto 0; z-index: 20; width: 100%; min-height: 50px; padding: 12px 24px; background: rgba(0, 0, 0, .62); color: #fff; font-family: monospace; }
     #messages { margin-left: 24px; }
-    #pauseMenuContainer { position: fixed; inset: 0; z-index: 25; display: grid; place-items: center; background: rgba(0, 0, 0, .45); }
+    #pauseMenuContainer { position: fixed; inset: 0; z-index: 25; display: grid; place-items: center; padding: 24px; background: rgba(0, 0, 0, .72); }
     #pauseMenuContainer[hidden] { display: none; }
-    #pauseMenu { display: grid; gap: 10px; min-width: 220px; padding: 28px; background: #17111f; border: 1px solid #fa1e4e; border-radius: 8px; }
-    #pauseMenu button { padding: 12px 20px; color: #fff; background: #fa1e4e; border: 0; border-radius: 5px; font: 700 16px Arial, sans-serif; }
-    #pauseMenu button#quitButton { background: #513044; }
+    #pauseMenuBorder { width: min(420px, 100%); padding: 4px; background: #fff; box-shadow: 0 0 0 4px #000; }
+    #pauseMenu { display: grid; gap: 4px; padding: 22px 26px 20px; background: #000; color: #fff; font-family: "Courier New", monospace; text-transform: uppercase; letter-spacing: 1.5px; }
+    #pauseMenu::before { content: "* Game paused"; margin-bottom: 12px; color: #fff; font-size: clamp(19px, 5vw, 25px); font-weight: 700; letter-spacing: 0; }
+    #pauseMenu::after { content: "Your game is still here."; margin-top: 13px; color: #aaa; font-size: 12px; letter-spacing: .2px; text-transform: none; }
+    #pauseMenu button { position: relative; min-height: 42px; padding: 7px 7px 7px 34px; overflow: visible; color: #fff; background: #000; border: 0; border-radius: 0; text-align: left; font: 700 clamp(18px, 5vw, 24px) "Courier New", monospace; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; }
+    #pauseMenu button::before { content: "♥"; position: absolute; left: 5px; color: transparent; font-size: .82em; line-height: 1.2; }
+    #pauseMenu button:hover, #pauseMenu button:focus-visible { color: #ffff00; outline: 0; }
+    #pauseMenu button:hover::before, #pauseMenu button:focus-visible::before { color: #ff0000; }
+    #pauseMenu button#resumeButton::before { color: #ff0000; }
+    #pauseMenu button#resumeButton:focus-visible::before { color: #ff0000; }
+    #pauseMenu button#quitButton { color: #fff; }
+    #pauseMenu button#quitButton:hover, #pauseMenu button#quitButton:focus-visible { color: #ff5555; }
+    @media (max-width: 380px) { #pauseMenu { padding: 19px 20px 17px; } }
     #output-container, #output { display: none; }
   </style>
 </head>
@@ -37,7 +47,7 @@
   <div id="pauseMenuContainer" hidden>
     <div id="pauseMenuBorder"><div id="pauseMenu">
       <button id="resumeButton" onclick="resume()">Resume</button>
-      <button id="quitButton" onclick="quitIfSupported()">Quit</button>
+      <button id="quitButton" onclick="quitIfSupported()">Exit game</button>
     </div></div>
   </div>
   <div class="loading" id="loading" role="status" aria-live="polite">
