@@ -1,86 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#f7f8fb">
+  <meta name="theme-color" content="#000000">
   <title>GameHub</title>
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="style.css">
   <style>
-    :root { color-scheme: light; }
+    :root { color-scheme: dark; }
     * { box-sizing: border-box; }
-    body.game-page { min-height: 100vh; margin: 0; background: #f4f6f8; color: #17202b; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    .game-page-shell { width: min(1120px, 100%); margin: 0 auto; padding: 18px 22px 42px; }
-    .game-page-nav { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-    .game-page-logo { display: inline-flex; align-items: center; min-height: 44px; padding: 0 17px; border-radius: 14px; color: #fff; background: #17202b; font-size: 1rem; font-weight: 900; letter-spacing: .04em; text-decoration: none; }
-    .game-page-nav-spacer { flex: 1; }
-    .game-nav-button, .game-action-button { border: 1px solid #d7dce3; border-radius: 12px; padding: 10px 14px; color: #253140; background: #fff; cursor: pointer; font: inherit; font-weight: 700; box-shadow: 0 2px 8px rgba(23,32,43,.06); transition: transform .16s ease-out, border-color .16s ease-out, box-shadow .16s ease-out; }
-    .game-nav-button:hover, .game-nav-button:focus-visible, .game-action-button:hover, .game-action-button:focus-visible { border-color: #17202b; box-shadow: 0 4px 14px rgba(23,32,43,.12); outline: none; }
-    .game-nav-button:active, .game-action-button:active { transform: scale(.97); }
-    .game-page-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin: 0 0 14px; }
-    .game-page-heading h1 { margin: 0; color: #17202b; font-size: clamp(1.45rem, 4vw, 2.2rem); line-height: 1.1; }
-    .game-page-heading p { margin: 4px 0 0; color: #687486; font-size: .94rem; }
-    .game-showcase { position: relative; overflow: hidden; min-height: 520px; border: 1px solid #e0e4e9; border-radius: 24px; background: #fff; box-shadow: 0 16px 42px rgba(23,32,43,.12); }
-    .game-cover { position: absolute; inset: 0; display: flex; align-items: end; justify-content: center; overflow: hidden; background: #dfe4ea; }
-    .game-cover-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.92); }
-    .game-cover::after { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.03) 32%, rgba(0,0,0,.72) 100%); content: ""; }
-    .game-cover-content { position: relative; z-index: 1; width: 100%; padding: 28px; color: #fff; }
-    .game-cover-content h2 { max-width: 680px; margin: 0 0 7px; font-size: clamp(1.75rem, 6vw, 3.35rem); line-height: 1; }
-    .game-cover-content p { margin: 0 0 18px; color: rgba(255,255,255,.84); }
-    .play-button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-width: 146px; border: 0; border-radius: 999px; padding: 14px 23px; color: #17202b; background: #fff; cursor: pointer; font: inherit; font-weight: 900; box-shadow: 0 8px 24px rgba(0,0,0,.22); transition: transform .16s ease-out, box-shadow .16s ease-out; }
-    .play-button:hover, .play-button:focus-visible { box-shadow: 0 10px 28px rgba(0,0,0,.3); outline: none; transform: translateY(-1px); }
+    html, body { min-height: 100%; }
+    body.game-page { margin: 0; background: #000; color: #fff; font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .game-page-shell { width: min(1180px, 100%); margin: 0 auto; padding: 22px 24px 54px; }
+    .game-page-nav { display: flex; align-items: center; margin-bottom: 22px; }
+    .game-page-logo { color: #fff; text-decoration: none; font-family: "Arial Black", Inter, sans-serif; font-size: clamp(1.25rem, 3vw, 1.8rem); font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+    .game-page-heading { margin-bottom: 16px; }
+    .game-page-heading h1 { margin: 0; color: #fff; font-family: "Arial Black", Inter, sans-serif; font-size: clamp(1.4rem, 4vw, 2.4rem); line-height: 1.08; letter-spacing: -.02em; }
+    .game-page-heading p { margin: 7px 0 0; color: #9b9b9b; font-size: .92rem; }
+    .game-showcase { position: relative; overflow: hidden; min-height: min(68vw, 650px); background: #000; }
+    .game-cover { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; isolation: isolate; background: #050505; }
+    .game-cover::before { position: absolute; inset: -28px; z-index: -2; background-image: var(--cover-image); background-position: center; background-size: cover; filter: blur(24px) brightness(.32) saturate(1.15); transform: scale(1.12); content: ""; }
+    .game-cover::after { position: absolute; inset: 0; z-index: -1; background: radial-gradient(circle at center, rgba(0,0,0,.08), rgba(0,0,0,.82) 88%); content: ""; }
+    .game-cover-image { width: min(72%, 520px); height: min(72%, 520px); object-fit: contain; filter: drop-shadow(0 18px 34px rgba(0,0,0,.65)); }
+    .game-cover-content { position: absolute; inset: 0; display: grid; place-items: center; }
+    .game-cover-content h2, .game-cover-content p { position: absolute; overflow: hidden; width: 1px; height: 1px; clip: rect(0 0 0 0); white-space: nowrap; }
+    .play-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-width: 148px; min-height: 58px; border: 2px solid rgba(255,255,255,.95); border-radius: 999px; color: #000; background: #fff; cursor: pointer; font: inherit; font-size: 1.05rem; font-weight: 900; box-shadow: 0 12px 34px rgba(0,0,0,.48); transition: transform .18s ease, background .18s ease, box-shadow .18s ease; }
+    .play-button:hover, .play-button:focus-visible { background: #f1f1f1; box-shadow: 0 16px 40px rgba(0,0,0,.6); outline: none; transform: scale(1.035); }
     .play-button:active { transform: scale(.97); }
-    .play-symbol { font-size: 1.1rem; }
-    .minecraft-chooser { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .play-symbol { font-size: 1.05rem; }
+    .minecraft-chooser { position: absolute; bottom: 28px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
     .minecraft-chooser[hidden] { display: none; }
-    .version-button { border: 1px solid rgba(255,255,255,.62); border-radius: 10px; padding: 10px 13px; color: #17202b; background: #fff; cursor: pointer; font: inherit; font-size: .86rem; font-weight: 800; }
-    .version-button:hover, .version-button:focus-visible { background: #e9edf2; outline: none; }
+    .version-button { border: 1px solid #fff; border-radius: 9px; padding: 9px 12px; color: #000; background: #fff; cursor: pointer; font: inherit; font-size: .82rem; font-weight: 800; }
     .game-stage { position: absolute; inset: 0; display: none; background: #000; }
     .game-stage.is-active { display: block; }
     #gameFrame { display: block; width: 100%; height: 100%; border: 0; background: #000; }
-    .game-status { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; color: #e9edf2; background: #000; text-align: center; }
+    .game-status { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; color: #d7d7d7; background: #000; text-align: center; }
     .game-status.is-hidden { display: none; }
-    .game-status.error { color: #ffbdbd; padding: 20px; }
-    .game-stage-toolbar { position: absolute; right: 14px; bottom: 14px; z-index: 3; display: flex; gap: 8px; }
-    .stage-button { border: 1px solid rgba(255,255,255,.38); border-radius: 10px; padding: 9px 12px; color: #fff; background: rgba(17,24,32,.82); cursor: pointer; font: inherit; font-size: .84rem; font-weight: 700; backdrop-filter: blur(8px); }
-    .stage-button:hover, .stage-button:focus-visible { border-color: #fff; outline: none; }
-    .game-note { margin: 13px 4px 0; color: #778393; font-size: .82rem; }
+    .game-status.error { padding: 20px; color: #ffb5b5; }
+    .related-section { margin-top: 48px; }
+    .related-section h2 { margin: 0 0 18px; color: #fff; font-size: 1.3rem; }
+    .related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 14px; }
+    .related-card { overflow: hidden; border: 1px solid #202020; border-radius: 12px; color: #fff; background: #0b0b0b; text-decoration: none; transition: transform .18s ease, border-color .18s ease; }
+    .related-card:hover, .related-card:focus-visible { border-color: #555; outline: none; transform: translateY(-3px); }
+    .related-card img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: #050505; }
+    .related-card span { display: block; overflow: hidden; padding: 11px 12px 13px; color: #f4f4f4; font-size: .86rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
     @media (max-width: 680px) {
-      .game-page-shell { padding: 10px 10px 24px; }
-      .game-page-nav { margin-bottom: 12px; }
-      .game-page-logo { min-height: 40px; padding: 0 14px; border-radius: 12px; font-size: .86rem; }
-      .game-nav-button, .game-action-button { padding: 9px 11px; font-size: .82rem; }
-      .game-page-heading { align-items: start; flex-direction: column; gap: 2px; margin-bottom: 10px; }
-      .game-showcase { min-height: calc(100svh - 155px); border-radius: 18px; }
-      .game-cover-content { padding: 22px 18px; }
-      .game-cover-content h2 { font-size: clamp(1.7rem, 10vw, 2.6rem); }
-      .game-stage-toolbar { right: 10px; bottom: 10px; }
+      .game-page-shell { padding: 16px 12px 38px; }
+      .game-page-nav { margin-bottom: 18px; }
+      .game-page-heading { margin-bottom: 12px; }
+      .game-showcase { min-height: calc(100svh - 142px); }
+      .game-cover-image { width: 84%; height: 84%; }
+      .play-button { min-width: 132px; min-height: 52px; }
+      .related-section { margin-top: 34px; }
+      .related-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     }
   </style>
 </head>
 <body class="game-page">
   <main class="game-page-shell">
-    <nav class="game-page-nav" aria-label="Game navigation">
-      <a id="backToGameHub" class="game-page-logo" href="./">GameHub</a>
-      <div class="game-page-nav-spacer"></div>
-      <button id="fullscreenButton" class="game-nav-button" type="button">Fullscreen</button>
-      <button id="backButton" class="game-nav-button" type="button">Back</button>
+    <nav class="game-page-nav" aria-label="Navegação do GameHub">
+      <a id="backToGameHub" class="game-page-logo" href="./">GAMEHUB</a>
     </nav>
     <section class="game-page-heading">
-      <div>
-        <h1 id="gamePageTitle">Loading game...</h1>
-        <p id="gamePageSubtitle">Play instantly in GameHub</p>
-      </div>
+      <h1 id="gamePageTitle">Carregando jogo...</h1>
+      <p id="gamePageSubtitle">Jogue instantaneamente no GameHub</p>
     </section>
-    <section id="gameShowcase" class="game-showcase" aria-label="Game player">
+    <section id="gameShowcase" class="game-showcase" aria-label="Player do jogo">
       <div id="gameCover" class="game-cover">
         <img id="gameCoverImage" class="game-cover-image" alt="" width="600" height="600">
         <div class="game-cover-content">
-          <h2 id="gameCoverTitle">Loading game...</h2>
-          <p>Play now in your browser</p>
+          <h2 id="gameCoverTitle">Carregando jogo...</h2>
+          <p>Jogue agora no navegador</p>
           <button id="playButton" class="play-button" type="button"><span class="play-symbol" aria-hidden="true">▶</span> Play</button>
-          <div id="minecraftChooser" class="minecraft-chooser" hidden aria-label="Choose Minecraft version">
+          <div id="minecraftChooser" class="minecraft-chooser" hidden aria-label="Escolha a versão do Minecraft">
             <button class="version-button" type="button" data-version="1.5.2.html">1.5.2</button>
             <button class="version-button" type="button" data-version="1.8.8.html">1.8.8</button>
             <button class="version-button" type="button" data-version="1.12.2.html">1.12.2</button>
@@ -88,15 +81,14 @@
         </div>
       </div>
       <div id="gameStage" class="game-stage">
-        <div id="gameStatus" class="game-status">Loading game...</div>
-        <iframe id="gameFrame" title="Game" allow="fullscreen; autoplay; gamepad; pointer-lock" allowfullscreen></iframe>
-        <div class="game-stage-toolbar">
-          <button id="stageFullscreenButton" class="stage-button" type="button">Fullscreen</button>
-          <button id="stageBackButton" class="stage-button" type="button">Back</button>
-        </div>
+        <div id="gameStatus" class="game-status">Carregando jogo...</div>
+        <iframe id="gameFrame" title="Jogo" allow="autoplay; gamepad; pointer-lock; fullscreen" allowfullscreen></iframe>
       </div>
     </section>
-    <p class="game-note">Fullscreen is available from the player button. On mobile, tap Play first and then use Fullscreen.</p>
+    <section id="relatedSection" class="related-section" hidden aria-labelledby="relatedTitle">
+      <h2 id="relatedTitle">Jogos do mesmo gênero</h2>
+      <div id="relatedGames" class="related-grid"></div>
+    </section>
   </main>
   <script src="asset-host.js"></script>
   <script src="play.js"></script>
