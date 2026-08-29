@@ -42,9 +42,17 @@
     }).catch(function () {});
   }
 
+  function isMobileDevice() {
+    return window.matchMedia('(max-width: 680px)').matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  }
+
   function requestFullscreen() {
     const request = showcase.requestFullscreen || showcase.webkitRequestFullscreen || showcase.mozRequestFullScreen || showcase.msRequestFullscreen;
-    if (request) Promise.resolve(request.call(showcase)).catch(function () {});
+    if (request && !document.fullscreenElement && !document.webkitFullscreenElement) Promise.resolve(request.call(showcase)).catch(function () {});
+  }
+
+  function requestMobileFullscreen() {
+    if (isMobileDevice()) requestFullscreen();
   }
 
   function showError(message) {
@@ -109,10 +117,15 @@
         titleEl.textContent = currentGame.Name + ' ' + path.replace('.html', '');
         document.title = titleEl.textContent + ' - GameHub';
       }
+      requestMobileFullscreen();
     }).catch(function () { showError('Unable to load the game.'); });
   }
 
   fullscreenButton.addEventListener('click', requestFullscreen);
+  frame.addEventListener('pointerdown', requestMobileFullscreen);
+  frame.addEventListener('touchstart', requestMobileFullscreen, { passive: true });
+  window.addEventListener('orientationchange', function () { window.setTimeout(requestMobileFullscreen, 120); });
+  window.addEventListener('blur', function () { window.setTimeout(requestMobileFullscreen, 120); });
 
   cover.addEventListener('click', function (event) {
     if (event.target.closest('#minecraftChooser')) return;
