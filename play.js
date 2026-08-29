@@ -259,14 +259,20 @@
   frame.addEventListener('pointerdown', requestMobileFullscreen);
   frame.addEventListener('touchstart', requestMobileFullscreen, { passive: true });
   let orientationTimer = 0;
+  let landscapeAutoHandled = false;
   function isLandscapeOrientation() {
     return window.matchMedia('(orientation: landscape)').matches || window.innerWidth > window.innerHeight;
   }
   function startOnLandscape() {
-    if (!isMobileDevice() || !isLandscapeOrientation()) return;
+    if (!isMobileDevice()) return;
+    if (!isLandscapeOrientation()) {
+      landscapeAutoHandled = false;
+      return;
+    }
+    if (!currentGame || landscapeAutoHandled) return;
+    landscapeAutoHandled = true;
     window.clearTimeout(orientationTimer);
     orientationTimer = window.setTimeout(function () {
-      if (!currentGame) return;
       if (keyFor(currentGame.Link) === 'Minecraft' && !selectedVersion) {
         mobileGateMessage.textContent = 'Choose a Minecraft version first';
         mobileMinecraftChooser.hidden = false;
@@ -280,7 +286,6 @@
   window.addEventListener('orientationchange', startOnLandscape);
   window.addEventListener('resize', startOnLandscape);
   if (screen.orientation) screen.orientation.addEventListener('change', startOnLandscape);
-  window.addEventListener('blur', function () { window.setTimeout(requestMobileFullscreen, 120); });
   document.addEventListener('fullscreenchange', function () {
     if (isFullscreen()) {
       if (isMobileDevice()) hideMobileGate();
@@ -307,6 +312,7 @@
       if (isMobileDevice()) {
         mobileGateMessage.textContent = 'Rotate your phone and tap to play in fullscreen';
         mobileStartRequested = true;
+        if (!gameStarted) launchGame();
         requestMobileFullscreen();
       } else {
         startGame();
