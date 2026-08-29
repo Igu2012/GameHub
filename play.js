@@ -15,123 +15,106 @@
   const status = document.getElementById('gameStatus');
   const playButton = document.getElementById('playButton');
   const minecraftChooser = document.getElementById('minecraftChooser');
-  const fullscreenButton = document.getElementById('fullscreenButton');
-  const stageFullscreenButton = document.getElementById('stageFullscreenButton');
-  const backButton = document.getElementById('backButton');
-  const stageBackButton = document.getElementById('stageBackButton');
-  const backLink = document.getElementById('backToGameHub');
+  const relatedSection = document.getElementById('relatedSection');
+  const relatedGames = document.getElementById('relatedGames');
 
   let currentGame = null;
-  let currentVersionPath = '';
   let selectedVersion = requestedVersion;
 
-  function setIcon(gameLink) {
-    const icon = document.querySelector('link[rel="icon"]');
-    if (!icon) return;
-    function cacheBusted(url) {
-      const separator = url.indexOf('?') >= 0 ? '&' : '?';
-      return url + separator + 'gameIcon=' + encodeURIComponent(gameKey) + '&v=4';
-    }
-    function tryIcon(path, fallback) {
-      GameHubAssets.resolveGameAssetUrl(gameLink, path).then(function (url) {
-        const probe = new Image();
-        probe.onload = function () { icon.href = cacheBusted(url); };
-        probe.onerror = function () {
-          if (fallback) tryIcon(fallback, null);
-        };
-        probe.src = cacheBusted(url);
-      }).catch(function () {
-        if (fallback) tryIcon(fallback, null);
-      });
-    }
-    tryIcon('favicon.png', 'favicon.ico');
+  function keyFor(link) {
+    return GameHubAssets.gameKey(link);
   }
 
-  function exitToHub() {
-    if (window.history.length > 1) window.history.back();
-    else window.location.assign('./');
+  function assetPath(game, filename) {
+    return String(game.ImageURL || '').startsWith('img/')
+      ? game.ImageURL
+      : GameHubAssets.gameAssetUrl(game.Link, filename || String(game.ImageURL || '').split('/').pop());
+  }
+
+  function setIcon(game) {
+    const icon = document.querySelector('link[rel="icon"]');
+    if (!icon) return;
+    const path = game.Favicon || 'favicon.png';
+    GameHubAssets.resolveGameAssetUrl(game.Link, path).then(function (url) {
+      icon.href = url + (url.includes('?') ? '&' : '?') + 'v=5';
+    }).catch(function () {});
   }
 
   function requestFullscreen() {
-    const target = showcase;
-    const request = target.requestFullscreen || target.webkitRequestFullscreen || target.mozRequestFullScreen || target.msRequestFullscreen;
-    if (request) Promise.resolve(request.call(target)).catch(function () {});
+    const request = showcase.requestFullscreen || showcase.webkitRequestFullscreen || showcase.mozRequestFullScreen || showcase.msRequestFullscreen;
+    if (request) Promise.resolve(request.call(showcase)).catch(function () {});
   }
 
   function showError(message) {
     status.textContent = message;
     status.classList.remove('is-hidden');
     status.classList.add('error');
-    titleEl.textContent = currentGame ? currentGame.Name : 'GameHub';
-    document.title = currentGame ? currentGame.Name + ' - GameHub' : 'GameHub';
-  }
-
-  function imagePathFromCatalog(game) {
-    const imageUrl = String(game.ImageURL || '');
-    return imageUrl.startsWith('img/') ? imageUrl : imageUrl.split('/').pop();
   }
 
   function loadCover(game) {
     coverTitle.textContent = game.Name;
     coverImage.alt = game.Name;
-    const imagePath = imagePathFromCatalog(game);
+    const imagePath = String(game.ImageURL || '').startsWith('img/') ? game.ImageURL : String(game.ImageURL || '').split('/').pop();
+    const applyImage = function (url) {
+      coverImage.src = url;
+      cover.style.setProperty('--cover-image', 'url("' + url.replace(/"/g, '\\"') + '")');
+    };
     if (imagePath.startsWith('img/')) {
-      coverImage.src = imagePath;
+      applyImage(imagePath);
       return;
     }
-    GameHubAssets.resolveGameAssetUrl(game.Link, imagePath)
-      .then(function (url) { coverImage.src = url; })
-      .catch(function () { coverImage.removeAttribute('src'); });
+    GameHubAssets.resolveGameAssetUrl(game.Link, imagePath).then(applyImage).catch(function () {
+      coverImage.removeAttribute('src');
+    });
   }
 
   function versionPathForGame(game) {
-    if (GameHubAssets.gameKey(game.Link) !== 'Minecraft') return 'index.html';
+    if (keyFor(game.Link) !== 'Minecraft') return 'index.html';
     const allowed = new Set(['1.5.2.html', '1.8.8.html', '1.12.2.html']);
-    return allowed.has(selectedVersion) ? selectedVersion : '' ;
+    return allowed.has(selectedVersion) ? selectedVersion : '';
+  }
+
+  function renderRelated(catalog, activeCategory) {
+    const candidates = (activeCategory.games || []).filter(function (game) {
+      return keyFor(game.Link) !== gameKey;
+    }).slice(0, 6);
+    if (!candidates.length) return;
+    relatedGames.innerHTML = candidates.map(function (game) {
+      const filename = String(game.ImageURL || '').split('/').pop();
+      const source = String(game.ImageURL || '').startsWith('img/') ? game.ImageURL : GameHubAssets.gameAssetUrl(game.Link, filename);
+      return '<a class="related-card" href="play.html?game=' + encodeURIComponent(keyFor(game.Link)) + '"><img src="' + source + '" alt="' + game.Name.replace(/"/g, '&quot;') + '" loading="lazy"><span>' + game.Name + '</span></a>';
+    }).join('');
+    relatedSection.hidden = false;
   }
 
   function startGame() {
     if (!currentGame) return;
-    currentVersionPath = versionPathForGame(currentGame);
-    if (GameHubAssets.gameKey(currentGame.Link) === 'Minecraft' && !currentVersionPath) return;
-    cover.style.display = 'none';
-    stage.classList.add('is-active');
-    status.textContent = 'Loading game...';
-    status.classList.remove('is-hidden', 'error');
-    GameHubAssets.resolveGameAssetUrl(currentGame.Link, currentVersionPath)
-      .then(function (url) {
-        frame.src = url;
-        frame.addEventListener('load', function () {
-          status.classList.add('is-hidden');
-        }, { once: true });
-        if (GameHubAssets.gameKey(currentGame.Link) === 'Minecraft' && currentVersionPath !== 'index.html') {
-          titleEl.textContent = currentGame.Name + ' ' + currentVersionPath.replace('.html', '');
-          document.title = titleEl.textContent + ' - GameHub';
-        }
-        // This is intentionally the only automatic fullscreen request: it follows the Play click.
-        if (window.matchMedia('(max-width: 680px)').matches) requestFullscreen();
-      })
-      .catch(function () { showError('Unable to reach the game host.'); });
-  }
-
-  [fullscreenButton, stageFullscreenButton].forEach(function (button) {
-    button.addEventListener('click', requestFullscreen);
-  });
-  [backButton, stageBackButton].forEach(function (button) {
-    button.addEventListener('click', exitToHub);
-  });
-  backLink.addEventListener('click', function (event) {
-    event.preventDefault();
-    exitToHub();
-  });
-  playButton.addEventListener('click', function () {
-    if (currentGame && GameHubAssets.gameKey(currentGame.Link) === 'Minecraft' && !selectedVersion) {
+    const path = versionPathForGame(currentGame);
+    if (keyFor(currentGame.Link) === 'Minecraft' && !path) {
       playButton.hidden = true;
       minecraftChooser.hidden = false;
       return;
     }
-    startGame();
+    cover.style.display = 'none';
+    stage.classList.add('is-active');
+    status.textContent = 'Carregando jogo...';
+    status.classList.remove('is-hidden', 'error');
+    GameHubAssets.resolveGameAssetUrl(currentGame.Link, path).then(function (url) {
+      frame.src = url;
+      frame.addEventListener('load', function () { status.classList.add('is-hidden'); }, { once: true });
+      if (keyFor(currentGame.Link) === 'Minecraft' && path !== 'index.html') {
+        titleEl.textContent = currentGame.Name + ' ' + path.replace('.html', '');
+        document.title = titleEl.textContent + ' - GameHub';
+      }
+      if (window.matchMedia('(max-width: 680px)').matches) requestFullscreen();
+    }).catch(function () { showError('Não foi possível carregar o jogo.'); });
+  }
+
+  cover.addEventListener('click', function (event) {
+    if (event.target.closest('#minecraftChooser')) return;
+    if (!playButton.hidden) startGame();
   });
+  playButton.addEventListener('click', startGame);
   minecraftChooser.querySelectorAll('[data-version]').forEach(function (button) {
     button.addEventListener('click', function () {
       selectedVersion = button.getAttribute('data-version');
@@ -141,7 +124,7 @@
   });
 
   if (!gameKey || !window.GameHubAssets) {
-    showError('Game not found.');
+    showError('Jogo não encontrado.');
     return;
   }
 
@@ -151,20 +134,19 @@
       return response.json();
     })
     .then(function (catalog) {
+      let activeCategory = null;
       catalog.categories.some(function (category) {
-        currentGame = category.games.find(function (candidate) {
-          return GameHubAssets.gameKey(candidate.Link) === gameKey;
-        }) || null;
+        currentGame = category.games.find(function (candidate) { return keyFor(candidate.Link) === gameKey; }) || null;
+        if (currentGame) activeCategory = category;
         return Boolean(currentGame);
       });
       if (!currentGame) throw new Error('game');
       titleEl.textContent = currentGame.Name;
       document.title = currentGame.Name + ' - GameHub';
-      subtitleEl.textContent = GameHubAssets.gameKey(currentGame.Link) === 'Minecraft' && requestedVersion
-        ? 'Minecraft ' + requestedVersion.replace('.html', '')
-        : 'Play instantly in GameHub';
-      setIcon(currentGame.Link);
+      subtitleEl.textContent = 'Jogue instantaneamente no GameHub';
+      setIcon(currentGame);
       loadCover(currentGame);
+      renderRelated(catalog, activeCategory);
     })
-    .catch(function () { showError('Unable to load this game.'); });
+    .catch(function () { showError('Não foi possível carregar este jogo.'); });
 })();
