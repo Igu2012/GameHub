@@ -88,6 +88,20 @@
     showcase.classList.add('is-fullscreen-mobile');
   }
 
+  function restoreAfterFullscreenExit() {
+    if (!gameStarted) {
+      if (isMobileDevice()) showMobileGate();
+      return;
+    }
+    mobileStartRequested = false;
+    gameStarted = false;
+    frame.src = 'about:blank';
+    stage.classList.remove('is-active');
+    cover.style.display = '';
+    playerControls.hidden = true;
+    if (isMobileDevice()) showMobileGate();
+  }
+
   function showError(message) {
     status.textContent = message;
     status.classList.remove('is-hidden');
@@ -122,9 +136,16 @@
   function renderRelated(catalog, activeCategory) {
     const candidates = (activeCategory.games || []).filter(function (game) {
       return keyFor(game.Link) !== gameKey;
-    }).slice(0, 6);
-    if (!candidates.length) return;
-    relatedGames.innerHTML = candidates.map(function (game) {
+    });
+    for (let index = candidates.length - 1; index > 0; index -= 1) {
+      const randomIndex = Math.floor(Math.random() * (index + 1));
+      const temporary = candidates[index];
+      candidates[index] = candidates[randomIndex];
+      candidates[randomIndex] = temporary;
+    }
+    const selectedGames = candidates.slice(0, 6);
+    if (!selectedGames.length) return;
+    relatedGames.innerHTML = selectedGames.map(function (game) {
       const filename = String(game.ImageURL || '').split('/').pop();
       const source = String(game.ImageURL || '').startsWith('img/') ? game.ImageURL : GameHubAssets.gameAssetUrl(game.Link, filename);
       return '<a class="related-card" href="play.html?game=' + encodeURIComponent(keyFor(game.Link)) + '"><img src="' + source + '" alt="' + game.Name.replace(/"/g, '&quot;') + '" loading="lazy"><span>' + game.Name + '</span></a>';
@@ -189,17 +210,11 @@
   window.addEventListener('orientationchange', function () { window.setTimeout(requestMobileFullscreen, 120); });
   window.addEventListener('blur', function () { window.setTimeout(requestMobileFullscreen, 120); });
   document.addEventListener('fullscreenchange', function () {
-    if (!isMobileDevice()) return;
     if (isFullscreen()) {
-      hideMobileGate();
+      if (isMobileDevice()) hideMobileGate();
       if (mobileStartRequested && !gameStarted) launchGame();
-    } else if (gameStarted) {
-      mobileStartRequested = false;
-      gameStarted = false;
-      frame.src = 'about:blank';
-      showMobileGate();
     } else {
-      showMobileGate();
+      restoreAfterFullscreenExit();
     }
   });
   document.addEventListener('webkitfullscreenchange', function () {
