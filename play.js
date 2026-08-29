@@ -105,6 +105,7 @@
       minecraftChooser.hidden = false;
       return;
     }
+    if (isMobileDevice()) requestMobileFullscreen();
     cover.style.display = 'none';
     stage.classList.add('is-active');
     playerControls.hidden = false;
@@ -117,7 +118,6 @@
         titleEl.textContent = currentGame.Name + ' ' + path.replace('.html', '');
         document.title = titleEl.textContent + ' - GameHub';
       }
-      requestMobileFullscreen();
     }).catch(function () { showError('Unable to load the game.'); });
   }
 
