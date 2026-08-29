@@ -149,15 +149,15 @@
           "MobileFriendly": false
         },
         {
-          "Name": "Baldi's Basics Remastered",
-          "ImageURL": "BaldiRemastered/card.webp",
-          "Link": "BaldiRemastered/",
-          "MobileFriendly": false
-        },
-        {
           "Name": "Granny 2",
           "ImageURL": "Granny2/card.webp",
           "Link": "Granny2/",
+          "MobileFriendly": false
+        },
+        {
+          "Name": "Baldi's Basics Remastered",
+          "ImageURL": "BaldiRemastered/card.webp",
+          "Link": "BaldiRemastered/",
           "MobileFriendly": false
         },
         {
