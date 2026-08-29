@@ -16,6 +16,7 @@
   const playButton = document.getElementById('playButton');
   const minecraftChooser = document.getElementById('minecraftChooser');
   const fullscreenButton = document.getElementById('fullscreenButton');
+  const playerControls = document.getElementById('playerControls');
   const relatedSection = document.getElementById('relatedSection');
   const relatedGames = document.getElementById('relatedGames');
 
@@ -98,6 +99,7 @@
     }
     cover.style.display = 'none';
     stage.classList.add('is-active');
+    playerControls.hidden = false;
     status.textContent = 'Loading game...';
     status.classList.remove('is-hidden', 'error');
     GameHubAssets.resolveGameAssetUrl(currentGame.Link, path).then(function (url) {
