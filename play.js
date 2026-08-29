@@ -193,7 +193,10 @@
         }
         status.classList.add('is-hidden');
       }, { once: true });
-      frame.src = url;
+      const frameUrl = activeGameKey === 'CookieClicker'
+        ? url + (url.includes('?') ? '&' : '?') + 'gamehub=1'
+        : url;
+      frame.src = frameUrl;
       if (activeGameKey === 'Minecraft' && path !== 'index.html') {
         titleEl.textContent = currentGame.Name + ' ' + path.replace('.html', '');
         document.title = titleEl.textContent + ' - GameHub';
