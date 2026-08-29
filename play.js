@@ -88,18 +88,21 @@
     showcase.classList.add('is-fullscreen-mobile');
   }
 
+  function showResumeGate() {
+    mobileGate.hidden = false;
+    mobileGateMessage.textContent = 'Tap to return to fullscreen';
+    mobileMinecraftChooser.hidden = true;
+    showcase.classList.remove('is-fullscreen-mobile');
+    playerControls.hidden = true;
+  }
+
   function restoreAfterFullscreenExit() {
     if (!gameStarted) {
       if (isMobileDevice()) showMobileGate();
       return;
     }
     mobileStartRequested = false;
-    gameStarted = false;
-    frame.src = 'about:blank';
-    stage.classList.remove('is-active');
-    cover.style.display = '';
-    playerControls.hidden = true;
-    if (isMobileDevice()) showMobileGate();
+    if (isMobileDevice()) showResumeGate();
   }
 
   function showError(message) {
