@@ -37,10 +37,16 @@
     MotoX3M2: 'gamefiles03', MotoX3MPoolParty: 'gamefiles03', MotoX3MSpookyLand: 'gamefiles03', MotoX3MWinter: 'gamefiles03'
   };
 
+  const providerCache = Object.create(null);
+  const healthPathByRepository = {
+    gamefiles01: 'HollowKnightSilksong/index.html',
+    gamefiles02: 'HollowKnight/index.html',
+    gamefiles03: 'Granny2/index.html'
+  };
+
   function currentProvider() {
     const hostname = String(global.location && global.location.hostname || '').toLowerCase();
-    if (hostname.endsWith('.onrender.com') || hostname.includes('render')) return 'render';
-    return 'vercel';
+    return hostname.endsWith('.onrender.com') || hostname.includes('render') ? 'render' : 'vercel';
   }
 
   function gameKey(link) {
@@ -51,19 +57,61 @@
     return repositoryByGame[gameKey(link)] || 'gamefiles03';
   }
 
-  function gameAssetUrl(link, relativePath) {
-    const provider = currentProvider();
+  function hostFor(provider, repository) {
+    return providerHosts[provider][repository];
+  }
+
+  function assetUrlFor(provider, link, relativePath) {
     const repository = repositoryFor(link);
-    const root = providerHosts[provider][repository];
     const game = gameKey(link);
     const relative = String(relativePath || 'index.html').replace(/^\/+/, '');
-    return `${root}/${game}/${relative}`;
+    return `${hostFor(provider, repository)}/${game}/${relative}`;
+  }
+
+  function gameAssetUrl(link, relativePath) {
+    return assetUrlFor(currentProvider(), link, relativePath);
+  }
+
+  function pingProvider(provider, repository) {
+    const controller = new AbortController();
+    const timeout = global.setTimeout(function () { controller.abort(); }, 5000);
+    return fetch(`${hostFor(provider, repository)}/${healthPathByRepository[repository]}?ping=${Date.now()}`, {
+      method: 'GET',
+      mode: 'cors',
+      cache: 'no-store',
+      signal: controller.signal
+    }).then(function (response) {
+      return response.ok;
+    }).catch(function () {
+      return false;
+    }).finally(function () {
+      global.clearTimeout(timeout);
+    });
+  }
+
+  function resolveProvider(repository) {
+    const preferred = currentProvider();
+    const cacheKey = `${preferred}:${repository}`;
+    if (providerCache[cacheKey]) return providerCache[cacheKey];
+    if (preferred !== 'render') {
+      providerCache[cacheKey] = Promise.resolve('vercel');
+      return providerCache[cacheKey];
+    }
+    providerCache[cacheKey] = pingProvider('render', repository).then(function (healthy) {
+      return healthy ? 'render' : 'vercel';
+    });
+    return providerCache[cacheKey];
+  }
+
+  function resolveGameAssetUrl(link, relativePath) {
+    return resolveProvider(repositoryFor(link)).then(function (provider) {
+      return assetUrlFor(provider, link, relativePath);
+    });
   }
 
   function gamePageUrl(link) {
-    const game = gameKey(link);
-    return `play.html?game=${encodeURIComponent(game)}`;
+    return `play.html?game=${encodeURIComponent(gameKey(link))}`;
   }
 
-  global.GameHubAssets = { currentProvider, gameKey, repositoryFor, gameAssetUrl, gamePageUrl, providerHosts, repositoryByGame };
+  global.GameHubAssets = { currentProvider, gameKey, repositoryFor, gameAssetUrl, resolveGameAssetUrl, resolveProvider, gamePageUrl, providerHosts, repositoryByGame };
 })(window);

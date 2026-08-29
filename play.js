@@ -21,7 +21,6 @@
   function setIcon(gameLink) {
     const icon = document.querySelector('link[rel="icon"]');
     if (!icon) return;
-    const png = GameHubAssets.gameAssetUrl(gameLink, 'favicon.png');
     const ico = GameHubAssets.gameAssetUrl(gameLink, 'favicon.ico');
     icon.onerror = function () {
       if (icon.href !== ico) {
@@ -29,7 +28,9 @@
         icon.href = ico;
       }
     };
-    icon.href = png;
+    GameHubAssets.resolveGameAssetUrl(gameLink, 'favicon.png')
+      .then(function (url) { icon.href = url; })
+      .catch(function () { icon.href = ico; });
   }
 
   function exitToHub() {
@@ -73,10 +74,16 @@
       document.title = game.Name + ' - GameHub';
       frame.title = game.Name;
       setIcon(game.Link);
-      frame.src = GameHubAssets.gameAssetUrl(game.Link, 'index.html');
-      frame.addEventListener('load', function () {
-        status.classList.add('is-hidden');
-      }, { once: true });
+      GameHubAssets.resolveGameAssetUrl(game.Link, 'index.html')
+        .then(function (url) {
+          frame.src = url;
+          frame.addEventListener('load', function () {
+            status.classList.add('is-hidden');
+          }, { once: true });
+        })
+        .catch(function () {
+          showError('Unable to reach the game host.');
+        });
     })
     .catch(function () {
       showError('Unable to load this game.');

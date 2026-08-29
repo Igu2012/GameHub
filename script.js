@@ -88,6 +88,12 @@ function renderSection(container, cat) {
             </div>
         `;
         grid.appendChild(card);
+        if (window.GameHubAssets && !String(game.ImageURL || '').startsWith('img/')) {
+            const image = card.querySelector('.game-card-image img');
+            GameHubAssets.resolveGameAssetUrl(game.Link, game.ImageURL.split('/').pop())
+                .then(url => { image.src = url; })
+                .catch(() => {});
+        }
     });
     
     section.appendChild(title);
