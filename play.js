@@ -44,10 +44,20 @@
   function setIcon(game) {
     const icon = document.querySelector('link[rel="icon"]');
     if (!icon) return;
-    const path = game.Favicon || 'favicon.png';
-    GameHubAssets.resolveGameAssetUrl(game.Link, path).then(function (url) {
-      icon.href = url + (url.includes('?') ? '&' : '?') + 'v=5';
-    }).catch(function () {});
+    const configured = String(game.Favicon || '').trim();
+    const candidates = configured ? [configured] : ['favicon.ico', 'favicon.png'];
+    function tryCandidate(index) {
+      if (index >= candidates.length) return;
+      GameHubAssets.resolveGameAssetUrl(game.Link, candidates[index]).then(function (url) {
+        const probe = new Image();
+        probe.onload = function () {
+          icon.href = url + (url.includes('?') ? '&' : '?') + 'v=6';
+        };
+        probe.onerror = function () { tryCandidate(index + 1); };
+        probe.src = url + (url.includes('?') ? '&' : '?') + 'probe=1';
+      }).catch(function () { tryCandidate(index + 1); });
+    }
+    tryCandidate(0);
   }
 
   function isMobileDevice() {
