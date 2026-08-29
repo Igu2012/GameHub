@@ -15,6 +15,7 @@
   const status = document.getElementById('gameStatus');
   const playButton = document.getElementById('playButton');
   const minecraftChooser = document.getElementById('minecraftChooser');
+  const fullscreenButton = document.getElementById('fullscreenButton');
   const relatedSection = document.getElementById('relatedSection');
   const relatedGames = document.getElementById('relatedGames');
 
@@ -97,7 +98,7 @@
     }
     cover.style.display = 'none';
     stage.classList.add('is-active');
-    status.textContent = 'Carregando jogo...';
+    status.textContent = 'Loading game...';
     status.classList.remove('is-hidden', 'error');
     GameHubAssets.resolveGameAssetUrl(currentGame.Link, path).then(function (url) {
       frame.src = url;
@@ -106,9 +107,10 @@
         titleEl.textContent = currentGame.Name + ' ' + path.replace('.html', '');
         document.title = titleEl.textContent + ' - GameHub';
       }
-      if (window.matchMedia('(max-width: 680px)').matches) requestFullscreen();
-    }).catch(function () { showError('Não foi possível carregar o jogo.'); });
+    }).catch(function () { showError('Unable to load the game.'); });
   }
+
+  fullscreenButton.addEventListener('click', requestFullscreen);
 
   cover.addEventListener('click', function (event) {
     if (event.target.closest('#minecraftChooser')) return;
@@ -124,7 +126,7 @@
   });
 
   if (!gameKey || !window.GameHubAssets) {
-    showError('Jogo não encontrado.');
+    showError('Game not found.');
     return;
   }
 
@@ -143,10 +145,10 @@
       if (!currentGame) throw new Error('game');
       titleEl.textContent = currentGame.Name;
       document.title = currentGame.Name + ' - GameHub';
-      subtitleEl.textContent = 'Jogue instantaneamente no GameHub';
+      subtitleEl.textContent = 'Play instantly in GameHub';
       setIcon(currentGame);
       loadCover(currentGame);
       renderRelated(catalog, activeCategory);
     })
-    .catch(function () { showError('Não foi possível carregar este jogo.'); });
+    .catch(function () { showError('Unable to load this game.'); });
 })();
