@@ -86,8 +86,12 @@
   function showMobileGate() {
     if (!isMobileDevice()) return;
     mobileGate.hidden = false;
-    if (currentGame && keyFor(currentGame.Link) === 'Minecraft') {
-      mobileGateMessage.textContent = selectedVersion ? 'Rotate your phone and tap to play in fullscreen' : 'Choose a Minecraft version first';
+    const isMinecraft = currentGame && keyFor(currentGame.Link) === 'Minecraft';
+    const hasMinecraftChooser = Boolean(isMinecraft && !selectedVersion);
+    mobileGate.classList.toggle('is-minecraft-chooser', hasMinecraftChooser);
+    showcase.classList.toggle('has-minecraft-chooser', hasMinecraftChooser);
+    if (isMinecraft) {
+      mobileGateMessage.textContent = selectedVersion ? 'Rotate your phone or tap to play' : 'Choose a Minecraft version first';
       mobileMinecraftChooser.hidden = Boolean(selectedVersion);
     }
     showcase.classList.remove('is-fullscreen-mobile');
@@ -102,6 +106,8 @@
 
   function showResumeGate() {
     mobileGate.hidden = false;
+    mobileGate.classList.remove('is-minecraft-chooser');
+    showcase.classList.remove('has-minecraft-chooser');
     mobileGateMessage.textContent = 'Tap to return to fullscreen';
     mobileMinecraftChooser.hidden = true;
     showcase.classList.remove('is-fullscreen-mobile');
@@ -226,6 +232,8 @@
     if (isMobileDevice()) {
       if (keyFor(currentGame.Link) === 'Minecraft' && !selectedVersion) {
         mobileGateMessage.textContent = 'Choose a Minecraft version first';
+        mobileGate.classList.add('is-minecraft-chooser');
+        showcase.classList.add('has-minecraft-chooser');
         mobileMinecraftChooser.hidden = false;
         return;
       }
@@ -275,6 +283,8 @@
     orientationTimer = window.setTimeout(function () {
       if (keyFor(currentGame.Link) === 'Minecraft' && !selectedVersion) {
         mobileGateMessage.textContent = 'Choose a Minecraft version first';
+        mobileGate.classList.add('is-minecraft-chooser');
+        showcase.classList.add('has-minecraft-chooser');
         mobileMinecraftChooser.hidden = false;
         return;
       }
@@ -309,8 +319,10 @@
       selectedVersion = button.getAttribute('data-minecraft-version');
       minecraftChooser.hidden = true;
       mobileMinecraftChooser.hidden = true;
+      mobileGate.classList.remove('is-minecraft-chooser');
+      showcase.classList.remove('has-minecraft-chooser');
       if (isMobileDevice()) {
-        mobileGateMessage.textContent = 'Rotate your phone and tap to play in fullscreen';
+        mobileGateMessage.textContent = 'Rotate your phone or tap to play';
         mobileStartRequested = true;
         if (!gameStarted) launchGame();
         requestMobileFullscreen();
