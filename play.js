@@ -9,6 +9,8 @@
   const cover = document.getElementById('gameCover');
   const coverImage = document.getElementById('gameCoverImage');
   const coverTitle = document.getElementById('gameCoverTitle');
+  const mobileGate = document.getElementById('mobileGate');
+  const mobileGateImage = document.getElementById('mobileGateImage');
   const stage = document.getElementById('gameStage');
   const showcase = document.getElementById('gameShowcase');
   const frame = document.getElementById('gameFrame');
@@ -22,6 +24,8 @@
 
   let currentGame = null;
   let selectedVersion = requestedVersion;
+  let mobileStartRequested = false;
+  let gameStarted = false;
 
   function keyFor(link) {
     return GameHubAssets.gameKey(link);
@@ -46,13 +50,36 @@
     return window.matchMedia('(max-width: 680px)').matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
   }
 
+  function isFullscreen() {
+    return Boolean(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+  }
+
   function requestFullscreen() {
     const request = showcase.requestFullscreen || showcase.webkitRequestFullscreen || showcase.mozRequestFullScreen || showcase.msRequestFullscreen;
-    if (request && !document.fullscreenElement && !document.webkitFullscreenElement) Promise.resolve(request.call(showcase)).catch(function () {});
+    if (!request || isFullscreen()) return Promise.resolve(false);
+    try {
+      return Promise.resolve(request.call(showcase)).then(function () { return true; }).catch(function () { return false; });
+    } catch (error) {
+      return Promise.resolve(false);
+    }
   }
 
   function requestMobileFullscreen() {
-    if (isMobileDevice()) requestFullscreen();
+    if (isMobileDevice()) return requestFullscreen();
+    return Promise.resolve(false);
+  }
+
+  function showMobileGate() {
+    if (!isMobileDevice()) return;
+    mobileGate.hidden = false;
+    showcase.classList.remove('is-fullscreen-mobile');
+    stage.classList.remove('is-active');
+    playerControls.hidden = true;
+  }
+
+  function hideMobileGate() {
+    mobileGate.hidden = true;
+    showcase.classList.add('is-fullscreen-mobile');
   }
 
   function showError(message) {
@@ -67,6 +94,8 @@
     const imagePath = String(game.ImageURL || '').startsWith('img/') ? game.ImageURL : String(game.ImageURL || '').split('/').pop();
     const applyImage = function (url) {
       coverImage.src = url;
+      mobileGateImage.src = url;
+      mobileGateImage.alt = game.Name;
       cover.style.setProperty('--cover-image', 'url("' + url.replace(/"/g, '\\"') + '")');
     };
     if (imagePath.startsWith('img/')) {
@@ -97,20 +126,14 @@
     relatedSection.hidden = false;
   }
 
-  function startGame() {
-    if (!currentGame) return;
+  function launchGame() {
     const path = versionPathForGame(currentGame);
-    if (keyFor(currentGame.Link) === 'Minecraft' && !path) {
-      playButton.hidden = true;
-      minecraftChooser.hidden = false;
-      return;
-    }
-    if (isMobileDevice()) requestMobileFullscreen();
     cover.style.display = 'none';
     stage.classList.add('is-active');
     playerControls.hidden = false;
     status.textContent = 'Loading game...';
     status.classList.remove('is-hidden', 'error');
+    gameStarted = true;
     GameHubAssets.resolveGameAssetUrl(currentGame.Link, path).then(function (url) {
       frame.src = url;
       frame.addEventListener('load', function () { status.classList.add('is-hidden'); }, { once: true });
@@ -121,11 +144,50 @@
     }).catch(function () { showError('Unable to load the game.'); });
   }
 
-  fullscreenButton.addEventListener('click', requestFullscreen);
+  function startGame() {
+    if (!currentGame) return;
+    const path = versionPathForGame(currentGame);
+    if (keyFor(currentGame.Link) === 'Minecraft' && !path) {
+      playButton.hidden = true;
+      minecraftChooser.hidden = false;
+      return;
+    }
+    if (isMobileDevice()) {
+      mobileStartRequested = true;
+      requestMobileFullscreen();
+      return;
+    }
+    launchGame();
+  }
+
+  fullscreenButton.addEventListener('click', function () {
+    requestFullscreen();
+  });
+  mobileGate.addEventListener('click', function () {
+    mobileStartRequested = true;
+    requestMobileFullscreen();
+  });
   frame.addEventListener('pointerdown', requestMobileFullscreen);
   frame.addEventListener('touchstart', requestMobileFullscreen, { passive: true });
   window.addEventListener('orientationchange', function () { window.setTimeout(requestMobileFullscreen, 120); });
   window.addEventListener('blur', function () { window.setTimeout(requestMobileFullscreen, 120); });
+  document.addEventListener('fullscreenchange', function () {
+    if (!isMobileDevice()) return;
+    if (isFullscreen()) {
+      hideMobileGate();
+      if (mobileStartRequested && !gameStarted) launchGame();
+    } else if (gameStarted) {
+      mobileStartRequested = false;
+      gameStarted = false;
+      frame.src = 'about:blank';
+      showMobileGate();
+    } else {
+      showMobileGate();
+    }
+  });
+  document.addEventListener('webkitfullscreenchange', function () {
+    document.dispatchEvent(new Event('fullscreenchange'));
+  });
 
   cover.addEventListener('click', function (event) {
     if (event.target.closest('#minecraftChooser')) return;
@@ -163,6 +225,7 @@
       subtitleEl.textContent = 'Play instantly in GameHub';
       setIcon(currentGame);
       loadCover(currentGame);
+      if (isMobileDevice()) showMobileGate();
       renderRelated(catalog, activeCategory);
     })
     .catch(function () { showError('Unable to load this game.'); });
