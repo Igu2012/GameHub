@@ -28,6 +28,8 @@
   let selectedVersion = requestedVersion;
   let mobileStartRequested = false;
   let gameStarted = false;
+  let frameReady = false;
+  const embeddedLoadingGames = new Set(['Granny2', 'HollowKnight', 'HollowKnightSilksong', 'Celeste']);
 
   function keyFor(link) {
     return GameHubAssets.gameKey(link);
@@ -107,8 +109,23 @@
 
   function showError(message) {
     status.textContent = message;
-    status.classList.remove('is-hidden');
+    status.classList.remove('is-hidden', 'is-loading');
     status.classList.add('error');
+  }
+
+  function handleEmbeddedGameMessage(event) {
+    if (!frame.contentWindow || event.source !== frame.contentWindow) return;
+    const payload = event.data || {};
+    if (payload.gamehub !== 'game-status') return;
+    if (payload.state === 'ready') {
+      frameReady = true;
+      status.classList.remove('is-loading', 'error');
+      status.classList.add('is-hidden');
+      return;
+    }
+    if (payload.state === 'error') {
+      showError(payload.message || 'Unable to load the game.');
+    }
   }
 
   function loadCover(game) {
@@ -158,16 +175,26 @@
 
   function launchGame() {
     const path = versionPathForGame(currentGame);
+    const activeGameKey = keyFor(currentGame.Link);
+    const hasEmbeddedLoading = embeddedLoadingGames.has(activeGameKey);
     cover.style.display = 'none';
     stage.classList.add('is-active');
     playerControls.hidden = false;
-    status.textContent = 'Loading game...';
+    frameReady = false;
+    status.textContent = hasEmbeddedLoading ? 'Loading game files...' : 'Loading game...';
     status.classList.remove('is-hidden', 'error');
+    status.classList.toggle('is-loading', hasEmbeddedLoading);
     gameStarted = true;
     GameHubAssets.resolveGameAssetUrl(currentGame.Link, path).then(function (url) {
+      frame.addEventListener('load', function () {
+        if (hasEmbeddedLoading && !frameReady) {
+          status.textContent = 'Loading game files...';
+          return;
+        }
+        status.classList.add('is-hidden');
+      }, { once: true });
       frame.src = url;
-      frame.addEventListener('load', function () { status.classList.add('is-hidden'); }, { once: true });
-      if (keyFor(currentGame.Link) === 'Minecraft' && path !== 'index.html') {
+      if (activeGameKey === 'Minecraft' && path !== 'index.html') {
         titleEl.textContent = currentGame.Name + ' ' + path.replace('.html', '');
         document.title = titleEl.textContent + ' - GameHub';
       }
@@ -195,6 +222,7 @@
     launchGame();
   }
 
+  window.addEventListener('message', handleEmbeddedGameMessage);
   fullscreenButton.addEventListener('click', function () {
     requestFullscreen();
   });
