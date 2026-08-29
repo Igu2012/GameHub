@@ -64,11 +64,18 @@
       .game-page-shell { padding: 14px 10px 34px; }
       .game-page-nav { margin-bottom: 14px; }
       .game-showcase { aspect-ratio: 4 / 3; min-height: 0; }
+      .game-showcase.has-minecraft-chooser { aspect-ratio: auto; min-height: 410px; }
       .game-showcase .game-cover { display: none; }
       .game-showcase .mobile-gate { display: flex; }
       .game-showcase .mobile-gate .minecraft-chooser { position: static; inset: auto; width: 100%; padding: 0; background: transparent; backdrop-filter: none; }
       .game-showcase .mobile-gate .version-chooser-title { margin-top: 2px; font-size: .95rem; }
       .game-showcase .mobile-gate .version-button { min-width: 92px; padding: 11px 12px; font-size: .8rem; }
+      .game-showcase .mobile-gate.is-minecraft-chooser { justify-content: flex-start; gap: 10px; padding: 18px 14px; overflow-y: auto; }
+      .game-showcase .mobile-gate.is-minecraft-chooser .mobile-gate-image { width: min(38vw, 145px); height: min(38vw, 145px); }
+      .game-showcase .mobile-gate.is-minecraft-chooser .mobile-gate-message { max-width: 100%; font-size: .84rem; }
+      .game-showcase .mobile-gate.is-minecraft-chooser .minecraft-chooser { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .game-showcase .mobile-gate.is-minecraft-chooser .version-chooser-title { grid-column: 1 / -1; font-size: .88rem; }
+      .game-showcase .mobile-gate.is-minecraft-chooser .version-button { min-width: 0; padding: 10px 4px; font-size: .76rem; }
       .game-showcase.is-fullscreen-mobile .mobile-gate { display: none; }
       .game-showcase.is-fullscreen-mobile .game-stage.is-active { display: block; }
       .game-cover-image { width: min(72%, 330px); height: auto; aspect-ratio: 1 / 1; border-radius: 12px; object-fit: cover; }
