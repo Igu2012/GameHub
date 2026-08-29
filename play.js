@@ -28,17 +28,23 @@
   function setIcon(gameLink) {
     const icon = document.querySelector('link[rel="icon"]');
     if (!icon) return;
-    function apply(url) {
+    function cacheBusted(url) {
       const separator = url.indexOf('?') >= 0 ? '&' : '?';
-      icon.href = url + separator + 'gameIcon=' + encodeURIComponent(gameKey) + '&v=3';
+      return url + separator + 'gameIcon=' + encodeURIComponent(gameKey) + '&v=4';
     }
-    GameHubAssets.resolveGameAssetUrl(gameLink, 'favicon.png')
-      .then(apply)
-      .catch(function () {
-        GameHubAssets.resolveGameAssetUrl(gameLink, 'favicon.ico')
-          .then(apply)
-          .catch(function () {});
+    function tryIcon(path, fallback) {
+      GameHubAssets.resolveGameAssetUrl(gameLink, path).then(function (url) {
+        const probe = new Image();
+        probe.onload = function () { icon.href = cacheBusted(url); };
+        probe.onerror = function () {
+          if (fallback) tryIcon(fallback, null);
+        };
+        probe.src = cacheBusted(url);
+      }).catch(function () {
+        if (fallback) tryIcon(fallback, null);
       });
+    }
+    tryIcon('favicon.png', 'favicon.ico');
   }
 
   function exitToHub() {
