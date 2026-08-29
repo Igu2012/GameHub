@@ -11,6 +11,11 @@
       gamefiles01: 'https://gamefiles01.onrender.com',
       gamefiles02: 'https://gamefiles02.onrender.com',
       gamefiles03: 'https://gamefiles03.onrender.com'
+    },
+    githubPages: {
+      gamefiles01: 'https://gamehubjogosfiles.github.io/gamefiles01',
+      gamefiles02: 'https://gamehubjogosfiles.github.io/gamefiles02',
+      gamefiles03: 'https://gamehubjogosfiles.github.io/gamefiles03'
     }
   };
 
@@ -46,6 +51,7 @@
 
   function currentProvider() {
     const hostname = String(global.location && global.location.hostname || '').toLowerCase();
+    if (hostname.endsWith('.github.io')) return 'githubPages';
     return hostname.endsWith('.onrender.com') || hostname.includes('render') ? 'render' : 'vercel';
   }
 
@@ -93,6 +99,10 @@
     const preferred = currentProvider();
     const cacheKey = `${preferred}:${repository}`;
     if (providerCache[cacheKey]) return providerCache[cacheKey];
+    if (preferred === 'githubPages') {
+      providerCache[cacheKey] = Promise.resolve('githubPages');
+      return providerCache[cacheKey];
+    }
     if (preferred !== 'render') {
       providerCache[cacheKey] = Promise.resolve('vercel');
       return providerCache[cacheKey];
