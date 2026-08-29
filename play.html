@@ -30,9 +30,12 @@
     .play-button:hover, .play-button:focus-visible { background: #f1f1f1; box-shadow: 0 16px 40px rgba(0,0,0,.65); outline: none; transform: scale(1.04); }
     .play-button:active { transform: scale(.97); }
     .play-symbol { font-size: 1.05rem; }
-    .minecraft-chooser { position: absolute; bottom: 24px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; pointer-events: auto; }
+    .minecraft-chooser { position: absolute; inset: 0; z-index: 3; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; padding: 32px; background: rgba(0,0,0,.68); backdrop-filter: blur(12px); pointer-events: auto; }
     .minecraft-chooser[hidden] { display: none; }
-    .version-button { border: 1px solid #fff; border-radius: 9px; padding: 9px 12px; color: #000; background: #fff; cursor: pointer; font: inherit; font-size: .82rem; font-weight: 800; }
+    .version-chooser-title { flex-basis: 100%; margin-bottom: 2px; color: #fff; font-family: "Arial Black", Inter, sans-serif; font-size: clamp(1rem, 2.4vw, 1.45rem); letter-spacing: .01em; text-align: center; }
+    .version-button { min-width: 112px; padding: 13px 18px; border: 1px solid #3a3a3a; border-radius: 12px; color: #fff; background: #151515; box-shadow: 0 8px 20px rgba(0,0,0,.28); cursor: pointer; font: inherit; font-size: .9rem; font-weight: 800; transition: border-color .18s ease, background .18s ease, transform .18s ease; }
+    .version-button:hover, .version-button:focus-visible { border-color: #fff; background: #252525; outline: none; transform: translateY(-2px); }
+    .version-button:active { transform: translateY(0) scale(.97); }
     .game-stage { position: absolute; inset: 0; display: none; background: #000; }
     .game-stage.is-active { display: block; }
     .mobile-gate { display: none; position: absolute; inset: 0; z-index: 4; align-items: center; justify-content: center; flex-direction: column; gap: 16px; padding: 22px; background: #050505; text-align: center; }
@@ -62,6 +65,9 @@
       .game-showcase { aspect-ratio: 4 / 3; min-height: 0; }
       .game-showcase .game-cover { display: none; }
       .game-showcase .mobile-gate { display: flex; }
+      .game-showcase .mobile-gate .minecraft-chooser { position: static; inset: auto; width: 100%; padding: 0; background: transparent; backdrop-filter: none; }
+      .game-showcase .mobile-gate .version-chooser-title { margin-top: 2px; font-size: .95rem; }
+      .game-showcase .mobile-gate .version-button { min-width: 92px; padding: 11px 12px; font-size: .8rem; }
       .game-showcase.is-fullscreen-mobile .mobile-gate { display: none; }
       .game-showcase.is-fullscreen-mobile .game-stage.is-active { display: block; }
       .game-cover-image { width: min(72%, 330px); height: auto; aspect-ratio: 1 / 1; border-radius: 12px; object-fit: cover; }
@@ -89,6 +95,7 @@
           <p>Play now in your browser</p>
           <button id="playButton" class="play-button" type="button"><span class="play-symbol" aria-hidden="true">▶</span> Play</button>
           <div id="minecraftChooser" class="minecraft-chooser" hidden aria-label="Choose a Minecraft version">
+            <div class="version-chooser-title">Choose your Minecraft version</div>
             <button class="version-button" type="button" data-minecraft-version="1.5.2.html">1.5.2</button>
             <button class="version-button" type="button" data-minecraft-version="1.8.8.html">1.8.8</button>
             <button class="version-button" type="button" data-minecraft-version="1.12.2.html">1.12.2</button>
@@ -99,7 +106,8 @@
         <img id="mobileGateImage" class="mobile-gate-image" alt="">
         <div id="mobileGateMessage" class="mobile-gate-message">Rotate your phone and tap to play in fullscreen</div>
         <div class="mobile-gate-hint">Fullscreen is required on mobile</div>
-        <div id="mobileMinecraftChooser" class="minecraft-chooser" hidden aria-label="Choose a Minecraft version on mobile">
+                  <div id="mobileMinecraftChooser" class="minecraft-chooser" hidden aria-label="Choose a Minecraft version on mobile">
+          <div class="version-chooser-title">Choose your Minecraft version</div>
           <button class="version-button" type="button" data-minecraft-version="1.5.2.html">1.5.2</button>
           <button class="version-button" type="button" data-minecraft-version="1.8.8.html">1.8.8</button>
           <button class="version-button" type="button" data-minecraft-version="1.12.2.html">1.12.2</button>
