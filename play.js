@@ -174,6 +174,7 @@
   }
 
   function launchGame() {
+    if (gameStarted || !currentGame) return;
     const path = versionPathForGame(currentGame);
     const activeGameKey = keyFor(currentGame.Link);
     const hasEmbeddedLoading = embeddedLoadingGames.has(activeGameKey);
@@ -219,6 +220,7 @@
         return;
       }
       mobileStartRequested = true;
+      launchGame();
       requestMobileFullscreen();
       return;
     }
@@ -227,6 +229,10 @@
 
   window.addEventListener('message', handleEmbeddedGameMessage);
   fullscreenButton.addEventListener('click', function () {
+    if (isMobileDevice() && !gameStarted) {
+      startGame();
+      return;
+    }
     requestFullscreen();
   });
   mobileGate.addEventListener('click', function (event) {
@@ -237,11 +243,33 @@
       return;
     }
     mobileStartRequested = true;
+    if (!gameStarted) launchGame();
     requestMobileFullscreen();
   });
   frame.addEventListener('pointerdown', requestMobileFullscreen);
   frame.addEventListener('touchstart', requestMobileFullscreen, { passive: true });
-  window.addEventListener('orientationchange', function () { window.setTimeout(requestMobileFullscreen, 120); });
+  let orientationTimer = 0;
+  function isLandscapeOrientation() {
+    return window.matchMedia('(orientation: landscape)').matches || window.innerWidth > window.innerHeight;
+  }
+  function startOnLandscape() {
+    if (!isMobileDevice() || !isLandscapeOrientation()) return;
+    window.clearTimeout(orientationTimer);
+    orientationTimer = window.setTimeout(function () {
+      if (!currentGame) return;
+      if (keyFor(currentGame.Link) === 'Minecraft' && !selectedVersion) {
+        mobileGateMessage.textContent = 'Choose a Minecraft version first';
+        mobileMinecraftChooser.hidden = false;
+        return;
+      }
+      mobileStartRequested = true;
+      if (!gameStarted) launchGame();
+      requestMobileFullscreen();
+    }, 180);
+  }
+  window.addEventListener('orientationchange', startOnLandscape);
+  window.addEventListener('resize', startOnLandscape);
+  if (screen.orientation) screen.orientation.addEventListener('change', startOnLandscape);
   window.addEventListener('blur', function () { window.setTimeout(requestMobileFullscreen, 120); });
   document.addEventListener('fullscreenchange', function () {
     if (isFullscreen()) {
@@ -299,7 +327,10 @@
       subtitleEl.textContent = 'Play instantly in GameHub';
       setIcon(currentGame);
       loadCover(currentGame);
-      if (isMobileDevice()) showMobileGate();
+      if (isMobileDevice()) {
+        showMobileGate();
+        startOnLandscape();
+      }
       renderRelated(catalog, activeCategory);
     })
     .catch(function () { showError('Unable to load this game.'); });
