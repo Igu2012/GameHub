@@ -111,7 +111,7 @@
     mobileGateMessage.textContent = 'Tap to return to fullscreen';
     mobileMinecraftChooser.hidden = true;
     showcase.classList.remove('is-fullscreen-mobile');
-    playerControls.hidden = true;
+    playerControls.hidden = false;
   }
 
   function restoreAfterFullscreenExit() {
