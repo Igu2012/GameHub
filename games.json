@@ -155,7 +155,7 @@
           "MobileFriendly": false
         },
         {
-          "Name": "Granny: Chapter Two",
+          "Name": "Granny 2",
           "ImageURL": "Granny2/card.webp",
           "Link": "Granny2/",
           "MobileFriendly": false
@@ -323,7 +323,7 @@
           "MobileFriendly": false
         },
         {
-          "Name": "Hollow Knight: Silksong",
+          "Name": "Hollow Knight Silksong",
           "ImageURL": "HollowKnightSilksong/card.webp",
           "Link": "HollowKnightSilksong/",
           "MobileFriendly": false
@@ -377,7 +377,7 @@
           "MobileFriendly": false
         },
         {
-          "Name": "Duck Life 5: Treasure Hunt",
+          "Name": "Duck Life 5",
           "ImageURL": "DuckLife5/card.webp",
           "Link": "DuckLife5/",
           "MobileFriendly": true
