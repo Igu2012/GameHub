@@ -79,8 +79,13 @@
   }
 
   function requestMobileFullscreen() {
-    if (isMobileDevice()) return requestFullscreen();
-    return Promise.resolve(false);
+    if (!isMobileDevice()) return Promise.resolve(false);
+    return requestFullscreen().then(function (entered) {
+      if (screen.orientation && screen.orientation.lock) {
+        return screen.orientation.lock('landscape').catch(function () { return entered; }).then(function () { return entered; });
+      }
+      return entered;
+    });
   }
 
   function showMobileGate() {

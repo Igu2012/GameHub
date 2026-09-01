@@ -19,7 +19,7 @@
     .game-page-nav { display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
     .game-page-logo { color: #fff; text-decoration: none; font-family: "Arial Black", Inter, sans-serif; font-size: clamp(1.2rem, 3vw, 1.7rem); font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-    .game-showcase { position: relative; overflow: hidden; width: 100%; aspect-ratio: 16 / 10; min-height: 560px; background: #000; box-shadow: 0 18px 50px rgba(0,0,0,.42); }
+    .game-showcase { position: relative; overflow: hidden; width: min(100%, 960px); aspect-ratio: 16 / 10; max-height: calc(100svh - 150px); margin: 0 auto; background: #000; box-shadow: 0 18px 50px rgba(0,0,0,.42); }
     .game-cover { position: absolute; inset: 0; display: grid; place-items: center; overflow: hidden; isolation: isolate; background: #050505; cursor: pointer; }
     .game-cover::before { position: absolute; inset: -30px; z-index: -2; background-image: var(--cover-image); background-position: center; background-size: cover; filter: blur(28px) brightness(.3) saturate(1.15); transform: scale(1.12); content: ""; }
     .game-cover::after { position: absolute; inset: 0; z-index: -1; background: radial-gradient(circle at center, rgba(0,0,0,.05), rgba(0,0,0,.84) 90%); content: ""; }
@@ -64,7 +64,7 @@
     @media (max-width: 680px) {
       .game-page-shell { padding: 14px 10px 34px; }
       .game-page-nav { margin-bottom: 14px; }
-      .game-showcase { aspect-ratio: 4 / 3; min-height: 0; }
+      .game-showcase { width: 100%; aspect-ratio: 4 / 3; max-height: calc(100svh - 116px); }
       .game-showcase.has-minecraft-chooser { aspect-ratio: auto; min-height: 285px; }
       .game-showcase .game-cover { display: none; }
       .game-showcase .mobile-gate { display: flex; }
@@ -79,6 +79,8 @@
       .game-showcase .mobile-gate.is-minecraft-chooser .version-button { min-width: 0; padding: 10px 4px; font-size: .76rem; }
       .game-showcase.is-fullscreen-mobile .mobile-gate { display: none; }
       .game-showcase.is-fullscreen-mobile .game-stage.is-active { display: block; }
+      .game-showcase:fullscreen { width: 100vw; height: 100svh; max-height: none; aspect-ratio: auto; }
+      .game-showcase:-webkit-full-screen { width: 100vw; height: 100svh; max-height: none; aspect-ratio: auto; }
       .game-cover-image { width: min(72%, 330px); height: auto; aspect-ratio: 1 / 1; border-radius: 12px; object-fit: cover; }
       .play-button { min-width: 128px; min-height: 50px; font-size: .95rem; }
       .player-controls { margin-top: 10px; }
