@@ -81,7 +81,13 @@
   function requestMobileFullscreen() {
     if (!isMobileDevice()) return Promise.resolve(false);
     return requestFullscreen().then(function (entered) {
-      if (screen.orientation && screen.orientation.lock) {
+      if (entered && isFullscreen()) {
+        // O iframe só pode aparecer depois que o navegador confirmar fullscreen.
+        showcase.classList.add('is-fullscreen-mobile');
+        mobileGate.hidden = true;
+        stage.classList.add('is-active');
+      }
+      if (screen.orientation && screen.orientation.lock && entered) {
         return screen.orientation.lock('landscape').catch(function () { return entered; }).then(function () { return entered; });
       }
       return entered;

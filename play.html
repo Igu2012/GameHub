@@ -79,6 +79,7 @@
       .game-showcase .mobile-gate.is-minecraft-chooser .version-button { min-width: 0; padding: 10px 4px; font-size: .76rem; }
       .game-showcase.is-fullscreen-mobile .mobile-gate { display: none; }
       .game-showcase.is-fullscreen-mobile .game-stage.is-active { display: block; }
+      .game-showcase:not(.is-fullscreen-mobile) .game-stage { display: none !important; }
       .game-showcase:fullscreen { width: 100vw; height: 100svh; max-height: none; aspect-ratio: auto; }
       .game-showcase:-webkit-full-screen { width: 100vw; height: 100svh; max-height: none; aspect-ratio: auto; }
       .game-cover-image { width: min(72%, 330px); height: auto; aspect-ratio: 1 / 1; border-radius: 12px; object-fit: cover; }
