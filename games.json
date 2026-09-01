@@ -17,6 +17,12 @@
           "MobileFriendly": false
         },
         {
+          "Name": "Doom",
+          "ImageURL": "Doom/card.webp",
+          "Link": "Doom/",
+          "MobileFriendly": false
+        },
+        {
           "Name": "Moto X3M",
           "ImageURL": "MotoX3M/card.webp",
           "Link": "MotoX3M/",
@@ -383,7 +389,7 @@
           "MobileFriendly": true
         },
         {
-          "Name": "Snail Bob",
+          "Name": "Snail Bob 1",
           "ImageURL": "SnailBob/card.webp",
           "Link": "SnailBob/",
           "MobileFriendly": true
