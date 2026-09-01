@@ -64,7 +64,7 @@
     @media (max-width: 680px) {
       .game-page-shell { padding: 14px 10px 34px; }
       .game-page-nav { margin-bottom: 14px; }
-      .game-showcase { width: 100%; aspect-ratio: 4 / 3; max-height: calc(100svh - 116px); }
+      .game-showcase { width: 100%; aspect-ratio: 16 / 10; max-height: none; }
       .game-showcase.has-minecraft-chooser { aspect-ratio: auto; min-height: 285px; }
       .game-showcase .game-cover { display: none; }
       .game-showcase .mobile-gate { display: flex; }
@@ -80,8 +80,8 @@
       .game-showcase.is-fullscreen-mobile .mobile-gate { display: none; }
       .game-showcase.is-fullscreen-mobile .game-stage.is-active { display: block; }
       .game-showcase:not(.is-fullscreen-mobile) .game-stage { display: none !important; }
-      .game-showcase:fullscreen { width: 100vw; height: 100svh; max-height: none; aspect-ratio: auto; }
-      .game-showcase:-webkit-full-screen { width: 100vw; height: 100svh; max-height: none; aspect-ratio: auto; }
+      .game-showcase:fullscreen { width: min(100vw, calc(100svh * 16 / 10)); height: min(100svh, calc(100vw * 10 / 16)); max-height: none; aspect-ratio: 16 / 10; margin: auto; }
+      .game-showcase:-webkit-full-screen { width: min(100vw, calc(100svh * 16 / 10)); height: min(100svh, calc(100vw * 10 / 16)); max-height: none; aspect-ratio: 16 / 10; margin: auto; }
       .game-cover-image { width: min(72%, 330px); height: auto; aspect-ratio: 1 / 1; border-radius: 12px; object-fit: cover; }
       .play-button { min-width: 128px; min-height: 50px; font-size: .95rem; }
       .player-controls { margin-top: 10px; }
