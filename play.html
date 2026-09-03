@@ -5,10 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#000000">
   <title>GameHub</title>
+  <script>
+    (function () {
+      var mobile = window.matchMedia('(max-width: 680px)').matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      document.documentElement.classList.add(mobile ? 'device-mobile' : 'device-desktop');
+    }());
+  </script>
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="style.css">
   <style>
     :root { color-scheme: dark; }
+    html.device-desktop .mobile-gate { display: none !important; }
+    html.device-mobile .mobile-gate[hidden] { display: none !important; }
     * { box-sizing: border-box; }
     html, body { min-height: 100%; }
     html, body, button, a, img, iframe { -webkit-tap-highlight-color: transparent; }
