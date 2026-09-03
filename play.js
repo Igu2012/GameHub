@@ -69,13 +69,23 @@
   }
 
   function requestFullscreen() {
-    const request = showcase.requestFullscreen || showcase.webkitRequestFullscreen || showcase.mozRequestFullScreen || showcase.msRequestFullscreen;
-    if (!request || isFullscreen()) return Promise.resolve(false);
-    try {
-      return Promise.resolve(request.call(showcase)).then(function () { return true; }).catch(function () { return false; });
-    } catch (error) {
-      return Promise.resolve(false);
+    if (isFullscreen()) return Promise.resolve(true);
+    const showcaseRequest = showcase.requestFullscreen || showcase.webkitRequestFullscreen || showcase.mozRequestFullScreen || showcase.msRequestFullscreen;
+    const documentElement = document.documentElement;
+    const documentRequest = documentElement.requestFullscreen || documentElement.webkitRequestFullscreen || documentElement.mozRequestFullScreen || documentElement.msRequestFullscreen;
+
+    function callRequest(request, target) {
+      if (!request) return Promise.resolve(false);
+      try {
+        return Promise.resolve(request.call(target)).then(function () { return true; }).catch(function () { return false; });
+      } catch (error) {
+        return Promise.resolve(false);
+      }
     }
+
+    return callRequest(showcaseRequest, showcase).then(function (entered) {
+      return entered ? true : callRequest(documentRequest, documentElement);
+    });
   }
 
   function requestMobileFullscreen() {
