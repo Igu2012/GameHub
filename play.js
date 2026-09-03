@@ -52,7 +52,8 @@
       GameHubAssets.resolveGameAssetUrl(game.Link, candidates[index]).then(function (url) {
         const probe = new Image();
         probe.onload = function () {
-          icon.href = url + (url.includes('?') ? '&' : '?') + 'v=6';
+          icon.href = url + (url.includes('?') ? '&' : '?') + 'v=7';
+          if (mobileGateImage && currentGame) mobileGateImage.src = url;
         };
         probe.onerror = function () { tryCandidate(index + 1); };
         probe.src = url + (url.includes('?') ? '&' : '?') + 'probe=1';
@@ -93,6 +94,11 @@
     if (!isMobileDevice() || !screen.orientation || !screen.orientation.lock) return Promise.resolve(false);
     return screen.orientation.lock('landscape').then(function () { return true; }).catch(function () { return false; });
   }
+  function isLandscape() {
+    const orientationType = screen.orientation && screen.orientation.type ? screen.orientation.type : '';
+    return orientationType.indexOf('landscape') !== -1 || Boolean(window.matchMedia && window.matchMedia('(orientation: landscape)').matches) || window.innerWidth > window.innerHeight;
+  }
+
   function requestMobileFullscreen() {
     if (!isMobileDevice()) return Promise.resolve(false);
     return requestFullscreen().then(function (entered) {
@@ -109,6 +115,7 @@
 
   function showMobileGate() {
     if (!isMobileDevice()) return;
+    document.body.classList.remove('is-playing', 'resume-required');
     mobileGate.hidden = false;
     const isMinecraft = currentGame && keyFor(currentGame.Link) === 'Minecraft';
     const hasMinecraftChooser = Boolean(isMinecraft && !selectedVersion);
@@ -127,11 +134,14 @@
 
   function hideMobileGate() {
     mobileGate.hidden = true;
+    document.body.classList.remove('resume-required');
     showcase.classList.add('is-fullscreen-mobile');
     stage.classList.add('is-active');
   }
 
   function showResumeGate() {
+    if (!isMobileDevice() || !isLandscape()) return;
+    document.body.classList.add('is-playing', 'resume-required');
     mobileGate.hidden = false;
     mobileGate.classList.remove('is-minecraft-chooser');
     showcase.classList.remove('has-minecraft-chooser');
@@ -150,7 +160,13 @@
       return;
     }
     mobileStartRequested = false;
-    if (isMobileDevice()) showResumeGate();
+    if (isMobileDevice()) {
+      [120, 450, 900].forEach(function (delay) {
+        window.setTimeout(function () {
+          if (!isFullscreen()) showResumeGate();
+        }, delay);
+      });
+    }
   }
 
   function showError(message) {
@@ -232,6 +248,7 @@
     status.classList.remove('is-hidden', 'error');
     status.classList.toggle('is-loading', hasEmbeddedLoading);
     gameStarted = true;
+    document.body.classList.add('is-playing');
     GameHubAssets.resolveGameAssetUrl(currentGame.Link, path).then(function (url) {
       frame.addEventListener('load', function () {
         if (hasEmbeddedLoading && !frameReady) {
@@ -300,7 +317,10 @@
     }
     mobileStartRequested = true;
     requestMobileFullscreen().then(function (entered) {
-      if (entered && !gameStarted) launchGame();
+      if (entered) {
+        hideMobileGate();
+        if (!gameStarted) launchGame();
+      }
     });
   });
   frame.addEventListener('pointerdown', function () {
@@ -322,6 +342,15 @@
   });
   document.addEventListener('webkitfullscreenchange', function () {
     document.dispatchEvent(new Event('fullscreenchange'));
+  });
+  function checkMobileResumeState() {
+    if (gameStarted && isMobileDevice() && !isFullscreen() && isLandscape()) showResumeGate();
+  }
+  window.setInterval(checkMobileResumeState, 500);
+  window.addEventListener('orientationchange', function () { [180, 500, 900].forEach(function (delay) { window.setTimeout(checkMobileResumeState, delay); }); });
+  window.addEventListener('resize', function () { window.setTimeout(checkMobileResumeState, 180); });
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'visible') window.setTimeout(checkMobileResumeState, 180);
   });
 
   cover.addEventListener('click', function (event) {

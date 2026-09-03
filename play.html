@@ -61,6 +61,15 @@
     .related-card:hover, .related-card:focus-visible { border-color: #555; outline: none; transform: translateY(-3px); }
     .related-card img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: #050505; }
     .related-card span { display: block; overflow: hidden; padding: 11px 12px 13px; color: #f4f4f4; font-size: .86rem; font-weight: 700; text-overflow: ellipsis; white-space: nowrap; }
+    body.game-page.is-playing { overflow: hidden; }
+    body.game-page.is-playing .game-page-shell { width: 100%; max-width: none; padding: 0; }
+    body.game-page.is-playing .game-page-nav, body.game-page.is-playing .related-section { display: none; }
+    body.game-page.is-playing .game-showcase { position: fixed; inset: 0; z-index: 10; width: 100vw; height: 100svh; max-height: none; aspect-ratio: auto; margin: 0; box-shadow: none; }
+    body.game-page.is-playing .player-controls { position: fixed; right: 12px; bottom: 12px; z-index: 20; margin: 0; }
+    body.game-page.resume-required .mobile-gate { position: fixed !important; inset: 0 !important; z-index: 30; display: flex !important; width: 100vw; height: 100svh; min-height: 100svh; background: #050505; }
+    body.game-page.resume-required .game-showcase { overflow: visible; }
+    body.game-page.resume-required .game-stage { display: none !important; }
+
     @media (max-width: 680px) {
       .game-page-shell { padding: 14px 10px 34px; }
       .game-page-nav { margin-bottom: 14px; }
