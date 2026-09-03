@@ -73,11 +73,11 @@ function renderSection(container, cat) {
     
     cat.games.forEach(game => {
         const card = document.createElement('a');
-        const mobileDevice = window.matchMedia && window.matchMedia('(max-width: 680px)').matches
-            || /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent);
+        // Always keep the browser on GameHub. The player resolves the selected
+        // provider and embeds the game's own index.html inside its iframe.
         card.href = window.GameHubAssets
-            ? (mobileDevice ? GameHubAssets.gamePageUrl(game.Link) : GameHubAssets.gameAssetUrl(game.Link, 'index.html'))
-            : game.Link;
+            ? GameHubAssets.gamePageUrl(game.Link)
+            : `play.html?game=${encodeURIComponent(String(game.Link || '').replace(/^\/+|\/+$/g, '').split('/')[0])}`;
         card.className = 'game-card';
         const imagePath = String(game.ImageURL || '').startsWith('img/')
             ? game.ImageURL

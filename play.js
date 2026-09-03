@@ -19,6 +19,7 @@
   const minecraftChooser = document.getElementById('minecraftChooser');
   const mobileMinecraftChooser = document.getElementById('mobileMinecraftChooser');
   const mobileGateMessage = document.getElementById('mobileGateMessage');
+  const mobilePlayButton = document.getElementById('mobilePlayButton');
   const fullscreenButton = document.getElementById('fullscreenButton');
   const playerControls = document.getElementById('playerControls');
   const relatedSection = document.getElementById('relatedSection');
@@ -114,9 +115,11 @@
     mobileGate.classList.toggle('is-minecraft-chooser', hasMinecraftChooser);
     showcase.classList.toggle('has-minecraft-chooser', hasMinecraftChooser);
     if (isMinecraft) {
-      mobileGateMessage.textContent = selectedVersion ? 'Rotate your phone or tap to play' : 'Choose a Minecraft version first';
+      mobileGateMessage.textContent = selectedVersion ? 'Tap Play to enter fullscreen' : 'Choose a Minecraft version first';
       mobileMinecraftChooser.hidden = Boolean(selectedVersion);
     }
+    mobilePlayButton.hidden = hasMinecraftChooser;
+    mobilePlayButton.textContent = '▶  Play';
     showcase.classList.remove('is-fullscreen-mobile');
     stage.classList.remove('is-active');
     playerControls.hidden = true;
@@ -132,8 +135,10 @@
     mobileGate.hidden = false;
     mobileGate.classList.remove('is-minecraft-chooser');
     showcase.classList.remove('has-minecraft-chooser');
-    mobileGateMessage.textContent = 'Tap the game icon to return to fullscreen';
+    mobileGateMessage.textContent = 'Tap Continue to return to fullscreen';
     mobileMinecraftChooser.hidden = true;
+    mobilePlayButton.hidden = false;
+    mobilePlayButton.textContent = '▶  Continue';
     showcase.classList.remove('is-fullscreen-mobile');
     stage.classList.remove('is-active');
     playerControls.hidden = false;
@@ -263,20 +268,16 @@
         return;
       }
       mobileStartRequested = true;
-      launchGame();
-      requestMobileFullscreen();
+      requestMobileFullscreen().then(function (entered) {
+        if (entered && !gameStarted) launchGame();
+      });
       return;
     }
 
-    // No PC, abre o index.html do jogo diretamente. Assim o navegador executa
-    // o jogo na própria página e resolve os assets relativos a partir da pasta dele,
-    // sem usar o iframe do GameHub como camada de execução.
-    const directPath = versionPathForGame(currentGame);
-    GameHubAssets.resolveGameAssetUrl(currentGame.Link, directPath).then(function (url) {
-      window.location.assign(url);
-    }).catch(function () {
-      showError('Unable to open the game.');
-    });
+    // Keep the browser on GameHub on every device. The game's own index.html
+    // is resolved by the provider and executed inside the embedded frame.
+    mobileStartRequested = false;
+    launchGame();
   }
 
   window.addEventListener('message', handleEmbeddedGameMessage);
@@ -287,19 +288,27 @@
     }
     requestFullscreen();
   });
-  mobileGate.addEventListener('click', function (event) {
-    if (event.target.closest('[data-minecraft-version]')) return;
+  mobilePlayButton.addEventListener('click', function (event) {
+    event.stopPropagation();
     if (keyFor(currentGame.Link) === 'Minecraft' && !selectedVersion) {
       mobileGateMessage.textContent = 'Choose a Minecraft version first';
+      mobileGate.classList.add('is-minecraft-chooser');
+      showcase.classList.add('has-minecraft-chooser');
+      mobilePlayButton.hidden = true;
       mobileMinecraftChooser.hidden = false;
       return;
     }
     mobileStartRequested = true;
-    if (!gameStarted) launchGame();
-    requestMobileFullscreen();
+    requestMobileFullscreen().then(function (entered) {
+      if (entered && !gameStarted) launchGame();
+    });
   });
-  frame.addEventListener('pointerdown', requestMobileFullscreen);
-  frame.addEventListener('touchstart', requestMobileFullscreen, { passive: true });
+  frame.addEventListener('pointerdown', function () {
+    if (isMobileDevice() && !isFullscreen()) showResumeGate();
+  });
+  frame.addEventListener('touchstart', function () {
+    if (isMobileDevice() && !isFullscreen()) showResumeGate();
+  }, { passive: true });
   document.addEventListener('fullscreenchange', function () {
     if (isFullscreen()) {
       if (isMobileDevice()) {
