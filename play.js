@@ -77,7 +77,7 @@
     function callRequest(request, target) {
       if (!request) return Promise.resolve(false);
       try {
-        return Promise.resolve(request.call(target)).then(function () { return true; }).catch(function () { return false; });
+        return Promise.resolve(request.call(target, { navigationUI: 'hide' })).then(function () { return true; }).catch(function () { return false; });
       } catch (error) {
         return Promise.resolve(false);
       }
@@ -88,6 +88,10 @@
     });
   }
 
+  function lockLandscape() {
+    if (!isMobileDevice() || !screen.orientation || !screen.orientation.lock) return Promise.resolve(false);
+    return screen.orientation.lock('landscape').then(function () { return true; }).catch(function () { return false; });
+  }
   function requestMobileFullscreen() {
     if (!isMobileDevice()) return Promise.resolve(false);
     return requestFullscreen().then(function (entered) {
@@ -96,9 +100,7 @@
         showcase.classList.add('is-fullscreen-mobile');
         mobileGate.hidden = true;
         stage.classList.add('is-active');
-        if (screen.orientation && screen.orientation.lock) {
-          return screen.orientation.lock('landscape').catch(function () {}).then(function () { return entered; });
-        }
+        return lockLandscape().then(function () { return entered; });
       }
       return entered;
     });
@@ -298,7 +300,10 @@
   frame.addEventListener('touchstart', requestMobileFullscreen, { passive: true });
   document.addEventListener('fullscreenchange', function () {
     if (isFullscreen()) {
-      if (isMobileDevice()) hideMobileGate();
+      if (isMobileDevice()) {
+        hideMobileGate();
+        lockLandscape();
+      }
       if (mobileStartRequested && !gameStarted) launchGame();
     } else {
       restoreAfterFullscreenExit();
