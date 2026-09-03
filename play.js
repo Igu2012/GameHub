@@ -125,15 +125,17 @@
   function hideMobileGate() {
     mobileGate.hidden = true;
     showcase.classList.add('is-fullscreen-mobile');
+    stage.classList.add('is-active');
   }
 
   function showResumeGate() {
     mobileGate.hidden = false;
     mobileGate.classList.remove('is-minecraft-chooser');
     showcase.classList.remove('has-minecraft-chooser');
-    mobileGateMessage.textContent = 'Tap to return to fullscreen';
+    mobileGateMessage.textContent = 'Tap the game icon to return to fullscreen';
     mobileMinecraftChooser.hidden = true;
     showcase.classList.remove('is-fullscreen-mobile');
+    stage.classList.remove('is-active');
     playerControls.hidden = false;
   }
 
@@ -360,7 +362,9 @@
       subtitleEl.textContent = 'Play instantly in GameHub';
       setIcon(currentGame);
       loadCover(currentGame);
-      if (isMobileDevice()) {
+      const mobile = isMobileDevice();
+      showcase.classList.toggle('is-mobile-device', mobile);
+      if (mobile) {
         showMobileGate();
       }
       renderRelated(catalog, activeCategory);

@@ -21,7 +21,7 @@
 
   const repositoryByGame = {
     HollowKnightSilksong: 'gamefiles01', Cuphead: 'gamefiles01', Balatro: 'gamefiles01',
-    CookieClicker: 'gamefiles01', BaldiRemastered: 'gamefiles01', SoccerRandom: 'gamefiles01',
+    CookieClicker: 'gamefiles01', BaldiRemastered: 'gamefiles01', Antonblast: 'gamefiles01', Brotato: 'gamefiles01', SoccerRandom: 'gamefiles01',
     RocketGoal: 'gamefiles01', BasketRandom: 'gamefiles01', VolleyRandom: 'gamefiles01',
     FootballLegends: 'gamefiles01', BoxingRandom: 'gamefiles01', Fnaf_4: 'gamefiles01',
     HollowKnight: 'gamefiles02', Celeste: 'gamefiles02', Fnaf_Sister_Location: 'gamefiles02',
@@ -35,7 +35,7 @@
     SnailBob8: 'gamefiles03', PapasPizzeria: 'gamefiles03', PapasFreezeria: 'gamefiles03', PapasBurgeria: 'gamefiles03',
     PapasPastaria: 'gamefiles03', AngryBirds1: 'gamefiles03', Bloxorz: 'gamefiles03', TheRightMix: 'gamefiles03',
     DuckLife1: 'gamefiles03', DuckLife2: 'gamefiles03', DuckLife3: 'gamefiles03', DuckLife4: 'gamefiles03',
-    DuckLife5: 'gamefiles03', FireboyAndWatergirl: 'gamefiles03', FireboyAndWatergirl2: 'gamefiles03',
+    DuckLife5: 'gamefiles03', SonicCD: 'gamefiles03', SonicMania: 'gamefiles03', Terraria: 'gamefiles03', FireboyAndWatergirl: 'gamefiles03', FireboyAndWatergirl2: 'gamefiles03',
     FireboyAndWatergirl3: 'gamefiles03', FireboyAndWatergirl4: 'gamefiles03', FireboyAndWatergirl5: 'gamefiles03',
     FireboyAndWatergirl6: 'gamefiles03', TankTrouble: 'gamefiles03', Wrassling: 'gamefiles03', BadIceCream: 'gamefiles03',
     BasketballLegends: 'gamefiles03', ClassicPoolGame: 'gamefiles03', Foosball: 'gamefiles03', MotoX3M: 'gamefiles03',

@@ -17,12 +17,6 @@
           "MobileFriendly": false
         },
         {
-          "Name": "Doom",
-          "ImageURL": "Doom/card.webp",
-          "Link": "Doom/",
-          "MobileFriendly": false
-        },
-        {
           "Name": "Moto X3M",
           "ImageURL": "MotoX3M/card.webp",
           "Link": "MotoX3M/",
@@ -105,6 +99,34 @@
           "ImageURL": "Cuphead/card.webp",
           "Link": "Cuphead/",
           "MobileFriendly": false
+        },
+        {
+          "Name": "Antonblast",
+          "ImageURL": "img/Antonblast.png",
+          "Link": "Antonblast/",
+          "MobileFriendly": false,
+          "Favicon": "favicon.png"
+        },
+        {
+          "Name": "Brotato",
+          "ImageURL": "img/Brotato.png",
+          "Link": "Brotato/",
+          "MobileFriendly": false,
+          "Favicon": "index.icon.png"
+        },
+        {
+          "Name": "Sonic CD",
+          "ImageURL": "img/SonicCD.png",
+          "Link": "SonicCD/",
+          "MobileFriendly": false,
+          "Favicon": "favicon.png"
+        },
+        {
+          "Name": "Sonic Mania",
+          "ImageURL": "img/SonicMania.png",
+          "Link": "SonicMania/",
+          "MobileFriendly": false,
+          "Favicon": "favicon.png"
         }
       ]
     },
@@ -345,6 +367,13 @@
           "ImageURL": "Undertale/card.webp",
           "Link": "Undertale/",
           "MobileFriendly": false
+        },
+        {
+          "Name": "Terraria",
+          "ImageURL": "img/Terraria.png",
+          "Link": "Terraria/",
+          "MobileFriendly": false,
+          "Favicon": "favicon.png"
         }
       ]
     },
