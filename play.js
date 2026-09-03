@@ -250,7 +250,16 @@
       requestMobileFullscreen();
       return;
     }
-    launchGame();
+
+    // No PC, abre o index.html do jogo diretamente. Assim o navegador executa
+    // o jogo na própria página e resolve os assets relativos a partir da pasta dele,
+    // sem usar o iframe do GameHub como camada de execução.
+    const directPath = versionPathForGame(currentGame);
+    GameHubAssets.resolveGameAssetUrl(currentGame.Link, directPath).then(function (url) {
+      window.location.assign(url);
+    }).catch(function () {
+      showError('Unable to open the game.');
+    });
   }
 
   window.addEventListener('message', handleEmbeddedGameMessage);
