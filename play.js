@@ -53,7 +53,6 @@
         const probe = new Image();
         probe.onload = function () {
           icon.href = url + (url.includes('?') ? '&' : '?') + 'v=7';
-          if (mobileGateImage && currentGame) mobileGateImage.src = url;
         };
         probe.onerror = function () { tryCandidate(index + 1); };
         probe.src = url + (url.includes('?') ? '&' : '?') + 'probe=1';
