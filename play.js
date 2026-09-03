@@ -404,6 +404,13 @@
       showcase.classList.toggle('is-mobile-device', mobile);
       if (mobile) {
         showMobileGate();
+      } else if (keyFor(currentGame.Link) === 'Minecraft' && !selectedVersion) {
+        // Minecraft keeps its version selector because its asset folder has no default index.html.
+        playButton.hidden = true;
+        minecraftChooser.hidden = false;
+      } else {
+        // Desktop has no intermediate cover or Play menu: load the real game entrypoint immediately.
+        launchGame();
       }
       renderRelated(catalog, activeCategory);
     })
