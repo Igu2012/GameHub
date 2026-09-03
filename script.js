@@ -73,7 +73,11 @@ function renderSection(container, cat) {
     
     cat.games.forEach(game => {
         const card = document.createElement('a');
-        card.href = window.GameHubAssets ? GameHubAssets.gamePageUrl(game.Link) : game.Link;
+        const mobileDevice = window.matchMedia && window.matchMedia('(max-width: 680px)').matches
+            || /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(navigator.userAgent);
+        card.href = window.GameHubAssets
+            ? (mobileDevice ? GameHubAssets.gamePageUrl(game.Link) : GameHubAssets.gameAssetUrl(game.Link, 'index.html'))
+            : game.Link;
         card.className = 'game-card';
         const imagePath = String(game.ImageURL || '').startsWith('img/')
             ? game.ImageURL

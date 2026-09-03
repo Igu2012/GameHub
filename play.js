@@ -82,10 +82,13 @@
     if (!isMobileDevice()) return Promise.resolve(false);
     return requestFullscreen().then(function (entered) {
       if (entered && isFullscreen()) {
-        // O iframe só pode aparecer depois que o navegador confirmar fullscreen.
+        // O iframe só aparece depois que o navegador confirma fullscreen.
         showcase.classList.add('is-fullscreen-mobile');
         mobileGate.hidden = true;
         stage.classList.add('is-active');
+        if (screen.orientation && screen.orientation.lock) {
+          return screen.orientation.lock('landscape').catch(function () {}).then(function () { return entered; });
+        }
       }
       return entered;
     });
@@ -99,7 +102,7 @@
     mobileGate.classList.toggle('is-minecraft-chooser', hasMinecraftChooser);
     showcase.classList.toggle('has-minecraft-chooser', hasMinecraftChooser);
     if (isMinecraft) {
-      mobileGateMessage.textContent = selectedVersion ? 'Tap to play in fullscreen' : 'Choose a Minecraft version first';
+      mobileGateMessage.textContent = selectedVersion ? 'Rotate your phone or tap to play' : 'Choose a Minecraft version first';
       mobileMinecraftChooser.hidden = Boolean(selectedVersion);
     }
     showcase.classList.remove('is-fullscreen-mobile');
@@ -309,7 +312,7 @@
       mobileGate.classList.remove('is-minecraft-chooser');
       showcase.classList.remove('has-minecraft-chooser');
       if (isMobileDevice()) {
-        mobileGateMessage.textContent = 'Tap to play in fullscreen';
+        mobileGateMessage.textContent = 'Rotate your phone or tap to play';
         mobileStartRequested = true;
         if (!gameStarted) launchGame();
         requestMobileFullscreen();
