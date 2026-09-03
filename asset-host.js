@@ -21,7 +21,7 @@
 
   const repositoryByGame = {
     HollowKnightSilksong: 'gamefiles01', Cuphead: 'gamefiles01', Balatro: 'gamefiles01',
-    CookieClicker: 'gamefiles01', BaldiRemastered: 'gamefiles01', Antonblast: 'gamefiles01', Brotato: 'gamefiles01', SoccerRandom: 'gamefiles01',
+    CookieClicker: 'gamefiles01', BaldiRemastered: 'gamefiles01', Antonblast: 'gamefiles03', Brotato: 'gamefiles03', SoccerRandom: 'gamefiles01',
     RocketGoal: 'gamefiles01', BasketRandom: 'gamefiles01', VolleyRandom: 'gamefiles01',
     FootballLegends: 'gamefiles01', BoxingRandom: 'gamefiles01', Fnaf_4: 'gamefiles01',
     HollowKnight: 'gamefiles02', Celeste: 'gamefiles02', Fnaf_Sister_Location: 'gamefiles02',
