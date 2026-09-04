@@ -20,8 +20,6 @@
   const mobileMinecraftChooser = document.getElementById('mobileMinecraftChooser');
   const mobileGateMessage = document.getElementById('mobileGateMessage');
   const mobilePlayButton = document.getElementById('mobilePlayButton');
-  const fullscreenButton = document.getElementById('fullscreenButton');
-  const playerControls = document.getElementById('playerControls');
   const relatedSection = document.getElementById('relatedSection');
   const relatedGames = document.getElementById('relatedGames');
 
@@ -128,7 +126,6 @@
     mobilePlayButton.textContent = '▶  Play';
     showcase.classList.remove('is-fullscreen-mobile');
     stage.classList.remove('is-active');
-    playerControls.hidden = true;
   }
 
   function hideMobileGate() {
@@ -150,7 +147,6 @@
     mobilePlayButton.textContent = '▶  Continue';
     showcase.classList.remove('is-fullscreen-mobile');
     stage.classList.remove('is-active');
-    playerControls.hidden = false;
   }
 
   function restoreAfterFullscreenExit() {
@@ -241,7 +237,6 @@
     const hasEmbeddedLoading = embeddedLoadingGames.has(activeGameKey);
     cover.style.display = 'none';
     stage.classList.add('is-active');
-    playerControls.hidden = false;
     frameReady = false;
     status.textContent = hasEmbeddedLoading ? 'Loading game files...' : 'Loading game...';
     status.classList.remove('is-hidden', 'error');
@@ -297,13 +292,6 @@
   }
 
   window.addEventListener('message', handleEmbeddedGameMessage);
-  fullscreenButton.addEventListener('click', function () {
-    if (isMobileDevice() && !gameStarted) {
-      startGame();
-      return;
-    }
-    requestFullscreen();
-  });
   mobilePlayButton.addEventListener('click', function (event) {
     event.stopPropagation();
     if (keyFor(currentGame.Link) === 'Minecraft' && !selectedVersion) {
