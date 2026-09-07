@@ -193,6 +193,34 @@
           "ImageURL": "BuckshotRoulette/card.jpeg",
           "Link": "BuckshotRoulette/",
           "MobileFriendly": true
+        },
+        {
+          "Name": "There's A Butcher Around",
+          "ImageURL": "img/ButchersAround.png",
+          "Link": "ButchersAround/",
+          "MobileFriendly": true,
+          "Favicon": "pageicon.png"
+        },
+        {
+          "Name": "Slendytubbies",
+          "ImageURL": "img/Slendytubbies.png",
+          "Link": "Slendytubbies/",
+          "MobileFriendly": false,
+          "Favicon": "TemplateData/favicon.ico"
+        },
+        {
+          "Name": "Slendytubbies II",
+          "ImageURL": "img/Slendytubbies2.png",
+          "Link": "Slendytubbies2/",
+          "MobileFriendly": false,
+          "Favicon": "TemplateData/favicon.ico"
+        },
+        {
+          "Name": "Slendytubbies 2D",
+          "ImageURL": "img/Slendytubbies2D.png",
+          "Link": "Slendytubbies2D/",
+          "MobileFriendly": false,
+          "Favicon": "TemplateData/favicon.ico"
         }
       ]
     },
