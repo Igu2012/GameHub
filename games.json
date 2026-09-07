@@ -198,7 +198,7 @@
           "Name": "There's A Butcher Around",
           "ImageURL": "img/ButchersAround.png",
           "Link": "ButchersAround/",
-          "MobileFriendly": true,
+          "MobileFriendly": false,
           "Favicon": "pageicon.png"
         },
         {
