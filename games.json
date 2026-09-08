@@ -127,6 +127,13 @@
           "Link": "SonicMania/",
           "MobileFriendly": false,
           "Favicon": "favicon.png"
+        },
+        {
+          "Name": "Pizza Tower",
+          "ImageURL": "img/PizzaTower.png",
+          "Link": "PizzaTower/",
+          "MobileFriendly": false,
+          "Favicon": "favicon.png"
         }
       ]
     },
@@ -221,6 +228,13 @@
           "Link": "Slendytubbies2D/",
           "MobileFriendly": false,
           "Favicon": "TemplateData/favicon.ico"
+        },
+        {
+          "Name": "The Visitor",
+          "ImageURL": "img/TheVisitor.png",
+          "Link": "TheVisitor/",
+          "MobileFriendly": false,
+          "Favicon": "cover.png"
         }
       ]
     },
@@ -400,6 +414,20 @@
           "Name": "Terraria",
           "ImageURL": "img/Terraria.png",
           "Link": "Terraria/",
+          "MobileFriendly": false,
+          "Favicon": "favicon.png"
+        },
+        {
+          "Name": "Spaceflight Simulator",
+          "ImageURL": "img/SpaceflightSimulator.png",
+          "Link": "SpaceflightSimulator/",
+          "MobileFriendly": false,
+          "Favicon": "favicon.png"
+        },
+        {
+          "Name": "PEAK",
+          "ImageURL": "img/Peak.png",
+          "Link": "Peak/",
           "MobileFriendly": false,
           "Favicon": "favicon.png"
         }
