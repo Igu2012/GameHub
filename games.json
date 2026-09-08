@@ -213,21 +213,21 @@
           "ImageURL": "img/Slendytubbies.png",
           "Link": "Slendytubbies/",
           "MobileFriendly": false,
-          "Favicon": "TemplateData/favicon.ico"
+          "Favicon": "favicon.png"
         },
         {
           "Name": "Slendytubbies II",
           "ImageURL": "img/Slendytubbies2.png",
           "Link": "Slendytubbies2/",
           "MobileFriendly": false,
-          "Favicon": "TemplateData/favicon.ico"
+          "Favicon": "favicon.png"
         },
         {
           "Name": "Slendytubbies 2D",
           "ImageURL": "img/Slendytubbies2D.png",
           "Link": "Slendytubbies2D/",
           "MobileFriendly": false,
-          "Favicon": "TemplateData/favicon.ico"
+          "Favicon": "favicon.png"
         },
         {
           "Name": "The Visitor",
