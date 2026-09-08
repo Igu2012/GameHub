@@ -534,12 +534,6 @@
           "ImageURL": "PapasPastaria/card.webp",
           "Link": "PapasPastaria/",
           "MobileFriendly": true
-        },
-        {
-          "Name": "The Visitor",
-          "ImageURL": "TheVisitor/card.webp",
-          "Link": "TheVisitor/",
-          "MobileFriendly": false
         }
       ]
     }
