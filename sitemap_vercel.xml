@@ -328,4 +328,8 @@
   <url>
     <loc>https://gamehubjogos.vercel.app/Slendytubbies2D/</loc>
   </url>
+  <url>
+    <loc>https://gamehubjogos.vercel.app/TheVisitor/</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>
