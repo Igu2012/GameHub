@@ -33,7 +33,7 @@
     Repo: 'gamefiles03', Granny2: 'gamefiles03', Funkin: 'gamefiles03', GeometryDash: 'gamefiles03',
     PvZ: 'gamefiles03', '20MinutesTillDawn': 'gamefiles03', SubwaySurfers: 'gamefiles03', HappyWheels: 'gamefiles03',
     LevelDevil: 'gamefiles03', Minecraft: 'gamefiles03', CrazyCattle3D: 'gamefiles03',
-    BadPiggies: 'gamefiles03',
+    BadPiggies: 'gamefiles03', MuddyHeights: 'gamefiles03',
     TheVisitor: 'gamefiles03', SnailBob: 'gamefiles03', SnailBob2: 'gamefiles03', SnailBob3: 'gamefiles03',
     SnailBob4: 'gamefiles03', SnailBob5: 'gamefiles03', SnailBob6: 'gamefiles03', SnailBob7: 'gamefiles03',
     SnailBob8: 'gamefiles03', PapasPizzeria: 'gamefiles03', PapasFreezeria: 'gamefiles03', PapasBurgeria: 'gamefiles03',

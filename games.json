@@ -134,6 +134,13 @@
           "Link": "PizzaTower/",
           "MobileFriendly": false,
           "Favicon": "favicon.png"
+        },
+        {
+          "Name": "Muddy Heights",
+          "ImageURL": "img/MuddyHeights.png",
+          "Link": "MuddyHeights/",
+          "MobileFriendly": true,
+          "Favicon": "TemplateData/favicon.ico"
         }
       ]
     },
