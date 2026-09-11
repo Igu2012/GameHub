@@ -141,6 +141,13 @@
           "Link": "MuddyHeights/",
           "MobileFriendly": false,
           "Favicon": "TemplateData/favicon.ico"
+        },
+        {
+          "Name": "2048",
+          "ImageURL": "img/2048.png",
+          "Link": "2048/",
+          "MobileFriendly": true,
+          "Favicon": "favicon.ico"
         }
       ]
     },
