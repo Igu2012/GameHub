@@ -139,7 +139,7 @@
           "Name": "Muddy Heights",
           "ImageURL": "img/MuddyHeights.png",
           "Link": "MuddyHeights/",
-          "MobileFriendly": true,
+          "MobileFriendly": false,
           "Favicon": "TemplateData/favicon.ico"
         }
       ]
