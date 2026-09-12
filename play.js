@@ -87,15 +87,25 @@
     });
   }
 
-  function lockLandscape() {
+  function expectedOrientation() {
+    return currentGame && currentGame.Orientation === 'portrait' ? 'portrait' : 'landscape';
+  }
+  function lockOrientation() {
     if (!isMobileDevice() || !screen.orientation || !screen.orientation.lock) return Promise.resolve(false);
-    return screen.orientation.lock('landscape').then(function () { return true; }).catch(function () { return false; });
+    return screen.orientation.lock(expectedOrientation()).then(function () { return true; }).catch(function () { return false; });
   }
   function isLandscape() {
     const orientationType = screen.orientation && screen.orientation.type ? screen.orientation.type : '';
     return orientationType.indexOf('landscape') !== -1 || Boolean(window.matchMedia && window.matchMedia('(orientation: landscape)').matches) || window.innerWidth > window.innerHeight;
   }
 
+  function isExpectedOrientation() {
+    if (expectedOrientation() === 'portrait') {
+      const orientationType = screen.orientation && screen.orientation.type ? screen.orientation.type : '';
+      return orientationType.indexOf('portrait') !== -1 || Boolean(window.matchMedia && window.matchMedia('(orientation: portrait)').matches) || window.innerWidth <= window.innerHeight;
+    }
+    return isLandscape();
+  }
   function requestMobileFullscreen() {
     if (!isMobileDevice()) return Promise.resolve(false);
     return requestFullscreen().then(function (entered) {
@@ -104,7 +114,7 @@
         showcase.classList.add('is-fullscreen-mobile');
         mobileGate.hidden = true;
         stage.classList.add('is-active');
-        return lockLandscape().then(function () { return entered; });
+        return lockOrientation().then(function () { return entered; });
       }
       return entered;
     });
@@ -136,7 +146,7 @@
   }
 
   function showResumeGate() {
-    if (!isMobileDevice() || !isLandscape()) return;
+    if (!isMobileDevice() || !isExpectedOrientation()) return;
     document.body.classList.add('is-playing', 'resume-required');
     mobileGate.hidden = false;
     mobileGate.classList.remove('is-minecraft-chooser');
@@ -320,7 +330,7 @@
     if (isFullscreen()) {
       if (isMobileDevice()) {
         hideMobileGate();
-        lockLandscape();
+        lockOrientation();
       }
       if (mobileStartRequested && !gameStarted) launchGame();
     } else {
@@ -331,7 +341,7 @@
     document.dispatchEvent(new Event('fullscreenchange'));
   });
   function checkMobileResumeState() {
-    if (gameStarted && isMobileDevice() && !isFullscreen() && isLandscape()) showResumeGate();
+    if (gameStarted && isMobileDevice() && !isFullscreen() && isExpectedOrientation()) showResumeGate();
   }
   window.setInterval(checkMobileResumeState, 500);
   window.addEventListener('orientationchange', function () { [180, 500, 900].forEach(function (delay) { window.setTimeout(checkMobileResumeState, delay); }); });
@@ -354,7 +364,7 @@
       mobileGate.classList.remove('is-minecraft-chooser');
       showcase.classList.remove('has-minecraft-chooser');
       if (isMobileDevice()) {
-        mobileGateMessage.textContent = 'Rotate your phone or tap to play';
+        mobileGateMessage.textContent = expectedOrientation() === 'portrait' ? 'Keep your phone upright or tap to play' : 'Rotate your phone or tap to play';
         mobileStartRequested = true;
         if (!gameStarted) launchGame();
         requestMobileFullscreen();
