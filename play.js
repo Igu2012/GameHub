@@ -146,7 +146,7 @@
   }
 
   function showResumeGate() {
-    if (!isMobileDevice() || !isExpectedOrientation()) return;
+    if (!isMobileDevice() || !isExpectedOrientation() || isNativeFullscreenGame()) return;
     document.body.classList.add('is-playing', 'resume-required');
     mobileGate.hidden = false;
     mobileGate.classList.remove('is-minecraft-chooser');
@@ -272,6 +272,10 @@
     }).catch(function () { showError('Unable to load the game.'); });
   }
 
+  function isNativeFullscreenGame() {
+    return keyFor(currentGame && currentGame.Link) === 'Balatro';
+  }
+
   function startGame() {
     if (!currentGame) return;
     const path = versionPathForGame(currentGame);
@@ -280,7 +284,7 @@
       minecraftChooser.hidden = false;
       return;
     }
-    if (isMobileDevice()) {
+    if (isMobileDevice() && !isNativeFullscreenGame()) {
       if (keyFor(currentGame.Link) === 'Minecraft' && !selectedVersion) {
         mobileGateMessage.textContent = 'Choose a Minecraft version first';
         mobileGate.classList.add('is-minecraft-chooser');
@@ -312,6 +316,12 @@
       mobileMinecraftChooser.hidden = false;
       return;
     }
+    if (isNativeFullscreenGame()) {
+      mobileStartRequested = false;
+      hideMobileGate();
+      if (!gameStarted) launchGame();
+      return;
+    }
     mobileStartRequested = true;
     requestMobileFullscreen().then(function (entered) {
       if (entered) {
@@ -321,14 +331,14 @@
     });
   });
   frame.addEventListener('pointerdown', function () {
-    if (isMobileDevice() && !isFullscreen()) showResumeGate();
+    if (isMobileDevice() && !isNativeFullscreenGame() && !isFullscreen()) showResumeGate();
   });
   frame.addEventListener('touchstart', function () {
-    if (isMobileDevice() && !isFullscreen()) showResumeGate();
+    if (isMobileDevice() && !isNativeFullscreenGame() && !isFullscreen()) showResumeGate();
   }, { passive: true });
   document.addEventListener('fullscreenchange', function () {
     if (isFullscreen()) {
-      if (isMobileDevice()) {
+      if (isMobileDevice() && !isNativeFullscreenGame()) {
         hideMobileGate();
         lockOrientation();
       }
@@ -341,7 +351,7 @@
     document.dispatchEvent(new Event('fullscreenchange'));
   });
   function checkMobileResumeState() {
-    if (gameStarted && isMobileDevice() && !isFullscreen() && isExpectedOrientation()) showResumeGate();
+    if (gameStarted && isMobileDevice() && !isNativeFullscreenGame() && !isFullscreen() && isExpectedOrientation()) showResumeGate();
   }
   window.setInterval(checkMobileResumeState, 500);
   window.addEventListener('orientationchange', function () { [180, 500, 900].forEach(function (delay) { window.setTimeout(checkMobileResumeState, delay); }); });
