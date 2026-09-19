@@ -125,14 +125,6 @@
           "Orientation": "landscape"
         },
         {
-          "Name": "Pizza Tower",
-          "ImageURL": "img/PizzaTower.png",
-          "Link": "PizzaTower/",
-          "MobileFriendly": false,
-          "Favicon": "favicon.png",
-          "Orientation": "landscape"
-        },
-        {
           "Name": "Brotato",
           "ImageURL": "img/Brotato.png",
           "Link": "Brotato/",
@@ -152,6 +144,14 @@
           "Name": "Sonic Mania",
           "ImageURL": "img/SonicMania.png",
           "Link": "SonicMania/",
+          "MobileFriendly": false,
+          "Favicon": "favicon.png",
+          "Orientation": "landscape"
+        },
+        {
+          "Name": "Pizza Tower",
+          "ImageURL": "img/PizzaTower.png",
+          "Link": "PizzaTower/",
           "MobileFriendly": false,
           "Favicon": "favicon.png",
           "Orientation": "landscape"
