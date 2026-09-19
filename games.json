@@ -171,6 +171,22 @@
           "MobileFriendly": true,
           "Favicon": "favicon.ico",
           "Orientation": "portrait"
+        },
+        {
+          "Name": "Ultrakill",
+          "ImageURL": "img/Ultrakill.png",
+          "Link": "Ultrakill/",
+          "ExternalURL": "https://cake-logic.itch.io/ultrakill-web-port",
+          "MobileFriendly": false,
+          "Orientation": "landscape"
+        },
+        {
+          "Name": "Karlson",
+          "ImageURL": "img/Karlson.png",
+          "Link": "Karlson/",
+          "ExternalURL": "https://cake-logic.itch.io/karlson-web-port",
+          "MobileFriendly": false,
+          "Orientation": "landscape"
         }
       ]
     },

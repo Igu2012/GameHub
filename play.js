@@ -235,13 +235,19 @@
     relatedGames.innerHTML = selectedGames.map(function (game) {
       const filename = String(game.ImageURL || '').split('/').pop();
       const source = String(game.ImageURL || '').startsWith('img/') ? game.ImageURL : GameHubAssets.gameAssetUrl(game.Link, filename);
-      return '<a class="related-card" href="play.html?game=' + encodeURIComponent(keyFor(game.Link)) + '"><img src="' + source + '" alt="' + game.Name.replace(/"/g, '&quot;') + '" loading="lazy"><span>' + game.Name + '</span></a>';
+      const href = game.ExternalURL || ('play.html?game=' + encodeURIComponent(keyFor(game.Link)));
+      const externalAttrs = game.ExternalURL ? ' target="_blank" rel="noopener noreferrer"' : '';
+      return '<a class="related-card" href="' + href + '"' + externalAttrs + '><img src="' + source + '" alt="' + game.Name.replace(/"/g, '&quot;') + '" loading="lazy"><span>' + game.Name + '</span></a>';
     }).join('');
     relatedSection.hidden = false;
   }
 
   function launchGame() {
     if (gameStarted || !currentGame) return;
+    if (currentGame.ExternalURL) {
+      window.location.href = currentGame.ExternalURL;
+      return;
+    }
     const path = versionPathForGame(currentGame);
     const activeGameKey = keyFor(currentGame.Link);
     const hasEmbeddedLoading = embeddedLoadingGames.has(activeGameKey);
