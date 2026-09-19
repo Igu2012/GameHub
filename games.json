@@ -664,6 +664,14 @@
           "Link": "PapasPastaria/",
           "MobileFriendly": true,
           "Orientation": "landscape"
+        },
+        {
+          "Name": "T.J. Trap-o-Matic",
+          "ImageURL": "TrapOMatic/card.png",
+          "Link": "TrapOMatic/",
+          "MobileFriendly": false,
+          "Favicon": "favicon.png",
+          "Orientation": "landscape"
         }
       ]
     }
