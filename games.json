@@ -666,8 +666,8 @@
           "Orientation": "landscape"
         },
         {
-          "Name": "T.J. Trap-o-Matic",
-          "ImageURL": "TrapOMatic/card.png",
+          "Name": "Trap O Matic",
+          "ImageURL": "TrapOMatic/card.jpg",
           "Link": "TrapOMatic/",
           "MobileFriendly": false,
           "Favicon": "favicon.png",
