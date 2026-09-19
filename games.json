@@ -669,7 +669,7 @@
           "Name": "Trap O Matic",
           "ImageURL": "TrapOMatic/card.jpg",
           "Link": "TrapOMatic/",
-          "MobileFriendly": false,
+          "MobileFriendly": true,
           "Favicon": "favicon.png",
           "Orientation": "landscape"
         }
