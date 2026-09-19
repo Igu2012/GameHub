@@ -125,6 +125,14 @@
           "Orientation": "landscape"
         },
         {
+          "Name": "Pizza Tower",
+          "ImageURL": "img/PizzaTower.png",
+          "Link": "PizzaTower/",
+          "MobileFriendly": false,
+          "Favicon": "favicon.png",
+          "Orientation": "landscape"
+        },
+        {
           "Name": "Brotato",
           "ImageURL": "img/Brotato.png",
           "Link": "Brotato/",
