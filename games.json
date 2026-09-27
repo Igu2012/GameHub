@@ -174,14 +174,14 @@
         },
         {
           "Name": "Ultrakill",
-          "ImageURL": "img/Ultrakill.png",
+          "ImageURL": "img/Ultrakill.jpg",
           "Link": "Ultrakill/",
           "MobileFriendly": false,
           "Orientation": "landscape"
         },
         {
           "Name": "Karlson",
-          "ImageURL": "img/Karlson.png",
+          "ImageURL": "img/Karlson.jpg",
           "Link": "Karlson/",
           "MobileFriendly": false,
           "Orientation": "landscape"
