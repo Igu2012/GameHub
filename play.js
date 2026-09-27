@@ -28,7 +28,7 @@
   let mobileStartRequested = false;
   let gameStarted = false;
   let frameReady = false;
-  const embeddedLoadingGames = new Set(['Granny2', 'HollowKnight', 'HollowKnightSilksong', 'Celeste']);
+  const embeddedLoadingGames = new Set(['Granny2', 'HollowKnight', 'HollowKnightSilksong', 'Celeste', 'Ultrakill', 'Karlson']);
 
   function keyFor(link) {
     return GameHubAssets.gameKey(link);
