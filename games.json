@@ -171,6 +171,20 @@
           "MobileFriendly": true,
           "Favicon": "favicon.ico",
           "Orientation": "portrait"
+        },
+        {
+          "Name": "Ultrakill",
+          "ImageURL": "img/Ultrakill.png",
+          "Link": "Ultrakill/",
+          "MobileFriendly": false,
+          "Orientation": "landscape"
+        },
+        {
+          "Name": "Karlson",
+          "ImageURL": "img/Karlson.png",
+          "Link": "Karlson/",
+          "MobileFriendly": false,
+          "Orientation": "landscape"
         }
       ]
     },
