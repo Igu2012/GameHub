@@ -329,8 +329,8 @@
           "Name": "The Visitor Returns",
           "ImageURL": "img/TheVisitorReturns.png",
           "Link": "TheVisitorReturns/",
-          "MobileFriendly": false,
-          "Favicon": "true",
+          "MobileFriendly": true,
+          "Favicon": "favicon.png",
           "Orientation": "landscape"
         }
       ]
