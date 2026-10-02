@@ -185,6 +185,13 @@
           "Link": "Karlson/",
           "MobileFriendly": false,
           "Orientation": "landscape"
+        },
+        {
+          "Name": "Kerbal Space Program",
+          "ImageURL": "img/KerbalSpaceProgram.jpg",
+          "Link": "KerbalSpaceProgram/",
+          "MobileFriendly": false,
+          "Orientation": "landscape"
         }
       ]
     },

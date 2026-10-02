@@ -6,9 +6,9 @@ GameHub is a browser-based game hub. Games open directly in the browser with no 
 
 | Hosting | Address |
 |---|---|
+| Github | [gamehubjogos.github.io](https://gamehubjogos.github.io/) |
 | Vercel | [gamehubjogos.vercel.app](https://gamehubjogos.vercel.app) |
 | Render | [gamehubjogos.onrender.com](https://gamehubjogos.onrender.com) |
-| GitHub Pages | [gamehubjogos.github.io](https://gamehubjogos.github.io/) |
 
 ## Main verified sources
 
