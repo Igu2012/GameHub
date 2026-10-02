@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gamehubjogos.vercel.app/sitemap_vercel.xml
+Sitemap: https://gamehubjogos.github.io/sitemap_github.xml

@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 from urllib.parse import quote
 
-BASE_URL = "https://gamehubjogos.vercel.app"
+BASE_URL = "https://gamehubjogos.github.io"
 registry = json.loads(Path("games.json").read_text(encoding="utf-8"))
 
 games = []
@@ -35,7 +35,7 @@ for key in games:
         '  </url>',
     ])
 lines.append('</urlset>')
-Path("sitemap_vercel.xml").write_text("\n".join(lines) + "\n", encoding="utf-8")
+Path("sitemap_github.xml").write_text("\n".join(lines) + "\n", encoding="utf-8")
 print(f"Generated {len(games)} game URLs plus the homepage.")
 print("First URL:", f"{BASE_URL}/play.html?game={quote(games[0], safe='')}")
 print("Last URL:", f"{BASE_URL}/play.html?game={quote(games[-1], safe='')}")

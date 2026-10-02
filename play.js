@@ -250,7 +250,8 @@
     }
     const path = versionPathForGame(currentGame);
     const activeGameKey = keyFor(currentGame.Link);
-    const hasEmbeddedLoading = embeddedLoadingGames.has(activeGameKey);
+    const waitsForGameReady = embeddedLoadingGames.has(activeGameKey);
+    const hasEmbeddedLoading = true;
     cover.style.display = 'none';
     stage.classList.add('is-active');
     frameReady = false;
@@ -261,7 +262,7 @@
     document.body.classList.add('is-playing');
     GameHubAssets.resolveGameAssetUrl(currentGame.Link, path).then(function (url) {
       frame.addEventListener('load', function () {
-        if (hasEmbeddedLoading && !frameReady) {
+        if (waitsForGameReady && !frameReady) {
           status.textContent = 'Loading game files...';
           return;
         }
