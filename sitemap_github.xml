@@ -169,6 +169,14 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://gamehubjogos.github.io/play.html?game=TheVisitorMassacreAtCampHappy</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://gamehubjogos.github.io/play.html?game=TheVisitorReturns</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://gamehubjogos.github.io/play.html?game=SoccerRandom</loc>
     <priority>0.8</priority>
   </url>

@@ -80,3 +80,24 @@ The sitemap generator is `generate_sitemap.py`. If the catalog changes, regenera
 - Test desktop and, when `MobileFriendly` is true, mobile behavior.
 - For large builds, verify all chunks exist and reassemble in the browser.
 - Use English commit messages and keep the working tree clean before pushing.
+
+## Naming rule
+
+Never use a colon (`:`) in the `Name` field of `games.json` or in the visible game name shown by GameHub. Replace it with a space or another punctuation mark that does not contain a colon.
+
+## Standard Flash game integration
+
+For a new Flash game or Flash sequel, use this simple procedure:
+
+1. Clone a working Flash game folder already present in `gamefiles03`, preferably the existing Ruffle wrapper in `TheVisitor` or another matching game.
+2. Rename the cloned folder using a stable alphanumeric key without spaces or colons, for example `TheVisitorReturns`.
+3. Replace the cloned `.swf` with the target game's SWF and keep the SWF self-hosted in the new folder.
+4. Update every relevant reference in `index.html`, including the page title, the `p.load(...)` SWF filename, favicon, Apple touch icon, and any other old game filename.
+5. Replace the cloned card with a card for the new game and create a small local `favicon.png` from that card. Keep both files inside the game folder.
+6. Add the card to `GameHub/img/` when the catalog uses a local `img/` path.
+7. Add the game to the appropriate category in `games.json` with a colon-free display name, the correct `Link`, `ImageURL`, `MobileFriendly`, `Favicon`, and `Orientation` values.
+8. Use `gamefiles03` unless another asset repository is explicitly selected; update `asset-host.js` only when the game belongs to a different repository.
+9. Regenerate `sitemap_github.xml`, test the Ruffle page directly and through `play.html?game=<GameKey>`, then commit in English and push the original repository.
+10. Sync the commit into `gamehubjogos/gamehubjogos.github.io` with GitHub's **Sync fork / Sync commits** button.
+
+Do not leave the original cloned SWF, old card, old favicon, or old game title referenced in the new wrapper. Do not include tokens or credentials in any Flash game folder.

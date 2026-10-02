@@ -308,6 +308,22 @@
           "MobileFriendly": false,
           "Favicon": "cover.png",
           "Orientation": "landscape"
+        },
+        {
+          "Name": "The Visitor Massacre at Camp Happy",
+          "ImageURL": "img/TheVisitorMassacreAtCampHappy.png",
+          "Link": "TheVisitorMassacreAtCampHappy/",
+          "MobileFriendly": false,
+          "Favicon": "favicon.png",
+          "Orientation": "landscape"
+        },
+        {
+          "Name": "The Visitor Returns",
+          "ImageURL": "img/TheVisitorReturns.png",
+          "Link": "TheVisitorReturns/",
+          "MobileFriendly": false,
+          "Favicon": "favicon.png",
+          "Orientation": "landscape"
         }
       ]
     },
